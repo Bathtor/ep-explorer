@@ -8,8 +8,10 @@ import scalatags.JsDom.all._
 
 import graphics._
 
+import com.outr.scribe.Logging
+
 class MapControls(cam: Camera, el: HTMLElement, sc: SceneContainer, width: Double, height: Double,
-                  tracked: graphics.GraphicsObject) extends TrackingCameraControls(cam, el, sc.scene, width, height, tracked) {
+                  tracked: graphics.GraphicsObject) extends TrackingCameraControls(cam, el, sc.scene, width, height, tracked) with Logging {
 
     override def sceneObjects: Array[Object3D] = sc.sceneObjects.toArray
 
@@ -35,7 +37,7 @@ class MapControls(cam: Camera, el: HTMLElement, sc: SceneContainer, width: Doubl
                 case o: Overlayed => {
                     o.overlay.hover();
                 }
-                case _ => // nothing
+                case x => logger.info(s"Intersected object was not Overlayed: ${x.name}") // nothing
             }
             UI.replaceInfo(obj.data)
         }

@@ -88,7 +88,7 @@ body {
     font-variant: small-caps;
 }
 
-#tracking {
+.leftSpace {
     padding-left: 3em;    
 }
 
@@ -122,7 +122,7 @@ body {
     position: fixed;
     bottom: 2vh;
     left: 2vw;
-    width: 15vw;
+    width: 20vw;
     height: 40vh;
     background-color: rgba(  3, 37, 58,0.5);
     z-index: 1;
@@ -144,6 +144,7 @@ body {
 
 #info-block dd {
     margin-left: 0.5em;
+    text-align: justify;
 }
 
 #time {
@@ -195,4 +196,12 @@ body {
     display: inline-block;
 }
 
+#stats {
+    position: fixed;
+    top: 5em;
+    left: 2vw;
+    cursor: pointer;
+    opacity: 0.9;
+    z-index: 2;
+}
 

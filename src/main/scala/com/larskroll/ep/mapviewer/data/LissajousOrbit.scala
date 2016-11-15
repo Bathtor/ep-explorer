@@ -20,14 +20,14 @@ class LissajousOrbit(val centre: Orbit, val eclipticAmplitude: Length, val zAmpl
     case class OrbitalPosition(at: Time, pos: Vector3, posRaw: Vector3, val M: Angle, parent: OrbitalSnapshot) extends OrbitalSnapshot {
         def v: Velocity = MetersPerSecond(Double.NaN); // FIXME: no idea how to calculate this
         def eclipticMatrix = parent.eclipticMatrix;
-        lazy val dir = {
-            val v = new Vector3();
-            v.subVectors(pos, parent.pos);
-            v
-        }
+//        lazy val dir = {
+//            val v = new Vector3();
+//            v.subVectors(pos, parent.pos);
+//            v
+//        }
         def project(pos: Vector3): Unit = {
             parent.project(pos);
-            pos.add(dir);
+            //pos.add(dir);
         }
     }
 
@@ -36,6 +36,7 @@ class LissajousOrbit(val centre: Orbit, val eclipticAmplitude: Length, val zAmpl
     private def scaledPosition(posRaw: Vector3, parentOrbit: OrbitalSnapshot): Vector3 = {
         val pos = new Vector3(posRaw.x * Main.scaleDistance, posRaw.y * Main.scaleDistance, posRaw.z * Main.scaleDistance);
         parentOrbit.project(pos);
+        pos.add(parentOrbit.pos);
         return pos;
     }
 

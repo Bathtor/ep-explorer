@@ -85,8 +85,8 @@ trait SceneContainer {
         vr.domElement.style.left = positionZero
         vr.domElement.style.margin = positionZero
         vr.domElement.style.padding = positionZero
+        vr.setPixelRatio(Main.pixelRatio);
         vr.setSize(width, height)
-        vr.setPixelRatio(dom.window.devicePixelRatio)
         vr
     }
     val cssScene = new Scene()
@@ -130,12 +130,21 @@ trait SceneContainer {
 
     def passes = Seq(clearPass, renderPass, copyPass);
 
+    val stats = {
+        val s = new facades.Stats();
+        s.showPanel(0);
+        this.container.appendChild(s.dom);
+        s
+    }
+
     private[SceneContainer] def onEnterFrame(): Unit = {
+        stats.begin();
         animate();
         controls.update()
         //renderer.render(scene, camera)
         composer.render();
         //cssRenderer.render(cssScene, camera)
+        stats.end();
     }
 
     def animate() {};

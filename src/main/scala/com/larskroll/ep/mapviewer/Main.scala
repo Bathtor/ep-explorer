@@ -27,6 +27,7 @@ object Main extends JSApp with Logging {
 
     val scale = 1e-6;
     val scaleDistance = 1e-6;
+    val pixelRatio = dom.window.devicePixelRatio;
     //val timeFactor = Minutes(1);
     var scene: Option[SceneContainer with TimeAnimatedScene] = None;
 

@@ -22,6 +22,7 @@ object GraphicsObjects {
         var firstMoon: Option[Moon] = None;
         var firstPlanet: Option[Planet] = None;
         var sun: Option[Star] = None;
+        var other: Option[GraphicsObject] = None;
         breakable {
             for (mesh <- objects) {
                 val objO = id2obj.get(mesh.id);
@@ -42,7 +43,10 @@ object GraphicsObjects {
                             firstMoon = Some(moon)
                         }
                     }
-                    case _ => // ignore
+                    case Some(x) => if (!other.isDefined) {
+                        other = Some(x)
+                    }
+                    case None => // ignore
                 }
             }
         }
@@ -52,6 +56,8 @@ object GraphicsObjects {
             firstPlanet
         } else if (firstMoon.isDefined) {
             firstMoon
+        } else if (other.isDefined) {
+            other
         } else {
             None
         }

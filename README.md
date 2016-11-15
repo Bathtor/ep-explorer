@@ -26,13 +26,12 @@ To build and run the project, check it out from git, cd into the project folder 
 
 ## TODO
 ### Definitely
-- Add Pluto and Eris
-- Add all the moons
-- Add all the space habitats
-- Add rotation to bodies
+- Add more space habitats
+- Add rotation to bodies (maybe just in single view mode? does it make a difference for solar system view?)
 - Deal with surface objects on bodies
 - Add settlements and surface habitats
 ### Nice to have
+- Add more moons if necessary
 - Region markers (e.g. Trojans, Greeks)
 - LOD
 - Object filters

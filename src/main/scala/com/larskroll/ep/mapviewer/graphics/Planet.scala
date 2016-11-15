@@ -3,8 +3,8 @@ package com.larskroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.larskroll.ep.mapviewer.data.{ Planet => PlanetData, Orbiting, Planets, ConstantOrbit, Moons, AstronomicalObject };
-import com.larskroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer };
+import com.larskroll.ep.mapviewer.data.{ Planet => PlanetData, Orbiting, Planets, ConstantOriginOrbit, Moons, AstronomicalObject };
+import com.larskroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer, Textures };
 
 import scala.scalajs.js
 import js.JSConverters._
@@ -20,11 +20,11 @@ class Planet(val planet: PlanetData, val radius: Double, val orbiter: Orbiting) 
     private val material = new MeshLambertMaterial(Planet.materialParams(planet.name));
 
     val mesh: Mesh = new Mesh(geometry, material);
-    
+
     GraphicsObjects.put(mesh, this);
 
     private val path = orbiter.orbit match {
-        case co: ConstantOrbit => co.path(360)
+        case co: ConstantOriginOrbit => co.path(360)
         case _                 => Array[Vector3]()
     };
     private val curve = new CatmullRomCurve3(path.toJSArray);
@@ -50,7 +50,7 @@ class Planet(val planet: PlanetData, val radius: Double, val orbiter: Orbiting) 
     }
 
     val overlay = TacticalOverlay.from(planet);
-    
+
     GraphicsObjects.put(overlay.mesh, this);
 
     def name = planet.name;
@@ -72,11 +72,11 @@ class Planet(val planet: PlanetData, val radius: Double, val orbiter: Orbiting) 
         moveTo(pos);
         children.foreach { c => c.update(t) }
     }
-    
+
     override def position = mesh.position;
-    
+
     override def id = mesh.id;
-    
+
     override def data: Option[AstronomicalObject] = Some(planet);
 }
 

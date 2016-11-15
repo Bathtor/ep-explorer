@@ -13,7 +13,7 @@ import scalatags.JsDom.all._
 import scala.util.Random
 
 import graphics._
-import data.{ Planets, Stars }
+import data.{ Planets, Stars, Habitats }
 import com.outr.scribe.Logging
 
 import squants._
@@ -24,7 +24,8 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
 
     val centre = new Vector3(0.0, 0.0, 0.0);
 
-    val planets = Planets.list.map(addPlanet).toMap;
+    val planets = Planets.list.map(Planet.fromPlanetData);
+    val habitats = Habitats.list.map(Habitat.fromData);
 
     var sprites = List.empty[HtmlSprite]
 
@@ -43,19 +44,8 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
 
     override val controls: CameraControls = ctrls;
 
-    private def addPlanet(planetData: data.Planet): (String, Planet) = {
-        val planet = Planet.fromPlanetData(planetData);
-        (planet.name -> planet)
-    }
-
-    private def addLabel(pos: Vector3, title: String = "hello three.js and ScalaJS!"): HtmlSprite = {
-        val helloHtml = nodeTagFromTitle(title)
-        val html = new HtmlSprite(helloHtml)
-        html.position.set(pos.x, pos.y, pos.z)
-        html
-    }
-
-    planets.foreach(p => p._2.addToScene(this))
+    planets.foreach(p => p.addToScene(this))
+    habitats.foreach(p => p.addToScene(this))
     //    planets.zipWithIndex.foreach {
     //        case (p, i) =>
     //            this.sprites = addLabel(p.mesh.position.clone().setY(p.mesh.position.y - 200), "Planet #" + i) :: this.sprites
@@ -82,7 +72,8 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
 
     private def updatePositions() {
         sun.update(time)
-        planets.foreach { p => p._2.update(time) }
+        planets.foreach { p => p.update(time) }
+        habitats.foreach { p => p.update(time) }
     }
 
     private var running = false;

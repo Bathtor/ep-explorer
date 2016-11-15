@@ -22,9 +22,8 @@ class L12(val largerBody: Orbiting, val smallerBody: Orbiting, val sign: Double)
         def M = parent.M;
         def eclipticMatrix = parent.eclipticMatrix;
         
-        def project(posP: Vector3): Unit = {
-            parent.project(posP);
-            posP.add(pos);
+        def project(pos: Vector3): Unit = {
+            parent.project(pos);
         }
     }
 
@@ -37,26 +36,27 @@ class L12(val largerBody: Orbiting, val smallerBody: Orbiting, val sign: Double)
 
     private def radius(R: Length): Length = R * massRatio3Root;
 
-    private def scaledPosition(posRaw: Vector3, parentOrbit: OrbitalSnapshot): Vector3 = {
+    private def scaledPosition(posRaw: Vector3, smallerOrbit: OrbitalSnapshot, largerOrbit: OrbitalSnapshot): Vector3 = {
         val pos = new Vector3(posRaw.x * Main.scaleDistance, posRaw.y * Main.scaleDistance, posRaw.z);
-        parentOrbit.project(pos);
+        smallerOrbit.project(pos);
+        pos.add(largerOrbit.pos);
         return pos;
     }
 
     override def at(t: Time): OrbitalPosition = {
         if (!parameterCache.at.equals(t)) {
             val osS = smallerBody.orbit.at(t);
-            val posL = largerBody.orbit.at(t).posRaw;
+            val osL = largerBody.orbit.at(t);
             val posS = osS.posRaw;
             val direction = new Vector3();
-            direction.subVectors(posS, posL);
+            direction.copy(posS);
             val dist = direction.length();
             direction.normalize();
             val r = radius(Kilometers(dist));
             direction.multiplyScalar(sign * r.toKilometers);
             val posRaw = new Vector3();
             posRaw.addVectors(posS, direction);
-            val pos = scaledPosition(posRaw, osS);
+            val pos = scaledPosition(posRaw, osS, osL);
             parameterCache = OrbitalPosition(t, pos, posRaw, r, osS);
         }
         return parameterCache;
@@ -75,9 +75,8 @@ class L3(val largerBody: Orbiting, val smallerBody: Orbiting) extends Lagrangian
         def M = parent.M;
         def eclipticMatrix = parent.eclipticMatrix;
         
-        def project(posP: Vector3): Unit = {
-            parent.project(posP);
-            posP.add(pos);
+        def project(pos: Vector3): Unit = {
+            parent.project(pos);
         }
     }
 
@@ -87,19 +86,20 @@ class L3(val largerBody: Orbiting, val smallerBody: Orbiting) extends Lagrangian
 
     private def radius(R: Length): Length = R * massRatio;
 
-    private def scaledPosition(posRaw: Vector3, parentOrbit: OrbitalSnapshot): Vector3 = {
+    private def scaledPosition(posRaw: Vector3, smallerOrbit: OrbitalSnapshot, largerOrbit: OrbitalSnapshot): Vector3 = {
         val pos = new Vector3(posRaw.x * Main.scaleDistance, posRaw.y * Main.scaleDistance, posRaw.z);
-        parentOrbit.project(pos);
+        smallerOrbit.project(pos);
+        pos.add(largerOrbit.pos);
         return pos;
     }
 
     override def at(t: Time): OrbitalPosition = {
         if (!parameterCache.at.equals(t)) {
             val osS = smallerBody.orbit.at(t);
-            val posL = largerBody.orbit.at(t).posRaw;
+            val osL = largerBody.orbit.at(t);
             val posS = osS.posRaw;
             val direction = new Vector3();
-            direction.subVectors(posS, posL);
+            direction.copy(posS);
             val dist = direction.length();
             direction.normalize();
             val r = radius(Kilometers(dist));
@@ -107,9 +107,9 @@ class L3(val largerBody: Orbiting, val smallerBody: Orbiting) extends Lagrangian
             rDir.multiplyScalar(1.0 * r.toKilometers);
             direction.multiplyScalar(-1.0 * dist);
             val posRaw = new Vector3();
-            posRaw.addVectors(posL, direction); // go to the opposite side
+            posRaw.add(direction); // go to the opposite side from the centre
             posRaw.add(rDir); // and then r back towards the larger body
-            val pos = scaledPosition(posRaw, osS);
+            val pos = scaledPosition(posRaw, osS, osL);
             parameterCache = OrbitalPosition(t, pos, posRaw, r, osS);
         }
         return parameterCache;
@@ -125,35 +125,35 @@ class L45(val largerBody: Orbiting, val smallerBody: Orbiting, val backwards: Bo
         def M = parent.M;
         def eclipticMatrix = parent.eclipticMatrix;
         
-        def project(posP: Vector3): Unit = {
-            parent.project(posP);
-            posP.add(pos);
+        def project(pos: Vector3): Unit = {
+            parent.project(pos);
         }
     }
 
     private var parameterCache: OrbitalPosition = OrbitalPosition(Seconds(Double.NaN), null, null, null);
 
-    private def scaledPosition(posRaw: Vector3, parentOrbit: OrbitalSnapshot): Vector3 = {
+    private def scaledPosition(posRaw: Vector3, smallerOrbit: OrbitalSnapshot, largerOrbit: OrbitalSnapshot): Vector3 = {
         val pos = new Vector3(posRaw.x * Main.scaleDistance, posRaw.y * Main.scaleDistance, posRaw.z);
-        parentOrbit.project(pos);
+        smallerOrbit.project(pos);
+        pos.add(largerOrbit.pos);
         return pos;
     }
 
     override def at(t: Time): OrbitalPosition = {
         if (!parameterCache.at.equals(t)) {
             val osS = smallerBody.orbit.at(t);
-            val posL = largerBody.orbit.at(t).posRaw;
+            val osL = largerBody.orbit.at(t);
             val posS = osS.posRaw;
             val direction = new Vector3();
-            direction.subVectors(posS, posL);
+            direction.copy(posS);
             if (backwards) {
                 direction.applyMatrix3(Constants.rotateMinus60DZ);
             } else {
                 direction.applyMatrix3(Constants.rotate60DZ);
             }
             val posRaw = new Vector3();
-            posRaw.addVectors(posL, direction);
-            val pos = scaledPosition(posRaw, osS);
+            posRaw.add(direction);
+            val pos = scaledPosition(posRaw, osS, osL);
             parameterCache = OrbitalPosition(t, pos, posRaw, osS);
         }
         return parameterCache;
@@ -164,3 +164,8 @@ class L45(val largerBody: Orbiting, val smallerBody: Orbiting, val backwards: Bo
 
 class L4(largerBody: Orbiting, smallerBody: Orbiting) extends L45(largerBody, smallerBody, false)
 class L5(largerBody: Orbiting, smallerBody: Orbiting) extends L45(largerBody, smallerBody, true)
+
+object SunEarthL1 extends L1(Stars.Sol, Planets.Earth)
+
+object EarthLunaL4 extends L4(Planets.Earth, Moons.Luna)
+object EarthLunaL5 extends L5(Planets.Earth, Moons.Luna)

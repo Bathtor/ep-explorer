@@ -3,7 +3,7 @@ package com.larskroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 
 import com.larskroll.ep.mapviewer.data.AstronomicalObject
-import com.larskroll.ep.mapviewer.{ Textures, ExtObject3D, ExtVector2, SceneContainer }
+import com.larskroll.ep.mapviewer.{ Main, Textures, ExtObject3D, ExtVector2, SceneContainer }
 
 import scala.scalajs.js
 import js.JSConverters._
@@ -16,7 +16,7 @@ class TacticalOverlay(obj: AstronomicalObject) extends GraphicsObject with Overl
     private val geometry = new Geometry();
     geometry.vertices.push(new Vector3(0, 0, 0));
     private val texture = Textures("overlay");
-    private val material = new PointsMaterial(js.Dynamic.literal(size = 64.0, map = texture, blending = THREE.AdditiveBlending, depthTest = false, transparent = true, sizeAttenuation = false, color = TacticalOverlay.defaultColor).asInstanceOf[PointsMaterialParameters]);
+    private val material = new PointsMaterial(js.Dynamic.literal(size = TacticalOverlay.overlaySize, map = texture, blending = THREE.AdditiveBlending, depthTest = false, transparent = true, sizeAttenuation = false, color = TacticalOverlay.defaultColor).asInstanceOf[PointsMaterialParameters]);
     val mesh = new Points(geometry, material);
     mesh.name = obj.name + " Overlay";
     //mesh
@@ -63,6 +63,7 @@ object TacticalOverlay extends Logging {
     val selectedColor = new Color(0x113B56);
     val hoverColor = new Color(0xFFFFFF);
     val defaultColor = new Color(0x406A86);
+    val overlaySize = 64.0/Main.pixelRatio; // make it smaller on higher resolution displays
 
     def from(obj: AstronomicalObject): TacticalOverlay = {
         new TacticalOverlay(obj)
