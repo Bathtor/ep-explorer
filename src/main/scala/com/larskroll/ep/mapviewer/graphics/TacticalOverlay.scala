@@ -56,6 +56,8 @@ class TacticalOverlay(obj: AstronomicalObject) extends GraphicsObject with Overl
 
     def overlay = this;
 
+    override def boundingRadius: Double = 0.0; // not applicable
+    
 }
 
 object TacticalOverlay extends Logging {

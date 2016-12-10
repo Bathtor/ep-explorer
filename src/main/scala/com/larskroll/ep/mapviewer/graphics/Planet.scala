@@ -3,8 +3,8 @@ package com.larskroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.larskroll.ep.mapviewer.data.{ Planet => PlanetData, Orbiting, Planets, ConstantOriginOrbit, Moons, AstronomicalObject };
-import com.larskroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer, Textures };
+import com.larskroll.ep.mapviewer.data.{ Planet => PlanetData, Orbiting, Rotating, Planets, ConstantOriginOrbit, Moons, AstronomicalObject, Settlements };
+import com.larskroll.ep.mapviewer.{ Main, ExtObject3D, ExtVector3, SceneContainer, Textures };
 
 import scala.scalajs.js
 import js.JSConverters._
@@ -14,18 +14,128 @@ import squants.space._
 
 import com.outr.scribe.Logging
 
-class Planet(val planet: PlanetData, val radius: Double, val orbiter: Orbiting) extends GraphicsObject with Logging with Overlayed {
-    private val geometry = new SphereGeometry(radius, 24.0, 24.0, 0.0, Math.PI * 2, 0.0, Math.PI * 2);
+class PlanetSingle(val planet: PlanetData) extends GraphicsObject {
 
-    private val material = new MeshLambertMaterial(Planet.materialParams(planet.name));
+    val orbiter: Orbiting = planet match {
+        case o: Orbiting => o
+        case _           => throw new RuntimeException("Planets better orbit^^")
+    }
 
-    val mesh: Mesh = new Mesh(geometry, material);
+    val rotor: Rotating = planet match {
+        case r: Rotating => r
+        case _           => throw new RuntimeException("Planets usually rotate, even if very slowly")
+    }
+
+    private val (radius, faces) = {
+        val r = planet.radius.toKilometers;
+        val f = Math.max(Math.floor((2.0 * Math.PI * r) / 400.0), 32.0);
+        (r, f)
+    }
+
+    private val geometry = new SphereGeometry(radius, faces, faces);
+
+    private val material = new MeshPhongMaterial(Planet.materialParams(planet.name, true));
+
+    val mesh: Mesh = {
+        val m = new Mesh(geometry, material);
+        m.name = planet.name;
+        //m.rotateX(Degrees(90.0).toRadians);
+        m
+    }
 
     GraphicsObjects.put(mesh, this);
 
+    def name = planet.name;
+
+    val arrow = {
+        val dir = new Vector3(0.0, 0.0, 0.0);
+        val origin = new Vector3(0.0, 0.0, 0.0);
+        val ah = new ArrowHelper(dir, origin, radius, 0xFFFF10);
+        ah
+    }
+    val light = new PointLight(0xFFFFFF, 1.0, 0.0);
+
+    val settlements = Settlements.forPlanet.getOrElse(planet.id, Seq.empty).map { ao => AtmosphericObject.fromData(ao) };
+
+    lazy val children = {
+        val cB = List.newBuilder[GraphicsObject];
+        cB ++= settlements;
+        cB.result()
+    }
+
+    override def moveTo(pos: Vector3) {
+        mesh.moveTo(pos);
+    }
+
+    override def addToScene(scene: SceneContainer) {
+        scene.addSceneObject(this, mesh);
+        scene.addObject(this, light);
+        if (Main.debug) {
+            scene.addObject(this, arrow);
+        }
+        children.foreach { c => c.addToScene(scene) }
+    }
+
+    val inverseScale = -1.0 / Main.scaleDistance;
+
+    override def update(t: Time) {
+        val pos = orbiter.orbit.at(t).pos.clone();
+        val dir = pos.clone().normalize();
+        pos.multiplyScalar(inverseScale); // direction from planet to sun
+        light.moveTo(pos);
+        if (Main.debug) {
+            pos.normalize().multiplyScalar(2.0 * radius);
+            arrow.moveTo(pos);
+            arrow.setDirection(dir);
+        }
+        val m = rotor.rotation.at(t).rotationMatrix;
+        mesh.setRotationFromMatrix(m);
+
+        children.foreach { c => c.update(t) }
+    }
+
+    override def position = mesh.position;
+
+    override def id = mesh.id;
+
+    override def data: Option[AstronomicalObject] = Some(planet);
+
+    override def boundingRadius: Double = radius;
+}
+
+class Planet(val planet: PlanetData) extends GraphicsObject with Logging with Overlayed {
+
+    val orbiter: Orbiting = planet match {
+        case o: Orbiting => o
+        case _           => throw new RuntimeException("Planets better orbit^^")
+    }
+
+    val rotor: Rotating = planet match {
+        case r: Rotating => r
+        case _           => throw new RuntimeException("Planets usually rotate, even if very slowly")
+    }
+
+    private val (radius, faces) = {
+        val r = planet.radius.toKilometers * Main.scale;
+        val f = Math.max(Math.floor((2.0 * Math.PI * r) / 400.0), 24.0);
+        (r, f)
+    }
+
+    private val geometry = new SphereGeometry(radius, faces, faces);
+
+    private val material = new MeshPhongMaterial(Planet.materialParams(planet.name, false));
+
+    val mesh: Mesh = {
+        val m = new Mesh(geometry, material);
+        m.name = planet.name;
+        GraphicsObjects.put(m, this);
+        m
+
+    }
+
     private val path = orbiter.orbit match {
         case co: ConstantOriginOrbit => co.path(360)
-        case _                 => Array[Vector3]()
+        case _                       => Array[Vector3]()
     };
     private val curve = new CatmullRomCurve3(path.toJSArray);
     private val curveGeometry = {
@@ -34,7 +144,7 @@ class Planet(val planet: PlanetData, val radius: Double, val orbiter: Orbiting) 
         geom
     };
     private val lineParams = js.Dynamic.literal(
-        color = 0xC0C0C0).asInstanceOf[LineBasicMaterialParameters]
+        color = 0xFCD19C).asInstanceOf[LineBasicMaterialParameters]
 
     private val curveMaterial = new LineBasicMaterial(lineParams);
 
@@ -70,6 +180,8 @@ class Planet(val planet: PlanetData, val radius: Double, val orbiter: Orbiting) 
     override def update(t: Time) {
         val pos = orbiter.orbit.at(t).pos;
         moveTo(pos);
+        val m = rotor.rotation.at(t).rotationMatrix;
+        mesh.setRotationFromMatrix(m);
         children.foreach { c => c.update(t) }
     }
 
@@ -78,18 +190,34 @@ class Planet(val planet: PlanetData, val radius: Double, val orbiter: Orbiting) 
     override def id = mesh.id;
 
     override def data: Option[AstronomicalObject] = Some(planet);
+
+    override def boundingRadius: Double = radius;
 }
 
 object Planet {
 
-    def materialParams(name: String): MeshLambertMaterialParameters = js.Dynamic.literal(
-        color = new Color(Planets.colours(name)) // wireframe = true
-        ).asInstanceOf[MeshLambertMaterialParameters]
+    def materialParams(name: String, transp: Boolean): MeshPhongMaterialParameters = js.Dynamic.literal(
+        color = new Color(Planets.colours(name)), //, wireframe = true
+        map = Textures("planet"),
+        transparent = transp,
+        opacity = 0.5,
+        side = THREE.DoubleSide).asInstanceOf[MeshPhongMaterialParameters];
 
-    def fromPlanetData(planet: PlanetData): Planet = {
-        val p = new Planet(planet, planet.radius.toKilometers * Main.scale, planet.asInstanceOf[Orbiting]);
-        p.mesh.name = planet.name;
-        return p;
+    def fromData(planet: PlanetData): Planet = {
+        fromData(planet, SystemView).left.get
+    }
+
+    def fromData(planet: PlanetData, viewType: ViewType): Either[Planet, PlanetSingle] = {
+        viewType match {
+            case SystemView => {
+                val p = new Planet(planet);
+                Left(p)
+            }
+            case SingleView => {
+                val p = new PlanetSingle(planet);
+                Right(p)
+            }
+        }
 
     }
 }

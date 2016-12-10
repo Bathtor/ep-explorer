@@ -3,7 +3,7 @@ package com.larskroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.larskroll.ep.mapviewer.data.{ Star => StarData, AstronomicalObject, Orbiting };
+import com.larskroll.ep.mapviewer.data.{ Star => StarData, AstronomicalObject, Orbiting, Rotating, ExtraUnits };
 import com.larskroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer };
 
 import scala.scalajs.js
@@ -13,11 +13,32 @@ import squants.space._
 import squants.time._
 import squants.motion._
 
-class Star(val star: StarData, val colour: String, val radius: Double, val orbiter: Orbiting) extends GraphicsObject with Overlayed {
-    private val geometry = new SphereGeometry(radius, 24.0, 24.0, 0.0, Math.PI * 2, 0.0, Math.PI * 2);
+class Star(val star: StarData) extends GraphicsObject with Overlayed {
+
+    import ExtraUnits._
+
+    val orbiter: Orbiting = star match {
+        case o: Orbiting => o
+        case _           => throw new RuntimeException("Planets better orbit^^")
+    }
+
+    val rotor: Rotating = star match {
+        case r: Rotating => r
+        case _           => throw new RuntimeException("Planets usually rotate, even if very slowly")
+    }
+
+    private val (radius, faces) = {
+        val r = star.radius.toKilometers * Main.scale;
+        val f = Math.max(Math.floor((2.0 * Math.PI * r) / 400.0), 24.0);
+        (r, f)
+    }
+
+    private val geometry = new SphereGeometry(radius, faces, faces);
+
+    val color: Color = star.temperature.toRGB();
 
     private val materialParams = js.Dynamic.literal(
-        color = 0xFCF8C2, wireframe = false, transparent = true).asInstanceOf[MeshBasicMaterialParameters]
+        color = color, wireframe = false, transparent = true).asInstanceOf[MeshBasicMaterialParameters]
 
     private val material = new MeshBasicMaterial(materialParams);
 
@@ -32,9 +53,7 @@ class Star(val star: StarData, val colour: String, val radius: Double, val orbit
 
     GraphicsObjects.put(overlay.mesh, this);
 
-    val light = new PointLight(0xFFFFFF, 1.0, 0.0);
-
-    private val rotation = DegreesPerSecond(14.7 / 86400.0);
+    val light = new PointLight(color.getHex(), 1.0, 0.0);
 
     def moveTo(pos: Vector3) {
         mesh.moveTo(pos);
@@ -48,9 +67,10 @@ class Star(val star: StarData, val colour: String, val radius: Double, val orbit
         scene.addObject(this, light);
     }
 
-    def update(time: Time) {
-        moveTo(orbiter.orbit.at(time).pos);
-        //mesh.rotateZ(rotation.toDegreesPerSecond * Main.timeFactor.toSeconds);
+    def update(t: Time) {
+        moveTo(orbiter.orbit.at(t).pos);
+        val m = rotor.rotation.at(t).rotationMatrix;
+        mesh.setRotationFromMatrix(m);
     }
 
     override def children = List.empty[GraphicsObject];
@@ -63,11 +83,13 @@ class Star(val star: StarData, val colour: String, val radius: Double, val orbit
 
     override def data: Option[AstronomicalObject] = Some(star);
 
+    override def boundingRadius: Double = radius;
+
 }
 
 object Star {
-    def fromStarData(star: StarData): Star = {
-        val s = new Star(star, "yellow", star.radius.toKilometers * Main.scale, star.asInstanceOf[Orbiting]);
+    def fromStarData(star: StarData, viewType: ViewType = SystemView): Star = {
+        val s = new Star(star);
         return s;
     }
 }

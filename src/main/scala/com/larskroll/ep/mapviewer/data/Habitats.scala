@@ -70,7 +70,7 @@ object Habitats {
         ONeillCyliner(Kilometers(64), Kilometers(4)), Planets.Earth,
         LunarLagrangeAlliance, Seq(French, Vietnamese),
         Seq(Research, Salvage)) with Orbiting {
-        val orbit = new ConstantOrbit(0.0, Kilometers(42164), Degrees(0.5), Degrees(0.0), Degrees(0.0), Degrees(0.0), this.mass, this.centre);
+        val orbit = new ConstantOrbit(0.0, Kilometers(42164), Degrees(23.44), Degrees(0.0), Degrees(0.0), Degrees(0.0), this.mass, this.centre);
     }
     
     object SeleneStation extends Habitat("Selene Station", UUID.randomUUID(), Kilograms(2.4e10), // I tried to calculate that from the speed and orbit given in the book, but I always come up with negative mass solutions^^

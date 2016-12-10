@@ -13,17 +13,25 @@ import com.larskroll.ep.mapviewer.graphics.GraphicsObject
 
 trait SceneContainer {
 
-    def container: HTMLElement
+    def container: HTMLElement;
 
-    def width: Double
+    def width: Double;
 
-    def height: Double
+    def height: Double;
 
     val sceneObjects = scala.collection.mutable.ArrayBuffer.empty[Object3D];
     val overlayObjects = scala.collection.mutable.ArrayBuffer.empty[Object3D];
     val searchIndex = scala.collection.mutable.Map.empty[String, GraphicsObject];
 
-    lazy val scene = new Scene();
+    lazy val scene = {
+        val s = new Scene();
+        // some init code here as this will definitely get loaded
+        UI.updateView(this, uiInfo);
+        // end init
+        s
+    }
+    
+    def uiInfo: String;
 
     def addSceneObject(obj: GraphicsObject, mesh: Object3D) {
         sceneObjects += mesh;

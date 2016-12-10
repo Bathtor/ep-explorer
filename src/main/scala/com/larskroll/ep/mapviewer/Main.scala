@@ -30,6 +30,11 @@ object Main extends JSApp with Logging {
     val pixelRatio = dom.window.devicePixelRatio;
     //val timeFactor = Minutes(1);
     var scene: Option[SceneContainer with TimeAnimatedScene] = None;
+    var debug: Boolean = false;
+    var url: String = {
+        val urlparts = document.URL.split("\\?");
+        urlparts(0)
+    }
 
     def main(): Unit = {
         //        val canvas: html.Canvas = document.body.children.namedItem("canvas").asInstanceOf[html.Canvas];
@@ -39,11 +44,19 @@ object Main extends JSApp with Logging {
         document.body.removeChild(nojs);
         val ctx = div(id := "context").render
         document.body.appendChild(ctx);
+
+        val params = QueryParams.fromURI(document.URL);
+
+        params.get("debug") match {
+            case Some("false") | Some("no") | None => debug = false;
+            case _                                 => debug = true;
+        }
+
         UI.render();
-        logger.info(s"Starting up with context ${ctx.id}");
+
         val height = window.innerHeight;
         val width = window.innerWidth;
-        val textures = Map("background" -> "starfield4k.png", "overlay" -> "hexagon.png");
+        val textures = Map("background" -> "starfield4k.png", "overlay" -> "hexagon.png", "planet" -> "planet.jpg");
         var countLoaded = 0;
 
         //        val scene = new PlanetScene(ctx, width, height);
@@ -52,15 +65,52 @@ object Main extends JSApp with Logging {
             Textures.put(key, texture);
             countLoaded += 1;
             if (countLoaded == textures.size) {
-                val sscene = new SolarSystemScene(ctx, width, height);
-                sscene.render();
-                scene = Some(sscene)
-                sscene.step();
+                selectScene(params, ctx, width, height) match {
+                    case Left(sscene) => {
+                        sscene.render();
+                        scene = Some(sscene)
+                        sscene.step();
+                    }
+                    case Right(msg) => {
+                        document.body.removeChild(ctx);
+                        UI.renderError(msg);
+                    }
+                }
             }
         }
         val backgroundLoader = new TextureLoader();
         textures.foreach { case (key, url) => backgroundLoader.load(url, addTexture(key) _, onPrint _, onError _) }
 
+    }
+
+    def getUrlFor(params: QueryParams): String = {
+        params.toURI(this.url)
+    }
+    
+    private def selectScene(params: QueryParams, ctx: HTMLElement, width: Double, height: Double): Either[SceneContainer with TimeAnimatedScene, String] = {
+        params.get("view") match {
+            case Some("system") => {
+                Left(new SolarSystemScene(ctx, width, height))
+            }
+            case Some("single") => {
+                params.get("target") match {
+                    case Some(name) => {
+                        data.findObjectForName(name) match {
+                            case Some(obj) => Left(new SingleScene(obj, ctx, width, height))
+                            case None      => Right(s"No astronomical object of name '${name}' found!")
+                        }
+                    }
+                    case None => Right(s"Missing 'target' parameter.")
+                }
+            }
+            case Some(x) => {
+                Right(s"Invalid view parameter ${x}. Expected 'single' or 'system'.")
+            }
+            case None => {
+                logger.info("No view parameter giving, defaulting to solar system view.");
+                Left(new SolarSystemScene(ctx, width, height))
+            }
+        }
     }
 
     private def onPrint(xhr: dom.XMLHttpRequest): Unit = println("still loading...");

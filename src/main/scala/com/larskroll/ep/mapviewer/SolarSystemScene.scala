@@ -24,13 +24,15 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
 
     val centre = new Vector3(0.0, 0.0, 0.0);
 
-    val planets = Planets.list.map(Planet.fromPlanetData);
+    val planets = Planets.list.map(Planet.fromData);
     val habitats = Habitats.list.map(Habitat.fromData);
 
     var sprites = List.empty[HtmlSprite]
 
     override def distance: Double = space.AstronomicalUnits(1).toKilometers * Main.scaleDistance
 
+    override def uiInfo: String = "Solar System";
+    
     //scene.background = new Color(0x000000);
     //scene.background = background;
 
@@ -64,7 +66,11 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
     //				effect2.renderToScreen = true;
     //				composer.addPass( effect2 );
 
-    //scene.add(buildAxes(1e16));
+    val axisHelper = new AxisHelper(1e12);
+    
+    if (Main.debug) {
+        scene.add(axisHelper);
+    }
 
     val texturePass = new facades.TexturePass(Textures("background"));
 
@@ -77,7 +83,7 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
     }
 
     private var running = false;
-    private var time = Seconds(0.0);
+    private var time = data.JulianDateTT(2451623.81597).to(data.J2000TT);//Seconds(0.0);
     private var deltaTime = Seconds(0.0);
 
     override def start(): Unit = {
@@ -110,37 +116,5 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
 
     override def track(obj: graphics.GraphicsObject): Unit = {
         ctrls.track(obj);
-    }
-
-    def buildAxes(length: Double): Object3D = {
-        val axes = new Object3D();
-
-        axes.add(buildAxis(new Vector3(0, 0, 0), new Vector3(length, 0, 0), 0xFF0000, false, "+X")); // +X
-        axes.add(buildAxis(new Vector3(0, 0, 0), new Vector3(-length, 0, 0), 0xFF0000, true, "-X")); // -X
-        axes.add(buildAxis(new Vector3(0, 0, 0), new Vector3(0, length, 0), 0x00FF00, false, "+Y")); // +Y
-        axes.add(buildAxis(new Vector3(0, 0, 0), new Vector3(0, -length, 0), 0x00FF00, true, "-Y")); // -Y
-        axes.add(buildAxis(new Vector3(0, 0, 0), new Vector3(0, 0, length), 0x0000FF, false, "+Z")); // +Z
-        axes.add(buildAxis(new Vector3(0, 0, 0), new Vector3(0, 0, -length), 0x0000FF, true, "-Z")); // -Z
-
-        return axes;
-
-    }
-
-    def buildAxis(src: Vector3, dst: Vector3, colorHex: Double, dashed: Boolean, name: String): Line = {
-        val geom = new Geometry();
-
-        val mat = if (dashed) {
-            new LineDashedMaterial(js.Dynamic.literal(linewidth = 3.0, color = colorHex, dashSize = 3.0, gapSize = 3.0).asInstanceOf[LineDashedMaterialParameters]);
-        } else {
-            new LineBasicMaterial(js.Dynamic.literal(linewidth = 3.0, color = colorHex).asInstanceOf[LineBasicMaterialParameters]);
-        }
-
-        geom.vertices.push(src.clone());
-        geom.vertices.push(dst.clone());
-        geom.computeLineDistances(); // This one is SUPER important, otherwise dashed lines will appear as simple plain lines
-
-        val l = new Line(geom, mat);
-        l.name = name;
-        l
     }
 }

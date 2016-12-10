@@ -61,26 +61,29 @@ class CylindricalHabitat(habitat: HabitatData, orbiter: Orbiting, val length: Do
         GraphicsObjects.put(m, this);
         m
     }
+    override def boundingRadius: Double = length/2.0+radius;
 }
 
 class SphericalHabitat(habitat: HabitatData, orbiter: Orbiting, val radius: Double) extends Habitat(habitat, orbiter) {
-    protected val geometry = new SphereGeometry(radius, 24.0, 24.0, 0.0, Math.PI * 2, 0.0, Math.PI * 2);
+    protected val geometry = new SphereGeometry(radius, 24.0, 24.0);
     protected val mesh: Mesh = {
         val m = new Mesh(geometry, material);
         m.name = habitat.name;
         GraphicsObjects.put(m, this);
         m
     }
+    override def boundingRadius: Double = radius;
 }
 
 class ToroidalHabitat(habitat: HabitatData, orbiter: Orbiting, val radius: Double, val thickness: Double) extends Habitat(habitat, orbiter) {
-    protected val geometry = new TorusGeometry(radius, thickness, 24.0, Math.PI * 2);
+    protected val geometry = new TorusGeometry(radius, thickness, 24.0);
     protected val mesh: Mesh = {
         val m = new Mesh(geometry, material);
         m.name = habitat.name;
         GraphicsObjects.put(m, this);
         m
     }
+    override def boundingRadius: Double = radius + thickness;
 }
 
 class AsteroidHabitat(habitat: HabitatData, orbiter: Orbiting, val length: Double, val width: Double, val height: Double) extends Habitat(habitat, orbiter) {
@@ -91,6 +94,7 @@ class AsteroidHabitat(habitat: HabitatData, orbiter: Orbiting, val length: Doubl
         GraphicsObjects.put(m, this);
         m
     }
+    override def boundingRadius: Double = Math.max(length, Math.max(width, height));
 }
 
 object Habitat extends Logging {

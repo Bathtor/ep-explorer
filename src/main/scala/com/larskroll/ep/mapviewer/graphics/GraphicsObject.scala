@@ -23,4 +23,6 @@ trait GraphicsObject {
     def id: Double;
 
     def data: Option[AstronomicalObject] = None;
+    
+    def boundingRadius: Double;
 }

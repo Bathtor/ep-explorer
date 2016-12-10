@@ -88,20 +88,40 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
     val T = Seconds(2 * Math.PI * Math.sqrt(Math.pow(a.toMeters, 3) / (mu + Constants.G * m2.toKilograms)));
     val n = DegreesPerSecond(360.0 / T.toSeconds);
 
-    private lazy val eulerMatrix = (new Matrix4)
-        .set(Omega.cos * omega.cos - Omega.sin * i.cos * omega.sin,
-            Omega.sin * omega.cos + Omega.cos * i.cos * omega.sin,
-            i.sin * omega.sin,
-            0.0,
+    private lazy val eulerMatrix = {
+        val m = (new Matrix4);
+        //        m.set(Omega.cos * omega.cos - Omega.sin * i.cos * omega.sin,
+        //            Omega.sin * omega.cos + Omega.cos * i.cos * omega.sin,
+        //            i.sin * omega.sin,
+        //            0.0,
+        //            -Omega.cos * omega.sin - Omega.sin * i.cos * omega.cos,
+        //            -Omega.sin * omega.sin + Omega.cos * i.cos * omega.cos,
+        //            i.sin * omega.cos,
+        //            0.0,
+        //            i.sin * Omega.sin,
+        //            -i.sin * Omega.cos,
+        //            i.cos,
+        //            0.0,
+        //            0.0, 0.0, 0.0, 0.1);
+        m.set( // row 1
+            Omega.cos * omega.cos - Omega.sin * i.cos * omega.sin,
             -Omega.cos * omega.sin - Omega.sin * i.cos * omega.cos,
-            -Omega.sin * omega.sin + Omega.cos * i.cos * omega.cos,
-            i.sin * omega.cos,
-            0.0,
             i.sin * Omega.sin,
-            -i.sin * Omega.cos,
+            0.0,
+            // row 2
+            Omega.sin * omega.cos + Omega.cos * i.cos * omega.sin,
+            -Omega.sin * omega.sin + Omega.cos * i.cos * omega.cos,
+            -i.sin * omega.cos,
+            0.0,
+            // row 3
+            i.sin * omega.sin,
+            i.sin * Omega.cos,
             i.cos,
             0.0,
+            // row 4
             0.0, 0.0, 0.0, 0.1);
+        m
+    };
 
     private val e2 = e * e;
     private val a1e2: Length = a * (1.0 - e2);
@@ -171,7 +191,8 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
     }
 
     private def rawPositionFromE(E: Angle): Vector3 = {
-        val x = a * (E.cos - e);
+        //val x = a * (E.cos - e); // why -e?
+        val x = a * E.cos;
         val y = b * E.sin;
         return new Vector3(x.toKilometers, y.toKilometers, 0.0);
     }
@@ -234,20 +255,27 @@ case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
     val T = Seconds(2 * Math.PI * Math.sqrt(Math.pow(a.toMeters, 3) / (mu + centreMu)));
     val n = DegreesPerSecond(360.0 / T.toSeconds);
 
-    private lazy val eulerMatrix = (new Matrix4)
-        .set(Omega.cos * omega.cos - Omega.sin * i.cos * omega.sin,
-            Omega.sin * omega.cos + Omega.cos * i.cos * omega.sin,
-            i.sin * omega.sin,
-            0.0,
+    private lazy val eulerMatrix = {
+        val m = (new Matrix4);
+        m.set( // row 1
+            Omega.cos * omega.cos - Omega.sin * i.cos * omega.sin,
             -Omega.cos * omega.sin - Omega.sin * i.cos * omega.cos,
-            -Omega.sin * omega.sin + Omega.cos * i.cos * omega.cos,
-            i.sin * omega.cos,
-            0.0,
             i.sin * Omega.sin,
-            -i.sin * Omega.cos,
+            0.0,
+            // row 2
+            Omega.sin * omega.cos + Omega.cos * i.cos * omega.sin,
+            -Omega.sin * omega.sin + Omega.cos * i.cos * omega.cos,
+            -i.sin * omega.cos,
+            0.0,
+            // row 3
+            i.sin * omega.sin,
+            i.sin * Omega.cos,
             i.cos,
             0.0,
+            // row 4
             0.0, 0.0, 0.0, 0.1);
+        m
+    }
 
     private val e2 = e * e;
     private val a1e2: Length = a * (1.0 - e2);
@@ -318,7 +346,7 @@ case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
     }
 
     private def rawPositionFromE(E: Angle): Vector3 = {
-        val x = a * (E.cos - e);
+        val x = a * E.cos;
         val y = b * E.sin;
         return new Vector3(x.toKilometers, y.toKilometers, 0.0);
     }
@@ -331,25 +359,25 @@ case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
         return pos;
     }
 
-//    private def positionFromE(E: Angle): Vector3 = {
-//        val raw = rawPositionFromE(E);
-//        scaledPosition(raw)
-//    }
-//
-//    private def positionFromM(M: Angle): Vector3 = {
-//        val E = eccentricAnomaly(M);
-//        positionFromE(E)
-//    }
-//
-//    def path(segments: Int): Array[Vector3] = {
-//        val inc = 360.0 / segments.doubleValue();
-//        val points = (0 to segments) map { i =>
-//            Degrees(i.doubleValue() * inc);
-//        } map { M =>
-//            positionFromM(M)
-//        };
-//        points.toArray
-//    }
+    //    private def positionFromE(E: Angle): Vector3 = {
+    //        val raw = rawPositionFromE(E);
+    //        scaledPosition(raw)
+    //    }
+    //
+    //    private def positionFromM(M: Angle): Vector3 = {
+    //        val E = eccentricAnomaly(M);
+    //        positionFromE(E)
+    //    }
+    //
+    //    def path(segments: Int): Array[Vector3] = {
+    //        val inc = 360.0 / segments.doubleValue();
+    //        val points = (0 to segments) map { i =>
+    //            Degrees(i.doubleValue() * inc);
+    //        } map { M =>
+    //            positionFromM(M)
+    //        };
+    //        points.toArray
+    //    }
 
 }
 
@@ -481,7 +509,7 @@ case class VariableOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
     }
 
     private def rawPositionFromE(E: Angle): Vector3 = {
-        val x = a * (E.cos - e);
+        val x = a * E.cos;
         val y = b * E.sin;
         return new Vector3(x.toKilometers, y.toKilometers, 0.0);
     }
@@ -494,23 +522,24 @@ case class VariableOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
     }
 
     private def eulerMatrix(Omega: Angle, omega: Angle): Matrix4 = {
-        val mat = (new Matrix4)
-            .set(Omega.cos * omega.cos - Omega.sin * i.cos * omega.sin,
-                Omega.sin * omega.cos + Omega.cos * i.cos * omega.sin,
-                i.sin * omega.sin,
-                0, // centrePos.x,
-                -Omega.cos * omega.sin - Omega.sin * i.cos * omega.cos,
-                -Omega.sin * omega.sin + Omega.cos * i.cos * omega.cos,
-                i.sin * omega.cos,
-                0, //centrePos.y,
-                i.sin * Omega.sin,
-                -i.sin * Omega.cos,
-                i.cos,
-                0, //centrePos.z,
-                0, 0, 0, 1);
-        //        val mat = (new Matrix4);
-        //        mat.identity();
-        //        mat.setPosition(centrePos);
+        val mat = (new Matrix4);
+        mat.set( // row 1
+            Omega.cos * omega.cos - Omega.sin * i.cos * omega.sin,
+            -Omega.cos * omega.sin - Omega.sin * i.cos * omega.cos,
+            i.sin * Omega.sin,
+            0.0,
+            // row 2
+            Omega.sin * omega.cos + Omega.cos * i.cos * omega.sin,
+            -Omega.sin * omega.sin + Omega.cos * i.cos * omega.cos,
+            -i.sin * omega.cos,
+            0.0,
+            // row 3
+            i.sin * omega.sin,
+            i.sin * Omega.cos,
+            i.cos,
+            0.0,
+            // row 4
+            0.0, 0.0, 0.0, 0.1);
         return mat;
     };
 

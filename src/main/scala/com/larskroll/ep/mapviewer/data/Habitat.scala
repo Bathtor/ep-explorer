@@ -7,10 +7,6 @@ trait StationType {
     def name: String;
 }
 
-trait Allegiance {
-    def description: String;
-}
-
 
 case class ONeillCyliner(val length: Length, val radius: Length) extends StationType {
     override def name = "O'Neill Cylinder";
