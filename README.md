@@ -27,13 +27,11 @@ To build and run the project, check it out from git, cd into the project folder 
 ## TODO
 ### Definitely
 - Add more space habitats
-- Add rotation to bodies (maybe just in single view mode? does it make a difference for solar system view?)
-- Deal with surface objects on bodies
-- Add settlements and surface habitats
+- Add more settlements and surface habitats
 ### Nice to have
 - Add more moons if necessary
 - Region markers (e.g. Trojans, Greeks)
 - LOD
 - Object filters
-- Some hints at geography (at least for the plantes)
+- Some hints at geography (at least for the planets)
 - Space elevators and transportation networks
