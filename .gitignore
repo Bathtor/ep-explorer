@@ -15,6 +15,7 @@ project/boot/
 project/plugins/project/
 project/target/
 project/project/
+target/
 
 # Scala-IDE specific
 .scala_dependencies
@@ -23,7 +24,6 @@ project/project/
 .project
 .settings
 .classpath
-
 # OS X
 
 .DS_Store

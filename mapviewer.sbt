@@ -11,7 +11,7 @@ version := "0.1-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 
-resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases")
+//resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases")
 resolvers += Resolver.mavenLocal
 
 libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.1"
