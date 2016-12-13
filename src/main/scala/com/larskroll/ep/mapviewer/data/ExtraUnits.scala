@@ -39,6 +39,8 @@ object ExtraUnits {
     implicit class ExtDoubles(d: Double) {
         def º(): Angle = Degrees(d);
         def ºd(): AngularVelocity = DegreesPerDay(d);
+        def km(): Length = Kilometers(d);
+        def AU(): Length = AstronomicalUnits(d);
     }
     implicit class ExtTemp(t: Temperature) {
         def toRGB(): Color = {

@@ -60,8 +60,8 @@ object Planets {
     }
 
     val list = Seq(Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Eris);
-    val colours = Map("Mercury" -> 0x848381, "Venus" -> 0xbeb977, "Earth" -> 0x838ab6,
-        "Mars" -> 0xdbc490, "Jupiter" -> 0xf5f2d3, "Saturn" -> 0xe9edcc,
-        "Uranus" -> 0xadc8d3, "Neptune" -> 0xa0b7d7, "Pluto" -> 0xdbc490,
-        "Eris" -> 0x848381);
+//    val colours = Map("Mercury" -> 0x848381, "Venus" -> 0xbeb977, "Earth" -> 0x838ab6,
+//        "Mars" -> 0xdbc490, "Jupiter" -> 0xf5f2d3, "Saturn" -> 0xe9edcc,
+//        "Uranus" -> 0xadc8d3, "Neptune" -> 0xa0b7d7, "Pluto" -> 0xdbc490,
+//        "Eris" -> 0x848381);
 }

@@ -197,7 +197,7 @@ class Planet(val planet: PlanetData) extends GraphicsObject with Logging with Ov
 object Planet {
 
     def materialParams(name: String, transp: Boolean): MeshPhongMaterialParameters = js.Dynamic.literal(
-        color = new Color(Planets.colours(name)), //, wireframe = true
+        //color = new Color(Planets.colours(name)), //, wireframe = true
         map = Textures("planet"),
         transparent = transp,
         opacity = 0.5,

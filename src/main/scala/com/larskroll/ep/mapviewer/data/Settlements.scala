@@ -9,6 +9,7 @@ object Settlements {
     import Polities.{ PlanetaryConsortium => _, _ }
     import Industries._
     import Corps._
+    import ExtraUnits._
 
     object Earth {
 
@@ -59,9 +60,9 @@ object Settlements {
     import Earth._
 
     object Luna {
-//        object ZeroMeridian extends Settlement("Zero Meridian", UUID.randomUUID(),
-//            (North(0, 0, 0), West(0, 0, 0)), Moons.Luna, Kilometers(10),
-//            NoPolity, Seq.empty[Language], Seq.empty[Industry])
+        //        object ZeroMeridian extends Settlement("Zero Meridian", UUID.randomUUID(),
+        //            (North(0, 0, 0), West(0, 0, 0)), Moons.Luna, Kilometers(10),
+        //            NoPolity, Seq.empty[Language], Seq.empty[Industry])
         object Erato extends Settlement("Erato", UUID.randomUUID(),
             (North(14, 47, 0), West(11, 32, 0)), Moons.Luna, Kilometers(10),
             LunarLagrangeAlliance, Seq(Mandarin, English), Seq(Fashion, Finance)) {
@@ -111,65 +112,128 @@ object Settlements {
         object Tether extends SyncOrbitStation("Tether (Asteroid)", UUID.randomUUID(),
             (North(18, 35, 0), West(134, 48, 0)), Kilometers(23000.0), Planets.Mars,
             PlanetaryConsortium(OIA), Seq(Mandarin, English), Seq.empty[Industry])
-        
+
         object VallesNewShanghai extends Settlement("Valles-New Shanghai", UUID.randomUUID(),
             (South(12, 8, 0), West(49, 4, 0)), Planets.Mars, Kilometers(80),
-            Polities.PlanetaryConsortium, Seq(English, Mandarin, Wu, Arabic, Hindi, Urdu, Portuguese), 
+            Polities.PlanetaryConsortium, Seq(English, Mandarin, Wu, Arabic, Hindi, Urdu, Portuguese),
             Seq(Trade, Politics, Research, Microfacturing, HeavyIndustry, Entertainment)) {
             override def extraInfo = Seq(("Population" -> "37 million"));
         }
         object NoctisQianjiao extends Settlement("Noctis-Qianjiao", UUID.randomUUID(),
             (South(7, 0, 0), West(102, 12, 0)), Planets.Mars, Kilometers(50),
-            Polities.PlanetaryConsortium, Seq(English, Hindi, Indonesian, Mandarin, German, Dutch), 
+            Polities.PlanetaryConsortium, Seq(English, Hindi, Indonesian, Mandarin, German, Dutch),
             Seq(Transport, Design, AI, Robotics, Microfacturing, Biodesign, Terraforming, Research)) {
             override def extraInfo = Seq(("Population" -> "13 million"));
         }
         object Elysium extends Settlement("Elysium", UUID.randomUUID(),
             (North(22, 0, 0), East(141, 13, 0)), Planets.Mars, Kilometers(10),
-            PlanetaryConsortium(Experia), Seq(Hindi, English, Cantonese, Mandarin, Indonesian), 
+            PlanetaryConsortium(Experia), Seq(Hindi, English, Cantonese, Mandarin, Indonesian),
             Seq(Entertainment)) {
             override def extraInfo = Seq(("Population" -> "9 million"));
         }
         object Ashoka extends Settlement("Ashoka", UUID.randomUUID(),
             (North(10, 24, 0), West(25, 48, 0)), Planets.Mars, Kilometers(5),
-            PlanetaryConsortium(TTO), Seq(Japanese, Korean, Mandarin, Arabic, English), 
+            PlanetaryConsortium(TTO), Seq(Japanese, Korean, Mandarin, Arabic, English),
             Seq(Terraforming, Tourism)) {
             override def extraInfo = Seq(("Population" -> "10 000"));
         }
         object NewDazhai extends Settlement("New Dazhai", UUID.randomUUID(),
             (South(36, 0, 0), West(44, 0, 0)), Planets.Mars, Kilometers(5),
-            PlanetaryConsortium(FaJing), Seq(Mandarin), 
+            PlanetaryConsortium(FaJing), Seq(Mandarin),
             Seq(Mining, Terraforming)) {
             override def extraInfo = Seq(("Population" -> "350 000"));
         }
         object PilsenerCity extends Settlement("Pilsener City", UUID.randomUUID(),
             (South(12, 3, 0), West(74, 45, 0)), Planets.Mars, Kilometers(5),
-            PlanetaryConsortium(FaJing), Seq(Japanese), 
+            PlanetaryConsortium(FaJing), Seq(Japanese),
             Seq(Agriculture, Brewing)) {
             //override def extraInfo = Seq(("Population" -> "350 000"));
         }
         object PathfinderGate extends PandoraGate("Pathfinder Gate", UUID.randomUUID(),
             (South(18, 34, 0), West(175, 14, 0)), Planets.Mars,
             PlanetaryConsortium(Pathfinder))
-        
+
         object PathfinderCity extends Settlement("Pathfinder City", UUID.randomUUID(),
             (South(15, 3, 0), West(175, 10, 0)), Planets.Mars, Kilometers(5),
-            PlanetaryConsortium(Pathfinder), Seq(English, Mandarin), 
+            PlanetaryConsortium(Pathfinder), Seq(English, Mandarin),
             Seq(Gatecrashing, Colonization)) {
             //override def extraInfo = Seq(("Population" -> "350 000"));
         }
         object Qurain extends Settlement("Qurain", UUID.randomUUID(),
             (South(15, 3, 0), West(179, 45, 0)), Planets.Mars, Kilometers(5),
-            AbandonedToTITANs, Seq(Arabic), 
+            AbandonedToTITANs, Seq(Arabic),
             Seq()) {
             //override def extraInfo = Seq(("Population" -> "350 000"));
         }
     }
     import Mars._
-    
+
+    object Venus {
+        /* Note that pretty much all aerostats just drift with the winds, 
+        * but this is very difficult to calculate, 
+        * so they'll just be drawn as if stationary for now
+   		*/
+        object Octavia extends Aerostat("Octavia", UUID.randomUUID(),
+            (North(12, 9, 0), East(123, 3, 0)), 54.0.km, Planets.Venus,
+            MorningstarConstellation, Seq(Cantonese, English, French),
+            Seq(Trade, Shipping, Tourism, Politics, Terraforming)) {
+            override def extraInfo = Seq(
+                ("Population" -> "500 000"),
+                ("Mayor" -> "Halis Sapien"));
+        }
+        object AphroditePrime extends Aerostat("Aphrodite Prime", UUID.randomUUID(),
+            (North(25, 9, 0), East(187, 0, 0)), 53.0.km, Planets.Venus,
+            MorningstarConstellation, Seq(English, Mandarin, Spanish),
+            Seq(Bioengineering, Biodesign, Tourism, MorphProduction)) {
+            override def extraInfo = Seq(
+                ("Population" -> "300 000"));
+        }
+        object Lucifer extends Aerostat("Lucifer", UUID.randomUUID(),
+            (North(45, 0, 0), East(12, 0, 0)), 55.0.km, Planets.Venus,
+            MorningstarConstellation, Seq(Arabic, English, French, Russian),
+            Seq(Mining)) {
+            override def extraInfo = Seq(
+                ("Population" -> "230 000"));
+        }
+        object TheShack extends Aerostat("The Shack", UUID.randomUUID(),
+            (North(3, 0, 0), West(36, 0, 0)), 53.0.km, Planets.Venus,
+            MorningstarConstellation, Seq(Hindi, Portuguese, Wu),
+            Seq(AerialConstruction)) {
+            override def extraInfo = Seq(
+                ("Population" -> "130 000"),
+                ("Mayor" -> "Colin Sandric"));
+        }
+        object Parvarti extends Aerostat("Parvarti", UUID.randomUUID(),
+            (South(9, 0, 0), West(79, 0, 0)), 54.0.km, Planets.Venus,
+            Independent(NoPolity), Seq(English, Farsi, Japanese),
+            Seq(Entertainment, Tourism)) {
+            override def extraInfo = Seq(
+                ("Population" -> "130 000"),
+                ("Mayor" -> "Colin Sandric"));
+        }
+        object Shukra extends Aerostat("Shukra", UUID.randomUUID(),
+            (South(21, 0, 0), West(132, 0, 0)), 53.0.km, Planets.Venus,
+            MorningstarConstellation, Seq(English, Mandarin),
+            Seq(Nanofabrication, SoftwareDesign)) {
+        }
+        object Etemenanki extends Aerostat("Etemenanki", UUID.randomUUID(),
+            (South(45, 0, 0), West(98, 0, 0)), 52.0.km, Planets.Venus,
+            Polities.PlanetaryConsortium, Seq(English, Mandarin, Arabic),
+            Seq()) {
+        }
+        object DeepReach extends Aerostat("Deep Reach", UUID.randomUUID(),
+            (South(32, 0, 0), West(176, 0, 0)), 20.0.km, Planets.Venus,
+            PlanetaryConsortium(Omnicor), Seq(Japanese, Russian),
+            Seq(Chemistry, Research)) {
+        }
+    }
+
+    import Venus._
+
     val forPlanet = Map(
         Planets.Earth.id -> Seq(Greenwich, KilimanjaroSE, KilimanjaroSEOrbital, NewYorkCity, Bejing, PanamaCity, Tashkent, Moscow, Hawaii, RioDeJaneiro, CapeTown),
-        Planets.Mars.id -> Seq(OlympusCity, Tether, VallesNewShanghai, NoctisQianjiao, Elysium, Ashoka, NewDazhai, PilsenerCity, PathfinderGate, PathfinderCity, Qurain));
+        Planets.Mars.id -> Seq(OlympusCity, Tether, VallesNewShanghai, NoctisQianjiao, Elysium, Ashoka, NewDazhai, PilsenerCity, PathfinderGate, PathfinderCity, Qurain),
+        Planets.Venus.id -> Seq(Octavia, AphroditePrime, Lucifer, TheShack, Parvarti, Shukra, Etemenanki, DeepReach));
 
     val forMoon = Map(
         Moons.Luna.id -> Seq(Erato, Nectar, Shackle, CleverHands, TheColony, Feynman, Muir, NewMumbai));

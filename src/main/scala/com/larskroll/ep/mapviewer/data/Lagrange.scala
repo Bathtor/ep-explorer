@@ -169,3 +169,5 @@ object SunEarthL1 extends L1(Stars.Sol, Planets.Earth)
 
 object EarthLunaL4 extends L4(Planets.Earth, Moons.Luna)
 object EarthLunaL5 extends L5(Planets.Earth, Moons.Luna)
+object MarsPhobosL4 extends L4(Planets.Mars, Moons.Phobos)
+object MarsPhobosL5 extends L5(Planets.Mars, Moons.Phobos)

@@ -38,7 +38,7 @@ class Star(val star: StarData) extends GraphicsObject with Overlayed {
     val color: Color = star.temperature.toRGB();
 
     private val materialParams = js.Dynamic.literal(
-        color = color, wireframe = false, transparent = true).asInstanceOf[MeshBasicMaterialParameters]
+        color = color, wireframe = true, transparent = true).asInstanceOf[MeshBasicMaterialParameters]
 
     private val material = new MeshBasicMaterial(materialParams);
 

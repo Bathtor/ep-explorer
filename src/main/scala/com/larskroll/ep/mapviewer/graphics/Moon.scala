@@ -166,7 +166,7 @@ class Moon(val moon: MoonData) extends GraphicsObject with Overlayed {
 object Moon {
 
     def materialParams(name: String, transp: Boolean): MeshPhongMaterialParameters = js.Dynamic.literal(
-        color = new Color(Moons.colours(name)), //, wireframe = true
+        //color = new Color(Moons.colours(name)), //, wireframe = true
         map = Textures("planet"),
         transparent = transp,
         opacity = 0.5,

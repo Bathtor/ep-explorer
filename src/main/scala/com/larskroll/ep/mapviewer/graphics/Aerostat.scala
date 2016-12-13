@@ -14,7 +14,7 @@ class Aerostat(val settlement: AerostatData) extends GraphicsObject with Overlay
 
     val (height, radius) = {
         val r = 5.0;
-        val h = r*2.0;
+        val h = r/2.0;
         (h, r)
     };
 
@@ -47,7 +47,6 @@ class Aerostat(val settlement: AerostatData) extends GraphicsObject with Overlay
 
     override def update(t: Time) {
         val pSnap = settlement.position.at(t);
-        // TODO move half geometry height up to stand on the surface
         val dir = pSnap.pos.clone();
         dir.normalize();
         val offset = dir.clone();

@@ -523,7 +523,7 @@
 			"file": "mapviewer.sbt",
 			"settings":
 			{
-				"buffer_size": 2086,
+				"buffer_size": 2088,
 				"line_ending": "Unix"
 			}
 		},
@@ -531,7 +531,7 @@
 			"file": "README.md",
 			"settings":
 			{
-				"buffer_size": 1657,
+				"buffer_size": 1516,
 				"line_ending": "Unix"
 			}
 		},
@@ -539,15 +539,15 @@
 			"file": "src/main/resources/WEB-INF/standard.css",
 			"settings":
 			{
-				"buffer_size": 4482,
+				"buffer_size": 5994,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "src/main/resources/WEB-INF/index-dev.html",
+			"file": "/Users/lkroll/Documents/Programming/lars-kroll.com/current/website.sbt",
 			"settings":
 			{
-				"buffer_size": 1212,
+				"buffer_size": 721,
 				"line_ending": "Unix"
 			}
 		}
@@ -636,9 +636,26 @@
 	},
 	"file_history":
 	[
+		"/Users/lkroll/Documents/Programming/Experiments/patternbalance/patternbalance.sbt",
+		"/Users/lkroll/Documents/Programming/Kompics/kompics/basic/data-network-interceptor/src/main/java/se/sics/kompics/network/data/policies/ProtocolSelectionPolicy.java",
+		"/Users/lkroll/Documents/Programming/caracaldb/caracaldb/experiments/driver/build.sbt",
+		"/Users/lkroll/Documents/Programming/Experiments/patternbalance/assembly.sbt",
+		"/Users/lkroll/Documents/Programming/Experiments/patternbalance/build.sbt",
+		"/Users/lkroll/Documents/Programming/caracaldb/caracaldb/experiments/dataflow/pom.xml",
+		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/WEB-INF/index.html",
+		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/WEB-INF/index-dev.html",
+		"/Users/lkroll/Documents/Programming/lars-kroll.com/current/src/main/resources/WEB-INF/index.html",
+		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/.gitignore",
+		"/Users/lkroll/Documents/Programming/lars-kroll.com/current/src/main/scala/com/larskroll/website/Main.scala",
+		"/Users/lkroll/Documents/Programming/threejs-facade/project/Versions.scala",
+		"/Users/lkroll/Documents/Programming/threejs-facade/build.sbt",
+		"/Users/lkroll/Documents/Programming/lars-kroll.com/current/README.md",
+		"/Users/lkroll/Documents/Programming/lars-kroll.com/current/src/main/resources/WEB-INF/index-dev.html",
+		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/WEB-INF/main.css",
+		"/Users/lkroll/Documents/Uni/PhD/repo/.gitignore",
+		"/Users/lkroll/Documents/Uni/PhD/repo/.git/config",
 		"/Users/lkroll/Documents/Programming/Climate/NetCDFImporter/pom.xml",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/mapviewer.sbt",
-		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/WEB-INF/index-dev.html",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/README.md",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/WEB-INF/standard.css",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/Stats.js",
@@ -665,7 +682,6 @@
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/src/lexer.mll",
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module1/ex7/dbst.ml",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/WEB-INF/normalize.css",
-		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/WEB-INF/main.css",
 		"/Users/lkroll/Documents/Uni/Climate/plot_map_DTR_slightlytidier.m",
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module1/ex7/lambda.ml",
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module1/ex7/parser.mly",
@@ -673,10 +689,8 @@
 		"/Users/lkroll/Documents/Programming/Climate/jblobAkka/jblob.sbt",
 		"/Users/lkroll/Documents/Programming/Climate/diurnal/diurnal.sbt",
 		"/Users/lkroll/Documents/Programming/lars-kroll.com/current/website.sbt",
-		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/.gitignore",
 		"/Users/lkroll/Documents/Programming/threejs-facade/.gitignore",
 		"/Users/lkroll/Documents/Programming/threejs-facade/facade/.gitignore",
-		"/Users/lkroll/Documents/Programming/lars-kroll.com/current/src/main/resources/WEB-INF/index-dev.html",
 		"/Users/lkroll/Documents/Programming/Kompics/kompics-scala/core/kompics-scala.sbt",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/OrbitControls.js",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/FXAAShader.js",
@@ -684,7 +698,6 @@
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/target/scala-2.11/map-viewer-jsdeps.js",
 		"/Users/lkroll/Dropbox/RPG/Eclipse Phase/Project Ideas.md",
 		"/Users/lkroll/Documents/Programming/three.js/pom.xml",
-		"/Users/lkroll/Documents/Programming/threejs-facade/build.sbt",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/TexturePass.js",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/ClearPass.js",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/EffectComposer.js",
@@ -696,7 +709,6 @@
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/project/plugins.sbt",
 		"/Users/lkroll/Documents/Programming/KTHx/id2203x/Grader/grader.sbt",
 		"/Users/lkroll/Documents/Programming/threejs-facade/project/build.properties",
-		"/Users/lkroll/Documents/Programming/threejs-facade/project/Versions.scala",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/target/scala-2.11/classes/JS_DEPENDENCIES",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/src/main/resources/index-dev.html",
 		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/website.sbt",
@@ -751,19 +763,7 @@
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/src/utils.mli",
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/docs/examples/example1.lam",
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/docs/examples/example3.lam",
-		"/Users/lkroll/Downloads/Adventure_Time.tmtheme",
-		"/Users/lkroll/Library/Application Support/Sublime Text 2/Packages/User/Kola.YAML-tmLanguage",
-		"/Users/lkroll/Library/Application Support/Sublime Text 2/Packages/User/Lambdakappa.tmLanguage",
-		"/Users/lkroll/Library/Application Support/Sublime Text 2/Packages/User/Kola.tmLanguage",
-		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/_build/src/parser.output",
-		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/docs/examples/example2.lam",
-		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/_oasis",
-		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/src/msg.ml",
-		"/Users/lkroll/Documents/Programming/Kola/kola/src/main/sablecc/kola-0.1.7.sablecc",
-		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex2/parser.mly",
-		"/Users/lkroll/Library/Application Support/Sublime Text 2/Packages/User/Merlin.sublime-settings",
-		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/src/info.ml",
-		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/_build/src/parser.ml"
+		"/Users/lkroll/Downloads/Adventure_Time.tmtheme"
 	],
 	"find":
 	{
@@ -936,7 +936,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -944,7 +944,7 @@
 					"file": "mapviewer.sbt",
 					"settings":
 					{
-						"buffer_size": 2086,
+						"buffer_size": 2088,
 						"regions":
 						{
 						},
@@ -952,7 +952,7 @@
 						[
 							[
 								0,
-								0
+								2088
 							]
 						],
 						"settings":
@@ -970,7 +970,7 @@
 					"file": "README.md",
 					"settings":
 					{
-						"buffer_size": 1657,
+						"buffer_size": 1516,
 						"regions":
 						{
 						},
@@ -996,15 +996,15 @@
 					"file": "src/main/resources/WEB-INF/standard.css",
 					"settings":
 					{
-						"buffer_size": 4482,
+						"buffer_size": 5994,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								2896,
+								2896
 							]
 						],
 						"settings":
@@ -1021,10 +1021,10 @@
 				},
 				{
 					"buffer": 3,
-					"file": "src/main/resources/WEB-INF/index-dev.html",
+					"file": "/Users/lkroll/Documents/Programming/lars-kroll.com/current/website.sbt",
 					"settings":
 					{
-						"buffer_size": 1212,
+						"buffer_size": 721,
 						"regions":
 						{
 						},
@@ -1037,7 +1037,7 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
