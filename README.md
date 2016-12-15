@@ -25,9 +25,11 @@ First checkout, build, and publish the dependencies (see above) to your local iv
 To build and run the project, check it out from git, cd into the project folder and run `sbt`. In sbt run `fastOptJS` to build the project. You can access the development version through your browser at <http://localhost:12345/target/scala-2.11/classes/WEB-INF/index-dev.html> (you might have to change the entry for `localUrl` in `mapviewer.sbt` an address you may actually bind on).
 
 ## TODO
+
 ### Definitely
 - Add more space habitats
 - Add more settlements and surface habitats
+
 ### Nice to have
 - Add more moons if necessary
 - Region markers (e.g. Trojans, Greeks)
