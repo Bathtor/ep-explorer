@@ -3,7 +3,7 @@ package com.larskroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.larskroll.ep.mapviewer.data.{ Habitat => HabitatData, Orbiting, Habitats, ONeillCyliner, BernalSphere, ModifiedBernalSphere, Cluster, Torus, ModifiedTorus, Asteroid, AstronomicalObject };
+import com.larskroll.ep.mapviewer.data.{ Habitat => HabitatData, Orbiting, Habitats, ONeillCyliner, BernalSphere, ModifiedBernalSphere, Cluster, Torus, ModifiedTorus, Asteroid, AstronomicalObject, UnkownStation };
 import com.larskroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
 
 import scala.scalajs.js
@@ -61,7 +61,7 @@ class CylindricalHabitat(habitat: HabitatData, orbiter: Orbiting, val length: Do
         GraphicsObjects.put(m, this);
         m
     }
-    override def boundingRadius: Double = length/2.0+radius;
+    override def boundingRadius: Double = length / 2.0 + radius;
 }
 
 class SphericalHabitat(habitat: HabitatData, orbiter: Orbiting, val radius: Double) extends Habitat(habitat, orbiter) {
@@ -110,6 +110,9 @@ object Habitat extends Logging {
             }
             case Cluster => { // FIXME come up with a better way to represent clusters
                 new CylindricalHabitat(habitat, habitat.asInstanceOf[Orbiting], 100.0 * Main.scale, 10.0 * Main.scale);
+            }
+            case UnkownStation => { // FIXME come up with a better way to represent clusters
+                new SphericalHabitat(habitat, habitat.asInstanceOf[Orbiting], 1.0 * Main.scale)
             }
             case BernalSphere(radius) => {
                 new SphericalHabitat(habitat, habitat.asInstanceOf[Orbiting], radius.toKilometers * Main.scale)

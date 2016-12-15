@@ -24,6 +24,10 @@ case object Cluster extends StationType {
     override def name = "Cluster"
 }
 
+case object UnkownStation extends StationType {
+    override def name = "Unkown"
+}
+
 case class Torus(val radius: Length, val thickness: Length) extends StationType {
     override def name = "Torus"
 }

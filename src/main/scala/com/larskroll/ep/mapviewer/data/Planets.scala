@@ -7,9 +7,10 @@ import squants.space.{ AstronomicalUnits => AU }
 import squants.time._
 
 object Planets {
-
+    import ExtraUnits._;
+    
     object Earth extends Planet("Earth", UUID.randomUUID(), Kilograms(5.97237e24), Kilometers(6371.0)) with Orbiting with Rotating {
-        val orbit = ConstantOriginOrbit(0.01671022, AU(1.00000011), Degrees(0.00005), Degrees(348.73936), Degrees(114.20783), Degrees(357.05281), mass, Stars.Sol.mass);
+        val orbit = ConstantOriginOrbit(0.01671022, 1.00000011.AU, 0.00005.º, 348.73936.º, 114.20783.º, 357.05281.º, mass, Stars.Sol.mass);
         val rotation = EarthEquatorConstantRotation;
     }
 

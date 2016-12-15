@@ -227,13 +227,42 @@ object Settlements {
             Seq(Chemistry, Research)) {
         }
     }
-
     import Venus._
+
+    object Mercury {
+        object AlHamadhanj extends Settlement("Al-Hamadhanj", UUID.randomUUID(),
+            (North(38, 49, 0), West(89, 43, 0)), Planets.Mercury, Kilometers(20),
+            Independent(Sifter), Seq(Arabic, Hindi), Seq(Trade, Mining, Politics)) {
+            //override def extraInfo = Seq(("Population" -> "1 million"));
+        }
+        object Caloris18 extends Settlement("Caloris 18 (Quarantined)", UUID.randomUUID(),
+            (North(10, 0, 0), West(190, 0, 0)), Planets.Mercury, Kilometers(5),
+            TITANs, Seq(), Seq()) {
+            //override def extraInfo = Seq(("Population" -> "1 million"));
+        }
+        object Cannon extends Settlement("Cannon", UUID.randomUUID(),
+            (North(7, 0, 0), West(167, 0, 0)), Planets.Mercury, Kilometers(2),
+            Hypercorp(JaehonOffworld), Seq(Korean), Seq(Shipping, Mining)) {
+            override def extraInfo = Seq(
+                ("Population" -> "10 000"),
+                ("Note" -> "Cannon is a moving city-sized mass driver."));
+        }
+        object DelacroixShelley extends Settlement("Delacroix-Shelley", UUID.randomUUID(),
+            (South(44, 46, 0), West(129, 0, 0)), Planets.Mercury, Kilometers(10),
+            Hypercorp(FaJing), Seq(English, Mandarin), Seq(Military, Research)) {            
+        }
+        object Lumina extends Settlement("Lumina", UUID.randomUUID(),
+            (North(82, 0, 0), West(11, 0, 0)), Planets.Mercury, Kilometers(10),
+            Hypercorp(MultipleCorps), Seq(English, Mandarin, Arabic), Seq(PowerGeneration, Research, Tourism)) {            
+        }
+    }
+    import Mercury._
 
     val forPlanet = Map(
         Planets.Earth.id -> Seq(Greenwich, KilimanjaroSE, KilimanjaroSEOrbital, NewYorkCity, Bejing, PanamaCity, Tashkent, Moscow, Hawaii, RioDeJaneiro, CapeTown),
         Planets.Mars.id -> Seq(OlympusCity, Tether, VallesNewShanghai, NoctisQianjiao, Elysium, Ashoka, NewDazhai, PilsenerCity, PathfinderGate, PathfinderCity, Qurain),
-        Planets.Venus.id -> Seq(Octavia, AphroditePrime, Lucifer, TheShack, Parvarti, Shukra, Etemenanki, DeepReach));
+        Planets.Venus.id -> Seq(Octavia, AphroditePrime, Lucifer, TheShack, Parvarti, Shukra, Etemenanki, DeepReach),
+        Planets.Mercury.id -> Seq(AlHamadhanj, Caloris18, Cannon, DelacroixShelley, Lumina));
 
     val forMoon = Map(
         Moons.Luna.id -> Seq(Erato, Nectar, Shackle, CleverHands, TheColony, Feynman, Muir, NewMumbai));

@@ -16,9 +16,9 @@ object TimeControls extends Logging {
     private var editing = true;
 
     private val epoch = select(size := "1",
-        option(value := "AF", "AF"),
+        option(value := "AF", "AF", selected),
         option(value := "BF", "BF"),
-        option(value := "J2000", "J2000", selected),
+        option(value := "J2000", "J2000"),
         option(value := "JD", "JD"),
         option(value := "Unix", "Unix")).render;
     private val yearField = input(`type` := "number", min := "-9999", max := "9999").render;

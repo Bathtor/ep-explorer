@@ -83,7 +83,7 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
     }
 
     private var running = false;
-    private var time = data.JulianDateTT(2451623.81597).to(data.J2000TT);//Seconds(0.0);
+    private var time = Main.starttime;
     private var deltaTime = Seconds(0.0);
 
     override def start(): Unit = {
