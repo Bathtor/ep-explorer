@@ -12,7 +12,7 @@ The project makes use of WebGL via [three.js][three] and [Scala.js][scalajs] to 
 
 ## Status
 
-Currently in pre-alpha stage with no current public deployment.
+Currently in alpha stage with an experimental deployment at <http://epexplorer.lars-kroll.com/>.
 
 ## Dependencies
 
