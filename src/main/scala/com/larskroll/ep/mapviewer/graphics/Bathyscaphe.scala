@@ -1,6 +1,6 @@
 package com.larskroll.ep.mapviewer.graphics
 
-import com.larskroll.ep.mapviewer.data.{ Aerostat => AerostatData, SyncOrbitStation => SyncOrbitStationData, AstronomicalObject }
+import com.larskroll.ep.mapviewer.data.{ Bathyscaphe => BathyscapheData, AstronomicalObject }
 import com.larskroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
 import org.denigma.threejs._
 
@@ -10,16 +10,12 @@ import js.JSConverters._
 import squants._
 import squants.space._
 
-class Aerostat(val settlement: AerostatData) extends GraphicsObject with Overlayed {
+class Bathyscaphe(val settlement: BathyscapheData) extends GraphicsObject with Overlayed {
 
-  val (height, radius) = {
-    val r = 5.0;
-    val h = r / 2.0;
-    (h, r)
-  };
+  val radius = 5.0;
 
-  protected val geometry = new ConeGeometry(radius, height, 32);
-  protected val material = new MeshPhongMaterial(Aerostat.materialParams(settlement.name));
+  protected val geometry = new SphereGeometry(radius, 12, 8);
+  protected val material = new MeshLambertMaterial(Bathyscaphe.materialParams(settlement.name));
   val mesh = {
     val m = new Mesh(geometry, material);
     m.name = settlement.name;
@@ -50,10 +46,10 @@ class Aerostat(val settlement: AerostatData) extends GraphicsObject with Overlay
     val dir = pSnap.pos.clone();
     dir.normalize();
     val offset = dir.clone();
-    offset.multiplyScalar(height / 2.0);
+    offset.multiplyScalar(-radius);
     offset.add(pSnap.pos);
     moveTo(offset);
-    dir.multiplyScalar(-1.0); // face down instead of up
+    //dir.multiplyScalar(-1.0); // face down instead of up
     meshRotation.setFromUnitVectors(vYup, dir);
     mesh.setRotationFromQuaternion(meshRotation);
   }
@@ -68,15 +64,15 @@ class Aerostat(val settlement: AerostatData) extends GraphicsObject with Overlay
 
   override def data: Option[AstronomicalObject] = Some(settlement);
 
-  override def boundingRadius: Double = height / 2.0 + radius;
+  override def boundingRadius: Double = radius;
 }
 
-object Aerostat {
-  def materialParams(name: String): MeshPhongMaterialParameters = js.Dynamic.literal(
+object Bathyscaphe {
+  def materialParams(name: String): MeshLambertMaterialParameters = js.Dynamic.literal(
     color = new Color(0xFCD19C) // wireframe = true
-    ).asInstanceOf[MeshPhongMaterialParameters];
+    ).asInstanceOf[MeshLambertMaterialParameters];
 
-  def fromData(data: AerostatData): Aerostat = {
-    new Aerostat(data)
+  def fromData(data: BathyscapheData): Bathyscaphe = {
+    new Bathyscaphe(data)
   }
 }

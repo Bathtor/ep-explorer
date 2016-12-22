@@ -40,6 +40,7 @@ object ExtraUnits {
         def º(): Angle = Degrees(d);
         def ºd(): AngularVelocity = DegreesPerDay(d);
         def km(): Length = Kilometers(d);
+        def kg(): Mass = Kilograms(d);
         def AU(): Length = AstronomicalUnits(d);
     }
     implicit class ExtTemp(t: Temperature) {

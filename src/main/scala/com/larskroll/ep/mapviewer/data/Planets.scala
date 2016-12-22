@@ -30,6 +30,11 @@ object Planets {
         val rotation = EquatorialConstantRotation(DegreesPerDay(1.4813688), Degrees(272.76), Degrees(67.16), Degrees(160.20), true);
     }
 
+    object Ceres extends Planet("Ceres", UUID.randomUUID(), 9.393e20.kg, 473.0.km) with Orbiting with Rotating {
+        val orbit = ConstantOriginOrbit(0.075823, 2.7675.AU, 10.593.º, 80.3293.º, 72.5220.º, 95.9891.º, mass, Stars.Sol.mass); // note: the mean anomaly is from the wrong epoch... I was too lazy to look up the right one
+        val rotation = EquatorialConstantRotation(952.1532.ºd, 291.0.º, 59.0.º, 170.90.º);
+    }
+    
     object Jupiter extends Planet("Jupiter", UUID.randomUUID(), Kilograms(1.8986e27), Kilometers(69911)) with Orbiting with Rotating {
         val orbit = ConstantOriginOrbit(0.04839266, AU(5.20336301), Degrees(1.30530), Degrees(100.55615), Degrees(274.1977), Degrees(19.65053), mass, Stars.Sol.mass);
         val rotation = EquatorialConstantRotation(DegreesPerDay(870.5360000), Degrees(268.056595), Degrees(64.495303), Degrees(284.95));
@@ -60,7 +65,7 @@ object Planets {
         val rotation = EquatorialConstantRotation(RotationPeriod(Hours(25.92)), Degrees(0.0), Degrees(0.0), Degrees(0.0)); // other values are unkown (http://www.johnstonsarchive.net/astro/astmoons/am-136199.html)
     }
 
-    val list = Seq(Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Eris);
+    val list = Seq(Mercury, Venus, Earth, Mars, Ceres, Jupiter, Saturn, Uranus, Neptune, Pluto, Eris);
 //    val colours = Map("Mercury" -> 0x848381, "Venus" -> 0xbeb977, "Earth" -> 0x838ab6,
 //        "Mars" -> 0xdbc490, "Jupiter" -> 0xf5f2d3, "Saturn" -> 0xe9edcc,
 //        "Uranus" -> 0xadc8d3, "Neptune" -> 0xa0b7d7, "Pluto" -> 0xdbc490,

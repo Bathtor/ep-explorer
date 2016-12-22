@@ -432,6 +432,23 @@ object Habitats {
         val orbit = new LissajousOrbit(SolMarsL2, 60000.0.km, 30000.0.km, RotationPeriod(Days(5.0)), RotationPeriod(Days(5.0)), 3.229, Degrees(0.0), Degrees(0.0));
         override def extraInfo = Seq(("Note" -> "This station houses the Planetary Stock Exchange"));
     }
+    
+    // Main Belt
+    object Aspis extends Habitat("Aspis", UUID.randomUUID(), Kilograms(3.6e11),
+        ONeillCyliner(Kilometers(192), Kilometers(8)), Stars.Sol,
+        Ultimates, Seq(Burmese, English, Russian),
+        Seq()) with Orbiting {
+        val orbit = new ConstantOriginOrbit(0.15, 2.3.AU, 3.5.º, 283.0.º, 289.0.º, 90.0.º, this.mass, Stars.Sol.mass);
+        override def extraInfo = Seq(("Population" -> "20 000"));
+    }
+    
+    object Extropia extends Habitat("Extropia (44 Nysa)", UUID.randomUUID(), Kilograms(3.6e11),
+        Asteroid("Beehive", 113.0.km, 67.0.km, 65.0.km), Stars.Sol,
+        Extropian, Seq(Cantonese, English, Russian, Spanish),
+        Seq(Trade, Shipping, Politics)) with Orbiting {
+        val orbit = new ConstantOriginOrbit(0.148158617, 2.42380478.AU, 3.7028885.º, 131.59519.º, 342.52066.º, 118.743236.º, this.mass, Stars.Sol.mass); // wrong epoch for mean anomaly
+        override def extraInfo = Seq(("Population" -> "10 million+"));
+    }
 
     val list = Seq(Remembrance, Elegua, FreshKills, Hexagon, HotelCalifornia, Paradise, VoNguyen,
         SeleneStation, KorolevShipyards, MVCPR, Mitre, Tsukomo, Progress, Pontes, McClintock,
@@ -441,5 +458,6 @@ object Habitats {
         TheEgg, Hellwatch,
         Atira, Condor2, Eros, Geographos, Horeb, Impian, LonelyMountain, Phaethon, Sisyphus, TheSummit,
         Introspect, MemoryHole, Moustier, QingLong, Transix,
-        ElysianFields, PEX);
+        ElysianFields, PEX,
+        Aspis, Extropia);
 }

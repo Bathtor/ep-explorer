@@ -121,8 +121,8 @@ class SyncOrbitStation(name: String, id: UUID, pos: Geography.Position, height: 
     override def `type` = "Synchronous Orbit Station";
 }
 
-class Bathyscaphe(name: String, id: UUID, pos: Geography.Position, height: Length, location: Rotating,
+class Bathyscaphe(name: String, id: UUID, pos: Geography.Position, depth: Length, location: Rotating,
                   val allegiance: Allegiance, val langs: Seq[Language], val industries: Seq[Industry])
-        extends AtmosphericObject(pos, height, location, name: String, id: UUID) {
+        extends AtmosphericObject(pos, -depth, location, name: String, id: UUID) {
     override def `type` = "Bathyscaphe";
 }

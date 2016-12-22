@@ -159,6 +159,12 @@ object Settlements {
             Seq(Gatecrashing, Colonization)) {
             //override def extraInfo = Seq(("Population" -> "350 000"));
         }
+        object Anyang extends Settlement("Anyang", UUID.randomUUID(),
+            (South(45, 25, 0), East(78, 30, 0)), Planets.Mars, Kilometers(5),
+            Polities.PlanetaryConsortium, Seq(Mandarin, Cantonese, Korean, English),
+            Seq(Terraforming, Research, GeneticalEngineering, Bioengineering)) {
+            override def extraInfo = Seq(("Population" -> "300 000"));
+        }
         object Qurain extends Settlement("Qurain", UUID.randomUUID(),
             (South(15, 3, 0), West(179, 45, 0)), Planets.Mars, Kilometers(5),
             AbandonedToTITANs, Seq(Arabic),
@@ -249,20 +255,37 @@ object Settlements {
         }
         object DelacroixShelley extends Settlement("Delacroix-Shelley", UUID.randomUUID(),
             (South(44, 46, 0), West(129, 0, 0)), Planets.Mercury, Kilometers(10),
-            Hypercorp(FaJing), Seq(English, Mandarin), Seq(Military, Research)) {            
+            Hypercorp(FaJing), Seq(English, Mandarin), Seq(Military, Research)) {
         }
         object Lumina extends Settlement("Lumina", UUID.randomUUID(),
             (North(82, 0, 0), West(11, 0, 0)), Planets.Mercury, Kilometers(10),
-            Hypercorp(MultipleCorps), Seq(English, Mandarin, Arabic), Seq(PowerGeneration, Research, Tourism)) {            
+            Hypercorp(MultipleCorps), Seq(English, Mandarin, Arabic), Seq(PowerGeneration, Research, Tourism)) {
         }
     }
-    import Mercury._
+    import Mercury._;
+
+    object Ceres {
+        object Aventine extends Settlement("Aventine", UUID.randomUUID(),
+            (North(0, 0, 0), West(0, 0, 0)), Planets.Ceres, Kilometers(5), // no idea where exactly it is
+            Extropian, Seq(English, Portuguese, Spanish, Tagalog),
+            Seq(Transport, Shipping)) {
+            //override def extraInfo = Seq(("Population" -> "1 million"));
+        }
+        object Wujec extends Bathyscaphe("Wujec", UUID.randomUUID(),
+            (North(0, 0, 0), West(0, 0, 0)), 10.0.km, Planets.Ceres, // no idea where exactly it is
+            Extropian, Seq(English, Portuguese, Spanish, Tagalog),
+            Seq(Trade, Bioengineering)) {
+            //override def extraInfo = Seq(("Population" -> "1 million"));
+        }
+    }
+    import Ceres._
 
     val forPlanet = Map(
         Planets.Earth.id -> Seq(Greenwich, KilimanjaroSE, KilimanjaroSEOrbital, NewYorkCity, Bejing, PanamaCity, Tashkent, Moscow, Hawaii, RioDeJaneiro, CapeTown),
-        Planets.Mars.id -> Seq(OlympusCity, Tether, VallesNewShanghai, NoctisQianjiao, Elysium, Ashoka, NewDazhai, PilsenerCity, PathfinderGate, PathfinderCity, Qurain),
+        Planets.Mars.id -> Seq(OlympusCity, Tether, VallesNewShanghai, NoctisQianjiao, Elysium, Ashoka, NewDazhai, PilsenerCity, PathfinderGate, PathfinderCity, Anyang, Qurain),
         Planets.Venus.id -> Seq(Octavia, AphroditePrime, Lucifer, TheShack, Parvarti, Shukra, Etemenanki, DeepReach),
-        Planets.Mercury.id -> Seq(AlHamadhanj, Caloris18, Cannon, DelacroixShelley, Lumina));
+        Planets.Mercury.id -> Seq(AlHamadhanj, Caloris18, Cannon, DelacroixShelley, Lumina),
+        Planets.Ceres.id -> Seq(Aventine, Wujec));
 
     val forMoon = Map(
         Moons.Luna.id -> Seq(Erato, Nectar, Shackle, CleverHands, TheColony, Feynman, Muir, NewMumbai));

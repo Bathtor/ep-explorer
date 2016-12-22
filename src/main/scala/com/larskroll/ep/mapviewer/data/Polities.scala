@@ -15,6 +15,8 @@ object Polities {
     case class CorpAsPolity(val corp: Corp) extends Polity(corp.name)
 
     object Argonauts extends Polity("Argonauts")
+    object Extropian extends Polity("Extropian")
+    object Ultimates extends Polity("Ultimates")
     object LunarLagrangeAlliance extends Polity("Lunar-Lagrange Alliance")
     object Factor extends Polity("Factor")
     object Scum extends Polity("Scum")

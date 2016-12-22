@@ -11,6 +11,7 @@ class LangName(val name: String) extends Language {
 object Languages {
     object Arabic extends LangName("Arabic")
     object Bengali extends LangName("Bengali")
+    object Burmese extends LangName("Burmese")
     object Cantonese extends LangName("Cantonese")
     object Dutch extends LangName("Dutch")
     object English extends LangName("English")
@@ -34,6 +35,7 @@ object Languages {
     object Spanish extends LangName("Spanish")
     object Suryan extends LangName("Suryan")
     object Swahili extends LangName("Swahili")
+    object Tagalog extends LangName("Tagalog")
     object Tamil extends LangName("Tamil")
     object Urdu extends LangName("Urdu")
     object Vietnamese extends LangName("Vietnamese")
