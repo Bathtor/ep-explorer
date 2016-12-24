@@ -531,7 +531,7 @@
 			"file": "README.md",
 			"settings":
 			{
-				"buffer_size": 1516,
+				"buffer_size": 1592,
 				"line_ending": "Unix"
 			}
 		},
@@ -539,15 +539,7 @@
 			"file": "src/main/resources/WEB-INF/standard.css",
 			"settings":
 			{
-				"buffer_size": 5994,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/lkroll/Documents/Programming/lars-kroll.com/current/website.sbt",
-			"settings":
-			{
-				"buffer_size": 721,
+				"buffer_size": 6015,
 				"line_ending": "Unix"
 			}
 		}
@@ -636,6 +628,14 @@
 	},
 	"file_history":
 	[
+		"/Users/lkroll/.ssh/config",
+		"/Volumes/IRM_CCSA_X64FRE_EN-US_DV5/sources/inf/setup.cfg",
+		"/Volumes/IRM_CCSA_X64FRE_EN-US_DV5/bootmgr",
+		"/Volumes/IRM_CCSA_X64FRE_EN-US_DV5/autorun.inf",
+		"/Users/lkroll/Downloads/tftp.plist",
+		"/Users/lkroll/Documents/Programming/EclipsePhase/MapViewer/deploy.sh",
+		"/Volumes/UNetbootin/readme.txt",
+		"/Users/lkroll/Documents/Programming/lars-kroll.com/current/website.sbt",
 		"/Users/lkroll/Documents/Programming/Experiments/patternbalance/patternbalance.sbt",
 		"/Users/lkroll/Documents/Programming/Kompics/kompics/basic/data-network-interceptor/src/main/java/se/sics/kompics/network/data/policies/ProtocolSelectionPolicy.java",
 		"/Users/lkroll/Documents/Programming/caracaldb/caracaldb/experiments/driver/build.sbt",
@@ -663,7 +663,6 @@
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/src/dbst.ml",
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/fix.lam",
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/test.lam",
-		"/Users/lkroll/.ssh/config",
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/.gitignore",
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/fullomega/test.f",
 		"/Users/lkroll/Dropbox/RPG/D&D 5E/ToD/Magic Item Ideas.md",
@@ -688,7 +687,6 @@
 		"/Users/lkroll/Documents/Programming/caracaldb/caracaldb/rest-api/assembly.sbt",
 		"/Users/lkroll/Documents/Programming/Climate/jblobAkka/jblob.sbt",
 		"/Users/lkroll/Documents/Programming/Climate/diurnal/diurnal.sbt",
-		"/Users/lkroll/Documents/Programming/lars-kroll.com/current/website.sbt",
 		"/Users/lkroll/Documents/Programming/threejs-facade/.gitignore",
 		"/Users/lkroll/Documents/Programming/threejs-facade/facade/.gitignore",
 		"/Users/lkroll/Documents/Programming/Kompics/kompics-scala/core/kompics-scala.sbt",
@@ -757,13 +755,7 @@
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/src/ustring.ml",
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/src/typechecker.ml",
 		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/src/lambda.ml",
-		"/Users/lkroll/Library/Application Support/Sublime Text 2/Packages/User/Lambdakappa.YAML-tmLanguage",
-		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/src/ustring.mli",
-		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/src/utils.ml",
-		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/src/utils.mli",
-		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/docs/examples/example1.lam",
-		"/Users/lkroll/Documents/Uni/Types, Semantics, and Programming Languages/ik3620/module2/ex3/docs/examples/example3.lam",
-		"/Users/lkroll/Downloads/Adventure_Time.tmtheme"
+		"/Users/lkroll/Library/Application Support/Sublime Text 2/Packages/User/Lambdakappa.YAML-tmLanguage"
 	],
 	"find":
 	{
@@ -936,7 +928,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -951,8 +943,8 @@
 						"selection":
 						[
 							[
-								0,
-								2088
+								1977,
+								1977
 							]
 						],
 						"settings":
@@ -960,7 +952,7 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 40.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -970,15 +962,15 @@
 					"file": "README.md",
 					"settings":
 					{
-						"buffer_size": 1516,
+						"buffer_size": 1592,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1381,
+								1381
 							]
 						],
 						"settings":
@@ -996,15 +988,15 @@
 					"file": "src/main/resources/WEB-INF/standard.css",
 					"settings":
 					{
-						"buffer_size": 5994,
+						"buffer_size": 6015,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2896,
-								2896
+								4666,
+								4666
 							]
 						],
 						"settings":
@@ -1014,33 +1006,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/Users/lkroll/Documents/Programming/lars-kroll.com/current/website.sbt",
-					"settings":
-					{
-						"buffer_size": 721,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2288.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

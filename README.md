@@ -27,8 +27,14 @@ To build and run the project, check it out from git, cd into the project folder 
 ## TODO
 
 ### Definitely
-- Add more space habitats
-- Add more settlements and surface habitats
+Add habitats and settlements for and around
+- Jupiter
+- Saturn
+- Uranus
+- Neptune
+- Pluto
+- Eris
+- Kuiper Belt
 
 ### Nice to have
 - Add more moons if necessary

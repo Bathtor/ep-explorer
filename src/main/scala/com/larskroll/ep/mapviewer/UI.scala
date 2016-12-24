@@ -132,7 +132,7 @@ object UI extends Logging {
     val infoB = List.newBuilder[Tuple2[String, Modifier]];
     if (obj.isInstanceOf[SingleViewable]) {
       val params = QueryParams(Map(("view" -> "single"), ("target" -> obj.name)));
-      infoB += ("Name" -> span(obj.name, " (", a(href := Main.getUrlFor(params), "Single View"), ")"));
+      infoB += ("Name" -> span(obj.name, " (", a(href := Main.getUrlFor(params), raw("Single&nbsp;View")), ")"));
     } else {
       infoB += ("Name" -> obj.name);
     }
