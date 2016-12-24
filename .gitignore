@@ -26,4 +26,8 @@ target/
 .classpath
 # OS X
 
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
 .DS_Store
