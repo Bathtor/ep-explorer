@@ -1,6 +1,6 @@
 package com.larskroll.ep.mapviewer.graphics
 
-import com.larskroll.ep.mapviewer.data.{ Settlement => SettlementData, Aerostat => AerostatData, SyncOrbitStation => SyncOrbitStationData, PandoraGate => PandoraGateData, AstronomicalObject, AtmosphericObject => AtmosphericObjectData, Bathyscaphe => BathyscapheData }
+import com.larskroll.ep.mapviewer.data.{ Settlement => SettlementData, Aerostat => AerostatData, SyncOrbitStation => SyncOrbitStationData, PandoraGate => PandoraGateData, AstronomicalObject, AtmosphericObject => AtmosphericObjectData, Bathyscaphe => BathyscapheData, UndergroundSettlement => USData }
 
 object AtmosphericObject {
   def fromData(ao: AtmosphericObjectData): GraphicsObject = {
@@ -9,6 +9,7 @@ object AtmosphericObject {
       case a: AerostatData         => Aerostat.fromData(a)
       case s: SyncOrbitStationData => SyncOrbitStation.fromData(s)
       case b: BathyscapheData      => Bathyscaphe.fromData(b)
+      case u: USData               => UndergroundSettlement.fromData(u)
       case p: PandoraGateData      => PandoraGate.fromData(p)
       case _                       => throw new RuntimeException(s"Unkown AtmosphericObject: ${ao}")
     }

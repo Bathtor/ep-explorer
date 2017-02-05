@@ -309,6 +309,86 @@ object Settlements {
   }
   import Ceres._
 
+  object Ganymede {
+    object LibertyCity extends UndergroundSettlement("Liberty City", UUID.randomUUID(),
+      (North(0, 0, 0), West(0, 0, 0)), 0.25.km, Moons.Ganymede, // no idea where exactly it is
+      Jovian, Seq(English, Spanish),
+      Seq(FoodIndustry, Microfacturing, MilitaryTech, Politics)) {
+      //override def extraInfo = Seq(("Population" -> "1 million"));
+    }
+    object LibertyStation {
+      val name = "Liberty Station";
+      val moon = Moons.Ganymede;
+      val allegiance: Allegiance = Jovian;
+      val langs = Seq(English, Spanish);
+      val industries = Seq(Trade, Shipping, AerospaceEngineering, ZeroGManufacturing, Military);
+
+      val atmos = new SyncOrbitStation(name, UUID.randomUUID(),
+        (North(0, 0, 0), West(0, 0, 0)), (45745.871.km - Moons.Ganymede.radius), moon, // no idea where exactly it is
+        allegiance, langs, industries);
+      object Hab extends Habitat(name, UUID.randomUUID(), squants.Kilograms(2.4e10),
+        Asteroid("Cluster/Beehive", 8.0.km, 4.2.km, 3.8.km), moon,
+        allegiance, langs, industries) with Orbiting {
+        val orbit = new ConstantOrbit(0.0, 45745.871.km, 334.57.º, 268.20.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less this^^
+      }
+    }
+  }
+  import Ganymede._
+
+  object Io {
+    object MauiPatera extends UndergroundSettlement("Maui Patera Rehabilitation Center", UUID.randomUUID(),
+      (North(0, 0, 0), West(0, 0, 0)), 0.25.km, Moons.Io, // no idea where exactly it is
+      Jovian, Seq(English, Spanish),
+      Seq(Mining, Prison)) {
+      //override def extraInfo = Seq(("Population" -> "1 million"));
+    }
+  }
+  import Io._
+
+  object Callisto {
+    object Hyoden extends UndergroundSettlement("Hyoden", UUID.randomUUID(),
+      (North(43, 0, 0), West(107, 0, 0)), 0.25.km, Moons.Callisto, // no idea where exactly it is
+      Independent(), Seq(Japanese, Indonesian, English),
+      Seq(Mining, MilitaryTech, Research)) {
+      override def extraInfo = Seq(("Population" -> "2 million"));
+    }
+    object Gerdr extends UndergroundSettlement("Gerðr", UUID.randomUUID(),
+      (South(2, 20, 0), West(355, 30, 0)), 0.25.km, Moons.Callisto, // no idea where exactly it is
+      Protectorate(Jovian, IndependentPolity), Seq(Skandinaviska, German, English),
+      Seq(Mining)) {
+      //override def extraInfo = Seq(("Population" -> "2 million"));
+    }
+  }
+  import Callisto._
+
+  object Europa {
+    object ConamaraChaos extends Settlement("Conamara Chaos elevator head", UUID.randomUUID(),
+      (North(9, 42, 0), East(87, 20, 0)), Moons.Europa, Kilometers(5),
+      Europan, Seq(Russian, Japanese, Spanish, Indonesian),
+      Seq(Transport, Shipping)) {
+      //override def extraInfo = Seq(("Population" -> "1 million"));
+    }
+    object Conamara extends Bathyscaphe("Conamara", UUID.randomUUID(),
+      (North(9, 42, 0), East(87, 20, 0)), 30.0.km, Moons.Europa,
+      Europan, Seq(Russian, Japanese, Spanish, Indonesian),
+      Seq(Trade, Bioengineering, Research)) {
+      //override def extraInfo = Seq(("Population" -> "1 million"));
+    }
+    object Pwyll extends Settlement("Pwyll elevator head", UUID.randomUUID(),
+      (South(25, 15, 0), East(88, 36, 0)), Moons.Europa, Kilometers(5),
+      Europan, Seq(Russian, Japanese, Spanish, Indonesian),
+      Seq(Transport, Shipping)) {
+      //override def extraInfo = Seq(("Population" -> "1 million"));
+    }
+    object TheNorns extends Bathyscaphe("The Norns", UUID.randomUUID(),
+      (South(25, 15, 0), East(88, 36, 0)), 28.0.km, Moons.Europa,
+      Europan, Seq(Russian, Japanese, Spanish, Indonesian),
+      Seq(Research, Exploration)) {
+      //override def extraInfo = Seq(("Population" -> "1 million"));
+    }
+  }
+  import Europa._
+
   val forPlanet = Map(
     Planets.Earth.id -> Seq(Greenwich, KilimanjaroSE, KilimanjaroSEOrbital, NewYorkCity, Bejing, PanamaCity, Tashkent, Moscow, Hawaii, RioDeJaneiro, CapeTown),
     Planets.Mars.id -> Seq(OlympusCity, Tether, VallesNewShanghai, NoctisQianjiao, Elysium, Ashoka, NewDazhai, PilsenerCity, PathfinderGate, PathfinderCity, Anyang, Qurain, Kartika),
@@ -317,5 +397,9 @@ object Settlements {
     Planets.Ceres.id -> Seq(Aventine, Wujec, Piazzi.atmos, Proserpina));
 
   val forMoon = Map(
-    Moons.Luna.id -> Seq(Erato, Nectar, Shackle, CleverHands, TheColony, Feynman, Muir, NewMumbai));
+    Moons.Luna.id -> Seq(Erato, Nectar, Shackle, CleverHands, TheColony, Feynman, Muir, NewMumbai),
+    Moons.Ganymede.id -> Seq(LibertyCity, LibertyStation.atmos),
+    Moons.Io.id -> Seq(MauiPatera),
+    Moons.Callisto.id -> Seq(Hyoden, Gerdr),
+    Moons.Europa.id -> Seq(ConamaraChaos, Conamara, Pwyll, TheNorns));
 }

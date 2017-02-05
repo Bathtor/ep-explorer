@@ -103,6 +103,12 @@ class Settlement(_name: String, _id: UUID, _pos: Geography.Position, _location: 
   override def `type` = "Settlement";
 }
 
+class UndergroundSettlement(_name: String, _id: UUID, _pos: Geography.Position, _depth: Length, _location: Rotating,
+                            val allegiance: Allegiance, val langs: Seq[Language], val industries: Seq[Industry])
+    extends AtmosphericObject(_pos, -_depth, _location, _name: String, _id: UUID) {
+  override def `type` = "Underground Settlement";
+}
+
 class PandoraGate(_name: String, _id: UUID, _pos: Geography.Position, _location: Rotating,
                   val allegiance: Allegiance)
     extends SurfaceObject(_pos, _location, _name: String, _id: UUID) {

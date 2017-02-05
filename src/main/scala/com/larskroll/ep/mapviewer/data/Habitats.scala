@@ -503,6 +503,147 @@ object Habitats {
     //override def extraInfo = Seq(("Population" -> "250 000"));
   }
 
+  // Jupiter
+  object Amalthea extends Habitat("Amalthea (Solano)", UUID.randomUUID(), Kilograms(2.08e18),
+    Asteroid("Reagan Cylinder", 250.0.km, 146.0.km, 128.0.km), Planets.Jupiter,
+    Jovian, Seq(English, Spanish), Seq(Security, Research)) with Orbiting {
+    val orbit = new ConstantOrbit(0.00319, 181365.84.km, 4.807.º, 140.7.º, 107.6.º, 241.521.º, this.mass, this.centre); // at 2451890.0 JED
+  }
+  object TheCastle extends Habitat("The Castle", UUID.randomUUID(), Kilograms(2.4e10),
+    Asteroid("Cluster/Beehive", 5.0.km, 2.2.km, 2.8.km), Moons.Ganymede,
+    Jovian, Seq(English, Spanish), Seq(Security, SignalAnalysis)) with Orbiting {
+    val orbit = new ConstantOrbit(0.0, 64000.0.km, 312.57.º, 232.20.º, 0.0.º, 0.0.º, this.mass, this.centre);
+  }
+  object TheHolySee extends Habitat("The Holy See", UUID.randomUUID(), Kilograms(2.4e12),
+    Asteroid("Reagan Cylinder", 20.0.km, 12.0.km, 9.0.km), Moons.Ganymede,
+    Protectorate(Jovian, CatholicChurch), Seq(Latin, English, Spanish), Seq(Religion)) with Orbiting {
+    val orbit = new ConstantOrbit(0.0, 79000.0.km, 342.57.º, 32.20.º, 89.0.º, 0.0.º, this.mass, this.centre);
+  }
+
+  object JSFAntimatterFactory extends Habitat("JSF Antimatter Factory", UUID.randomUUID(), Kilograms(2.4e10),
+    Asteroid("Cluster/Beehive", 5.0.km, 2.2.km, 2.8.km), Moons.Io,
+    Jovian, Seq(English, Spanish), Seq(Antimatter, Military)) with Orbiting {
+    val orbit = new ConstantOrbit(0.0, 47000.0.km, 322.0.º, 89.0.º, 55.0.º, 0.0.º, this.mass, this.centre);
+  }
+
+  object Aoede extends Habitat("Aoede", UUID.randomUUID(), Kilograms(1.4e10), // infos are shaky
+    Asteroid("Unknown", 4.0.km, 4.0.km, 4.0.km), Planets.Jupiter,
+    Protectorate(Jovian, NoPolity), Seq(), Seq()) with Orbiting {
+    val orbit = new ConstantOrbit(0.432, 23.980e6.km, 158.3.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre, true); // best info I could find (http://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html)
+  }
+
+  object Aitne extends Habitat("Aitne", UUID.randomUUID(), Kilograms(1.4e8), // infos are shaky
+    Asteroid("Beehive", 1.5.km, 1.5.km, 1.5.km), Planets.Jupiter,
+    CarmeCompact, Seq(), Seq()) with Orbiting {
+    val orbit = new ConstantOrbit(0.264, 23.230e6.km, 165.1.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre, true); // best info I could find (http://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html)
+    override def extraInfo = Seq(("Population" -> "8 000 (Compact)"));
+  }
+
+  object Kale extends Habitat("Kale", UUID.randomUUID(), Kilograms(0.4e8), // infos are shaky
+    Asteroid("Beehive", 1.0.km, 1.0.km, 1.0.km), Planets.Jupiter,
+    CarmeCompact, Seq(), Seq()) with Orbiting {
+    val orbit = new ConstantOrbit(0.260, 23.220e6.km, 165.0.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre, true); // best info I could find (http://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html)
+    override def extraInfo = Seq(("Population" -> "8 000 (Compact)"));
+  }
+
+  object Taygete extends Habitat("Taygete", UUID.randomUUID(), Kilograms(2.4e9), // infos are shaky
+    Asteroid("Beehive", 2.5.km, 2.5.km, 2.5.km), Planets.Jupiter,
+    CarmeCompact, Seq(), Seq()) with Orbiting {
+    val orbit = new ConstantOrbit(0.251, 23.360e6.km, 165.2.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre, true); // best info I could find (http://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html)
+    override def extraInfo = Seq(("Population" -> "8 000 (Compact)"));
+  }
+
+  object Callirrhoe extends Habitat("Callirrhoe", UUID.randomUUID(), Kilograms(2.4e10), // infos are shaky
+    Asteroid("Dome", 8.6.km, 8.6.km, 8.6.km), Planets.Jupiter,
+    Protectorate(Jovian, IndependentPolity), Seq(), Seq()) with Orbiting {
+    val orbit = new ConstantOrbit(0.2796, 24.099e6.km, 147.080.º, 283.104.º, 23.909.º, 107.962.º, this.mass, this.centre, true); // no idea which Epoch
+  }
+
+  object Carpo extends Habitat("Carpo", UUID.randomUUID(), Kilograms(2.4e9), // infos are shaky
+    Asteroid("Beehive/Simulspace", 3.0.km, 3.0.km, 3.0.km), Planets.Jupiter,
+    IndependentPolity, Seq(English), Seq()) with Orbiting {
+    val orbit = new ConstantOrbit(0.430, 16.990e6.km, 51.4.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre, true); // best info I could find (http://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html)
+    override def extraInfo = Seq(("Population" -> "17 000 (98% infomorphs)"));
+  }
+
+  object Euanthe extends Habitat("Euanthe", UUID.randomUUID(), Kilograms(2.4e10), // infos are shaky
+    Asteroid("Dome/Beehive", 3.0.km, 3.0.km, 3.0.km), Planets.Jupiter,
+    Protectorate(Jovian, IndependentPolity), Seq(), Seq()) with Orbiting {
+    val orbit = new ConstantOrbit(0.232, 20.800e6.km, 148.9.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre, true); // best info I could find (http://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html)
+    override def extraInfo = Seq(("Population" -> "2 000"));
+  }
+
+  object Helike extends Habitat("Helike", UUID.randomUUID(), Kilograms(2.4e10), // infos are shaky
+    Asteroid("Reagan Cylinder", 4.0.km, 4.0.km, 4.0.km), Planets.Jupiter,
+    NoPolity, Seq(), Seq()) with Orbiting {
+    val orbit = new ConstantOrbit(0.156, 21.260e6.km, 154.8.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre, true); // best info I could find (http://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html)
+    override def extraInfo = Seq(("Notes" -> "Abandonded due to decompression."));
+  }
+
+  // Jovian Trojans/Greeks
+  object Locus extends Habitat("Locus", UUID.randomUUID(), Kilograms(2.4e8),
+    NuestroShell(11.0.km), Stars.Sol,
+    Autonomist, Seq(AnyLang), Seq(Art, Research, Military)) with Orbiting {
+    val orbit = new LissajousOrbit(JovianTrojans, 20000000.0.km, 2500000.0.km, RotationPeriod(Days(50.0)), RotationPeriod(Days(10.0)), 3.229, Degrees(35.0), Degrees(125.0));
+    override def extraInfo = Seq(("Population" -> "1 million"));
+  }
+
+  object CSquat extends Habitat("C Squat", UUID.randomUUID(), Kilograms(2.4e8),
+    Asteroid("Beehive", 3.0.km, 3.0.km, 3.0.km), Stars.Sol,
+    Autonomist, Seq(English, Hindi, Spanish), Seq(Art)) with Orbiting {
+    val orbit = new LissajousOrbit(JovianGreeks, 20000000.0.km, 2500000.0.km, RotationPeriod(Days(50.0)), RotationPeriod(Days(10.0)), 3.229, Degrees(35.0), Degrees(125.0));
+    override def extraInfo = Seq(("Population" -> "500"));
+  }
+
+  object CasaArturo extends Habitat("Casa Arturo", UUID.randomUUID(), Kilograms(2.4e8),
+    NuestroShell(1.0.km), Stars.Sol,
+    Autonomist, Seq(English, Mandarin, Spanish), Seq(RocketDesign, Mining, ZeroGManufacturing)) with Orbiting {
+    val orbit = new LissajousOrbit(JovianGreeks, 20000000.0.km, 2500000.0.km, RotationPeriod(Days(50.0)), RotationPeriod(Days(10.0)), 3.229, Degrees(98.0), Degrees(12.0));
+    override def extraInfo = Seq(("Population" -> "1 200"));
+  }
+
+  object CatalHayuk extends Habitat("Catal Hayuk", UUID.randomUUID(), Kilograms(2.4e8),
+    ONeillCyliner(Kilometers(8), Kilometers(4)), Stars.Sol,
+    Independent(Brinker), Seq(Kurdish, Turkish), Seq(Research)) with Orbiting {
+    val orbit = new LissajousOrbit(JovianTrojans, 20000000.0.km, 2500000.0.km, RotationPeriod(Days(50.0)), RotationPeriod(Days(10.0)), 3.229, Degrees(98.0), Degrees(12.0));
+    override def extraInfo = Seq(("Population" -> "3 500"));
+  }
+
+  object Exarchia extends Habitat("Exarchia", UUID.randomUUID(), Kilograms(2.4e8),
+    Cluster, Stars.Sol,
+    Autonomist, Seq(English, Greek, Mandarin), Seq(Hacktivism)) with Orbiting {
+    val orbit = new LissajousOrbit(JovianGreeks, 20000000.0.km, 2500000.0.km, RotationPeriod(Days(50.0)), RotationPeriod(Days(10.0)), 3.229, Degrees(270.0), Degrees(157.0));
+    override def extraInfo = Seq(("Population" -> "4 500"));
+  }
+
+  object Lot49 extends Habitat("Lot49", UUID.randomUUID(), Kilograms(2.4e8),
+    NuestroShell(1.0.km), Stars.Sol,
+    Autonomist, Seq(English, Portuguese, Thai), Seq(Transport, Shipping)) with Orbiting {
+    val orbit = new LissajousOrbit(JovianGreeks, 20000000.0.km, 2500000.0.km, RotationPeriod(Days(50.0)), RotationPeriod(Days(10.0)), 3.229, Degrees(170.0), Degrees(187.0));
+    override def extraInfo = Seq(("Population" -> "400"));
+  }
+
+  object Respect extends Habitat("Respect", UUID.randomUUID(), Kilograms(2.4e8),
+    BernalSphere(8.0.km), Stars.Sol,
+    IndependentNamed("Sapient Uplift"), Seq(Javanese, Tamil, Spanish), Seq()) with Orbiting {
+    val orbit = new LissajousOrbit(JovianTrojans, 20000000.0.km, 2500000.0.km, RotationPeriod(Days(50.0)), RotationPeriod(Days(10.0)), 3.229, Degrees(132.0), Degrees(43.0));
+    override def extraInfo = Seq(("Population" -> "3 000"));
+  }
+
+  object Turing extends Habitat("Turing", UUID.randomUUID(), Kilograms(2.4e8),
+    Asteroid("Beehive", 1.0.km, 0.5.km, 0.8.km), Stars.Sol,
+    NoPolity, Seq(), Seq()) with Orbiting {
+    val orbit = new LissajousOrbit(JovianTrojans, 20000000.0.km, 2500000.0.km, RotationPeriod(Days(50.0)), RotationPeriod(Days(10.0)), 3.229, Degrees(32.0), Degrees(110.0));
+    override def extraInfo = Seq(("Notes" -> "Nuked and Abandoned"));
+  }
+
+  object Winter extends Habitat("Winter", UUID.randomUUID(), Kilograms(2.4e8),
+    Asteroid("Cole bubble", 8.0.km, 5.2.km, 4.0.km), Stars.Sol,
+    Independent(Brinker), Seq(Arabic, Italian), Seq()) with Orbiting {
+    val orbit = new LissajousOrbit(JovianTrojans, 20000000.0.km, 2500000.0.km, RotationPeriod(Days(50.0)), RotationPeriod(Days(10.0)), 3.229, Degrees(213.0), Degrees(67.0));
+    override def extraInfo = Seq(("Population" -> "10 000"));
+  }
+
   val list = Seq(Remembrance, Elegua, FreshKills, Hexagon, HotelCalifornia, Paradise, VoNguyen,
     SeleneStation, KorolevShipyards, MVCPR, Mitre, Tsukomo, Progress, Pontes, McClintock,
     LuXing, Ptah, Viriditas, Batteries123, Batteries456, Gerlach, Thought, FarReachII, Cythera, Frostfire,
@@ -512,5 +653,8 @@ object Habitats {
     Atira, Condor2, Eros, Geographos, Horeb, Impian, LonelyMountain, Phaethon, Sisyphus, TheSummit,
     Introspect, MemoryHole, Moustier, QingLong, Transix,
     ElysianFields, PEX,
-    Aspis, Extropia, Settlements.Ceres.Piazzi.Hab, Legba, NovaYork, Pallas, Starwell, Vesta, Zombieland);
+    Aspis, Extropia, Settlements.Ceres.Piazzi.Hab, Legba, NovaYork, Pallas, Starwell, Vesta, Zombieland,
+    Amalthea, Settlements.Ganymede.LibertyStation.Hab, TheCastle, TheHolySee, JSFAntimatterFactory,
+    Aoede, Aitne, Kale, Taygete, Callirrhoe, Carpo, Euanthe, Helike,
+    Locus, CSquat, CasaArturo, CatalHayuk, Exarchia, Lot49, Respect, Turing, Winter);
 }

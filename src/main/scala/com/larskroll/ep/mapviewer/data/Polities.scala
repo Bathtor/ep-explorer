@@ -1,46 +1,66 @@
 package com.larskroll.ep.mapviewer.data
 
-class Polity(val name: String)
+class Polity(val designation: String, val adjective: String, val demonym: String)
 
 object Polities {
   implicit class SinglePolityAllegiance(val polity: Polity) extends Allegiance {
-    override def description = polity.name;
+    override def description = polity.adjective;
   }
   implicit class MultiPolityAllegiance(val polities: Seq[Polity]) extends Allegiance {
-    override def description = polities.map { p => p.name }.mkString(" / ");
+    override def description = polities.map { p => p.adjective }.mkString(" / ");
   }
   case class Independent(val polities: Polity*) extends Allegiance {
     override def description = if (polities.isEmpty) { "Independent" } else {
-      val pS = polities.map(_.name).mkString("(", " / ", ")");
+      val pS = polities.map(_.adjective).mkString("(", " / ", ")");
       s"Independent $pS"
     };
   }
-  case class CorpAsPolity(val corp: Corp) extends Polity(corp.name)
+  case class IndependentNamed(val name: String) extends Allegiance {
+    override def description = s"Independent($name)";
+  }
+  case class CorpAsPolity(val corp: Corp) extends Polity(corp.name, corp.name, corp.name)
 
-  object Argonauts extends Polity("Argonauts")
-  object Autonomist extends Polity("Autonomist")
-  object Extropian extends Polity("Extropian")
-  object Ultimates extends Polity("Ultimates")
-  object LunarLagrangeAlliance extends Polity("Lunar-Lagrange Alliance")
-  object Factor extends Polity("Factor")
-  object Scum extends Polity("Scum")
-  object Brinker extends Polity("Brinker")
-  object TechnoCreationists extends Polity("Techno-Creationists")
-  object PlanetaryConsortium extends Polity("Planetary Consortium")
-  object MorningstarConstellation extends Polity("Morningstar Constellation")
-  object TITANs extends Polity("TITANs")
-  object Titanian extends Polity("Titanian")
-  object Sifter extends Polity("Sifter")
-  object Solarian extends Polity("Solarian")
-  object NoPolity extends Polity("None")
-  object Private extends Polity("Private")
-  object Hyperelite extends Polity("Hyperelite")
-  object UnkownPolity extends Polity("Unkown")
-  object Israeli extends Polity("Israeli")
-  object Preservationists extends Polity("Preservationists")
-  object Criminal extends Polity("Criminal")
-  object LosZetas extends Polity("Los Zetas")
-  object NightCartel extends Polity("Night Cartel")
-  object NineLives extends Polity("Nine Lives")
-  object Triad extends Polity("Triad")
+  case class Protectorate(val protector: Polity, val protectee: Polity) extends Allegiance {
+    override def description = s"${protectee.adjective} (${protector.adjective} Protectorate)";
+  }
+
+  object IndependentPolity extends Polity("Independent", "Independent", "Independent")
+  object NoPolity extends Polity("None", "None", "None")
+  object Private extends Polity("Private", "Private", "Private")
+  object UnkownPolity extends Polity("Unkown", "Unkown", "Unkown")
+
+  // Major
+  object Argonauts extends Polity("Argonauts", "Argonaut", "Argonaut")
+  object Autonomist extends Polity("Autonomist Alliance", "Autonomist", "Autonomist")
+  object Extropian extends Polity("Extropia", "Extropian", "Extropian")
+  object Jovian extends Polity("Jovian Republic", "Jovian", "Jovian")
+  object LunarLagrangeAlliance extends Polity("Lunar-Lagrange Alliance", "LLA", "Lunar/Langranian")
+  object MorningstarConstellation extends Polity("Morningstar Constellation", "Morningstar Constellation", "Venusian")
+  object PlanetaryConsortium extends Polity("Planetary Consortium", "Planetary Consortium", "Consortium")
+  object Titanian extends Polity("Titanian Commonwealth", "Titanian", "Titanian")
+
+  // Minor
+  object Brinker extends Polity("Brinkers", "Brinker", "Brinker")
+  object CarmeCompact extends Polity("Carme Compact", "Carme Compact", "Compact")
+  object CatholicChurch extends Polity("Roman Catholic Church", "Catholic Church", "Catholic")
+  object Europan extends Polity("Europa", "Europan", "Europan")
+  object Hyperelite extends Polity("Hyperelites", "Hyperelite", "Hyperelite")
+  object Israeli extends Polity("Israel", "Israeli", "Israeli")
+  object Preservationists extends Polity("Preservationists", "Preservationist", "Preservationist")
+  object Scum extends Polity("Scum", "Scum", "Scum")
+  object Sifter extends Polity("Sifters", "Sifter", "Sifter")
+  object Solarian extends Polity("Solarians", "Solarian", "Solarian")
+  object TechnoCreationists extends Polity("Techno-Creationists", "Techno-Creationist", "Techno-Creationist")
+  object Ultimates extends Polity("Ultimates", "Ultimate", "Ultimate")
+
+  // Non-human
+  object Factor extends Polity("The Factors", "Factor", "Factor")
+  object TITANs extends Polity("The TITANs", "TITAN", "TITAN")
+
+  // Criminals
+  object Criminal extends Polity("Criminals", "Criminal", "Criminal")
+  object LosZetas extends Polity("Los Zetas", "Los Zetas", "Los Zetas") // FIXME: my Spanish sucks
+  object NightCartel extends Polity("Night Cartel", "Night Cartel", "Cartellian") // FIXME: not sure if the demonym makes any sense
+  object NineLives extends Polity("Nine Lives", "Nine Lives", "Gangster") // FIXME: not sure if the demonym makes any sense
+  object Triad extends Polity("The Triads", "Triad", "Triad")
 }

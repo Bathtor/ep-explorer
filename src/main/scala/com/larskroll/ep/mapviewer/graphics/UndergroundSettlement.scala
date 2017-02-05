@@ -1,6 +1,6 @@
 package com.larskroll.ep.mapviewer.graphics
 
-import com.larskroll.ep.mapviewer.data.{ Settlement => SettlementData, AstronomicalObject }
+import com.larskroll.ep.mapviewer.data.{ UndergroundSettlement => USData, AstronomicalObject }
 import com.larskroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
 import org.denigma.threejs._
 
@@ -10,16 +10,16 @@ import js.JSConverters._
 import squants._
 import squants.space._
 
-class Settlement(val settlement: SettlementData) extends GraphicsObject with Overlayed {
+class UndergroundSettlement(val settlement: USData) extends GraphicsObject with Overlayed {
 
   val (height, radius) = {
-    val r = settlement.size.toKilometers;
-    val h = r / 4.0;
+    val r = 5.0
+    val h = r / 2.0;
     (h, r)
   };
 
   protected val geometry = new ConeGeometry(radius, height, 32);
-  protected val material = new MeshPhongMaterial(Settlement.materialParams(settlement.name));
+  protected val material = new MeshLambertMaterial(Bathyscaphe.materialParams(settlement.name));
   val mesh = {
     val m = new Mesh(geometry, material);
     m.name = settlement.name;
@@ -50,9 +50,10 @@ class Settlement(val settlement: SettlementData) extends GraphicsObject with Ove
     val dir = pSnap.pos.clone();
     dir.normalize();
     val offset = dir.clone();
-    offset.multiplyScalar(height / 2.0);
+    offset.multiplyScalar(-radius);
     offset.add(pSnap.pos);
     moveTo(offset);
+    dir.multiplyScalar(-1.0); // face down instead of up
     meshRotation.setFromUnitVectors(vYup, dir);
     mesh.setRotationFromQuaternion(meshRotation);
   }
@@ -67,16 +68,15 @@ class Settlement(val settlement: SettlementData) extends GraphicsObject with Ove
 
   override def data: Option[AstronomicalObject] = Some(settlement);
 
-  override def boundingRadius: Double = height / 2.0 + radius;
+  override def boundingRadius: Double = radius;
 }
 
-object Settlement {
-
-  def materialParams(name: String): MeshPhongMaterialParameters = js.Dynamic.literal(
+object UndergroundSettlement {
+  def materialParams(name: String): MeshLambertMaterialParameters = js.Dynamic.literal(
     color = new Color(0xFCD19C) // wireframe = true
-    ).asInstanceOf[MeshPhongMaterialParameters];
+    ).asInstanceOf[MeshLambertMaterialParameters];
 
-  def fromData(data: SettlementData): Settlement = {
-    new Settlement(data)
+  def fromData(data: USData): UndergroundSettlement = {
+    new UndergroundSettlement(data)
   }
 }

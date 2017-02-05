@@ -19,6 +19,10 @@ case class ModifiedBernalSphere(val radius: Length) extends StationType {
   override def name = "Modified Bernal Sphere"
 }
 
+case class NuestroShell(val radius: Length) extends StationType {
+  override def name = "Nuestro Shell"
+}
+
 case object Cluster extends StationType {
   override def name = "Cluster"
 }

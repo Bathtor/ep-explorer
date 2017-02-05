@@ -181,6 +181,12 @@ object UI extends Logging {
         infoB += ("Primary Languages" -> station.langs.mkString(", "));
         infoB += ("Major Industries" -> station.industries.mkString(", "));
       }
+      case station: UndergroundSettlement => {
+        infoB += ("Position" -> s"${station.pos.pretty} at ${-station.height} b.s.l");
+        infoB += ("Allegiance" -> station.allegiance.description);
+        infoB += ("Primary Languages" -> station.langs.mkString(", "));
+        infoB += ("Major Industries" -> station.industries.mkString(", "));
+      }
       case gate: PandoraGate => {
         infoB += ("Position" -> s"${gate.pos.pretty}");
         infoB += ("Allegiance" -> gate.allegiance.description);
