@@ -28,7 +28,6 @@ To build and run the project, check it out from git, cd into the project folder 
 
 ### Definitely
 Add habitats and settlements for and around
-- Jupiter
 - Saturn
 - Uranus
 - Neptune
