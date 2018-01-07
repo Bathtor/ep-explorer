@@ -1,7 +1,8 @@
 #!/bin/bash
-TARGET="/srv/www/epexplorer.lars-kroll.com/target"
-SRC="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/target"
+TARGET="/srv/www/epexplorer/build/"
+SRC="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/target/scala-2.12/*"
 
 sbt fullOptJS
-ssh lkr "rm -r $TARGET"
-scp -r $SRC lkr:$TARGET
+ssh lkroll "rm -r $TARGET"
+ssh lkroll "mkdir $TARGET"
+scp -r $SRC lkroll:$TARGET
