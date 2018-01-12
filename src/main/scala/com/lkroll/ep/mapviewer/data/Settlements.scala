@@ -397,27 +397,34 @@ object Settlements {
       override def extraInfo = Seq(("Population" -> "350 000"));
     }
     object Profunda extends Settlement("Profunda", UUID.randomUUID(),
-      (North(0, 0, 0), West(0, 0, 0)), Moons.Enceladus, Kilometers(5), // no idea where
+      (North(0, 0, 0), West(0, 0, 0)), Moons.Enceladus, Kilometers(30), // no idea where
       AA(Extropian), Seq(English, Javanese, Tamil),
       Seq(Mining)) {
       override def extraInfo = Seq(("Population" -> "850 000"));
     }
+    object HarmoniusAnarchy extends Settlement("Harmonius Anarchy", UUID.randomUUID(),
+      (North(0, 0, 0), West(0, 0, 0)), Moons.Mimas, Kilometers(5), // no idea where
+      Autonomist, Seq(Cantonese, Mandarin),
+      Seq(ZeroGManufacturing, SoftwareDesign, Microfacturing)) {
+      override def extraInfo = Seq(("Population" -> "500 000"));
+    }
   }
   import SaturnSystem._
 
-  val forPlanet = Map(
+  val forPlanet: Map[UUID, Seq[AtmosphericObject]] = Map(
     Planets.Earth.id -> Seq(Greenwich, KilimanjaroSE, KilimanjaroSEOrbital, NewYorkCity, Bejing, PanamaCity, Tashkent, Moscow, Hawaii, RioDeJaneiro, CapeTown),
     Planets.Mars.id -> Seq(OlympusCity, Tether, VallesNewShanghai, NoctisQianjiao, Elysium, Ashoka, NewDazhai, PilsenerCity, PathfinderGate, PathfinderCity, Anyang, Qurain, Kartika),
     Planets.Venus.id -> Seq(Octavia, AphroditePrime, Lucifer, TheShack, Parvarti, Shukra, Etemenanki, DeepReach),
     Planets.Mercury.id -> Seq(AlHamadhanj, Caloris18, Cannon, DelacroixShelley, Lumina),
     Planets.Ceres.id -> Seq(Aventine, Wujec, Piazzi.atmos, Proserpina));
 
-  val forMoon = Map(
+  val forMoon: Map[UUID, Seq[AtmosphericObject]] = Map(
     Moons.Luna.id -> Seq(Erato, Nectar, Shackle, CleverHands, TheColony, Feynman, Muir, NewMumbai),
     Moons.Ganymede.id -> Seq(LibertyCity, LibertyStation.atmos),
     Moons.Io.id -> Seq(MauiPatera),
     Moons.Callisto.id -> Seq(Hyoden, Gerdr),
     Moons.Europa.id -> Seq(ConamaraChaos, Conamara, Pwyll, TheNorns),
     Moons.Dione.id -> Seq(Thoroughgood),
-    Moons.Enceladus.id -> Seq(Profunda));
+    Moons.Enceladus.id -> Seq(Profunda),
+    Moons.Mimas.id -> Seq(HarmoniusAnarchy));
 }

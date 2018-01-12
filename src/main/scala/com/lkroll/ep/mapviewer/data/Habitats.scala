@@ -678,6 +678,14 @@ object Habitats {
     override def extraInfo = Seq(("Population" -> "500"));
   }
 
+  object IZulu extends Habitat("iZulu (Pan)", UUID.randomUUID(), Kilograms(4.95e15),
+    Asteroid("Beehive", 34.4.km, 31.4.km, 20.8.km), Planets.Saturn,
+    Autonomist, Seq(Afrikaans, English, Xhosa, Zulu),
+    Seq(SoftwareDesign)) with Orbiting {
+    val orbit = new ConstantOrbit(0.0000144, 133584.0.km, 2.48456.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // no idea
+    override def extraInfo = Seq(("Population" -> "1.1 million"));
+  }
+
   val list = Seq(Remembrance, Elegua, FreshKills, Hexagon, HotelCalifornia, Paradise, VoNguyen,
     SeleneStation, KorolevShipyards, MVCPR, Mitre, Tsukomo, Progress, Pontes, McClintock,
     LuXing, Ptah, Viriditas, Batteries123, Batteries456, Gerlach, Thought, FarReachII, Cythera, Frostfire,
@@ -691,5 +699,5 @@ object Habitats {
     Amalthea, Settlements.Ganymede.LibertyStation.Hab, TheCastle, TheHolySee, JSFAntimatterFactory,
     Aoede, Aitne, Kale, Taygete, Callirrhoe, Carpo, Euanthe, Helike,
     Locus, CSquat, CasaArturo, CatalHayuk, Exarchia, Lot49, Respect, Turing, Winter,
-    Volkograd, Bright, Kiviuq, MeatHab);
+    Volkograd, Bright, Kiviuq, MeatHab, IZulu);
 }

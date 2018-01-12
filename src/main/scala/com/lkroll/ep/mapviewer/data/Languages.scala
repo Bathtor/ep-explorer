@@ -14,6 +14,7 @@ object AnyLang extends Language {
 }
 
 object Languages {
+  object Afrikaans extends LangName("Afrikaans")
   object Arabic extends LangName("Arabic")
   object Bengali extends LangName("Bengali")
   object Burmese extends LangName("Burmese")
@@ -54,4 +55,6 @@ object Languages {
   object Urdu extends LangName("Urdu")
   object Vietnamese extends LangName("Vietnamese")
   object Wu extends LangName("Wu")
+  object Xhosa extends LangName("Xhosa");
+  object Zulu extends LangName("Zulu");
 }

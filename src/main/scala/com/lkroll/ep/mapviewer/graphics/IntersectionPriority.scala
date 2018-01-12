@@ -58,6 +58,7 @@ object IntersectionPriorities {
   object FirstSmallest extends IntersectionPriority {
     override def prioritiseObject(objects: List[Object3D]): Option[GraphicsObject] = {
       var firstMoon: Option[Moon] = None;
+      var moonSingle: Option[MoonSingle] = None;
       var firstPlanet: Option[Planet] = None;
       var planetSingle: Option[PlanetSingle] = None;
       var sun: Option[Star] = None;
@@ -83,6 +84,11 @@ object IntersectionPriorities {
               firstMoon = Some(moon);
             }
           }
+          case Some(moon: MoonSingle) => {
+            if (!moonSingle.isDefined) {
+              moonSingle = Some(moon);
+            }
+          }
           case Some(x) => {
             if (!other.isDefined) {
               other = Some(x);
@@ -91,7 +97,7 @@ object IntersectionPriorities {
           case None => // ignore
         }
       }
-      val order = Seq(other, firstMoon, firstPlanet, planetSingle, sun);
+      val order = Seq(other, firstMoon, firstPlanet, moonSingle, planetSingle, sun);
       order.find(_.isDefined) match {
         case Some(o) => o
         case None    => None

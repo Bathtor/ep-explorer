@@ -30,7 +30,7 @@ class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement
     t
   }
 
-  val initialTrackingObject: Option[GraphicsObject] = Main.opts.tracking.get.flatMap { ao =>
+  lazy val initialTrackingObject: Option[GraphicsObject] = Main.opts.tracking.get.flatMap { ao =>
     val r = this.searchIndex.get(ao.name);
     if (r.isEmpty) {
       logger.warn(s"Tracking object ${ao.name} could not be found in scene.");

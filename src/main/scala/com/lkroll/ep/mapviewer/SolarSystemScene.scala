@@ -44,15 +44,6 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
   sun.moveTo(centre);
   sun.addToScene(this);
 
-  val initialTrackingObject: Option[GraphicsObject] = Main.opts.tracking.get.flatMap { ao =>
-    val objects = sun :: (planets.toList ++ habitats.toList);
-    objects.find(_.represents(ao))
-  }
-
-  val ctrls = new MapControls(camera, this.container, this, width, height, initialTrackingObject.getOrElse(sun), IntersectionPriorities.FirstLargest); //planets("Saturn").mesh);
-
-  override val controls: CameraControls = ctrls;
-
   planets.foreach(p => p.addToScene(this))
   habitats.foreach(p => p.addToScene(this))
   //    planets.zipWithIndex.foreach {
@@ -82,6 +73,18 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
   val texturePass = new facades.TexturePass(Textures("background"));
 
   override def passes = Seq(clearPass, texturePass, renderPass, copyPass);
+
+  val initialTrackingObject: Option[GraphicsObject] = Main.opts.tracking.get.flatMap { ao =>
+    val r = this.searchIndex.get(ao.name);
+    if (r.isEmpty) {
+      logger.warn(s"Tracking object ${ao.name} could not be found in scene.");
+    }
+    r
+  }
+
+  val ctrls = new MapControls(camera, this.container, this, width, height, initialTrackingObject.getOrElse(sun), IntersectionPriorities.FirstLargest); //planets("Saturn").mesh);
+
+  override val controls: CameraControls = ctrls;
 
   private def updatePositions() {
     sun.update(time)

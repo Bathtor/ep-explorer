@@ -40,7 +40,7 @@ EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.ManagedClas
 
 //bootSnippet := "com.larskroll.ep.mapviewer.Main().main();"
 //refreshBrowsers <<= refreshBrowsers.triggeredBy(fastOptJS in Compile)
-//localUrl := ("lkroll.sics.se", 12345)
-localUrl := ("192.168.0.105", 12345)
+localUrl := ("lkroll.sics.se", 12345)
+//localUrl := ("192.168.0.105", 12345)
 //localUrl := ("192.168.178.208", 12345)
 //localUrl := ("localhost", 12345)
