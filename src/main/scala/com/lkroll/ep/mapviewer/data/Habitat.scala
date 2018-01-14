@@ -31,6 +31,10 @@ case object Cluster extends StationType {
   override def name = "Cluster"
 }
 
+case object Swarm extends StationType {
+  override def name = "Nomadic Swarm"
+}
+
 case object UnkownStation extends StationType {
   override def name = "Unkown"
 }

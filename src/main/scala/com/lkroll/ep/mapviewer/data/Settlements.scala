@@ -408,6 +408,12 @@ object Settlements {
       Seq(ZeroGManufacturing, SoftwareDesign, Microfacturing)) {
       override def extraInfo = Seq(("Population" -> "500 000"));
     }
+    object Godwinhead extends Settlement("Godwinhead", UUID.randomUUID(),
+      (North(0, 0, 0), West(0, 0, 0)), Moons.Tethys, Kilometers(5), // no idea where
+      AA(Anarchists), Seq(English, Hindi, Punjabi),
+      Seq(Art, Bioengineering, Research, Tourism)) {
+      override def extraInfo = Seq(("Population" -> "200 000"));
+    }
   }
   import SaturnSystem._
 
@@ -426,5 +432,7 @@ object Settlements {
     Moons.Europa.id -> Seq(ConamaraChaos, Conamara, Pwyll, TheNorns),
     Moons.Dione.id -> Seq(Thoroughgood),
     Moons.Enceladus.id -> Seq(Profunda),
-    Moons.Mimas.id -> Seq(HarmoniusAnarchy));
+    Moons.Mimas.id -> Seq(HarmoniusAnarchy),
+    Moons.Rhea.id -> Seq(Habitats.KronosCluster.Atmos),
+    Moons.Tethys.id -> Seq(Godwinhead));
 }

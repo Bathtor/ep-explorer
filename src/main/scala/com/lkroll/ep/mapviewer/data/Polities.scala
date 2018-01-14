@@ -31,6 +31,7 @@ object Polities {
   object NoPolity extends Polity("None", "None", "None")
   object Private extends Polity("Private", "Private", "Private")
   object UnkownPolity extends Polity("Unkown", "Unkown", "Unkown")
+  object Contested extends IndependentNamed("Contested");
 
   // Major
   object Argonauts extends Polity("Argonauts", "Argonaut", "Argonaut")
@@ -43,6 +44,7 @@ object Polities {
   object Titanian extends Polity("Titanian Commonwealth", "Titanian", "Titanian")
 
   // Minor
+  object Anarchists extends Polity("Anarchists", "Anarchist", "Anarchist")
   object Brinker extends Polity("Brinkers", "Brinker", "Brinker")
   object CarmeCompact extends Polity("Carme Compact", "Carme Compact", "Compact")
   object CatholicChurch extends Polity("Roman Catholic Church", "Catholic Church", "Catholic")

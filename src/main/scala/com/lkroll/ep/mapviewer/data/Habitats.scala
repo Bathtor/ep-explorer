@@ -36,7 +36,7 @@ object Habitats {
     override def extraInfo = Seq(("Population" -> "120 000"));
   }
 
-  object FreshKills extends Habitat("Fresh Kills", UUID.randomUUID(), Kilograms(4.8e10),
+  object FreshKills extends Habitat("Fresh Kills", UUID.randomUUID(), Kilograms(4.8e7),
     Cluster, Planets.Earth,
     Independent(Scum), Seq(English, French, Tamil),
     Seq(Salvage)) with Orbiting {
@@ -653,11 +653,11 @@ object Habitats {
     override def extraInfo = Seq(("Population" -> "50 000"));
   }
 
-  object Bright extends Habitat("Bright", UUID.randomUUID(), Kilograms(4.8e10),
+  object Bright extends Habitat("Bright (Telesto)", UUID.randomUUID(), Kilograms(4.8e10),
     HamiltonCylinder(8.0.km, 1.0.km), Planets.Saturn,
     Hypercorp(Acumenic), Seq(English, German, Mandarin),
     Seq(Research)) with Orbiting {
-    val orbit = new LissajousOrbit(new L4(Planets.Saturn, Moons.Tethys), 200.0.km, 2500.0.km, RotationPeriod(Days(0.3)), RotationPeriod(Days(0.6)), 3.229, Degrees(0.0), Degrees(0.0));
+    val orbit = new L4(Planets.Saturn, Moons.Tethys);
     override def extraInfo = Seq(("Population" -> "30 000")); // conflicting data on the same page (7000)
   }
 
@@ -686,6 +686,59 @@ object Habitats {
     override def extraInfo = Seq(("Population" -> "1.1 million"));
   }
 
+  object PhelansRecourse extends Habitat("Phelan's Recourse", UUID.randomUUID(), Kilograms(3.2e7),
+    Cluster, Planets.Saturn,
+    AA(Scum), Seq(English, Mandarin, Skandinaviska),
+    Seq(Entertainment)) with Orbiting {
+    val orbit = VariableOrbit(0.792137, 681795.km, 87.0.º,
+      ConstantAngle(0.0.º),
+      ConstantAngle(0.0.º),
+      0.0.º, this.mass, this.centre); // no idea
+    override def extraInfo = Seq(("Population" -> "250 000"));
+  }
+
+  object MarseillesPrometheus extends Habitat("Marseilles (Prometheus)", UUID.randomUUID(), Kilograms(1.595e17),
+    Asteroid("Beehive", 135.6.km, 79.4.km, 59.4.km), Planets.Saturn,
+    AA(Titanian), Seq(French, Skandinaviska, Vietnamese),
+    Seq(Antimatter, Chemistry, Mining, Transport)) with Orbiting {
+    val orbit = new ConstantOrbit(0.0022, 139380.0.km, 2.49246.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // no idea
+    override def extraInfo = Seq(("Population" -> "800 000"));
+  }
+
+  object KronosCluster {
+    import Geography._
+
+    val name = "Kronos Cluster";
+    val moon = Moons.Rhea;
+    val allegiance: Allegiance = Independent(Anarchists, Criminal, Ultimates);
+    val langs: Seq[Language] = Seq(Cantonese, Dutch, Turkish);
+    val industries: Seq[Industry] = Seq(Art, Counterfeiting, Crime, Entertainment, Smuggling, Tourism, Trade, WaterExtraction);
+    val geoSync: Length = 8407.2522.km;
+    val info = Seq(("Population" -> "950 000"));
+
+    object Atmos extends SyncOrbitStation(name, UUID.randomUUID(),
+      (North(0, 0, 0), West(0, 0, 0)), (geoSync - moon.radius), moon, // no idea where exactly it is
+      allegiance, langs, industries) {
+      override def extraInfo = info;
+    }
+    object Hab extends Habitat(name, UUID.randomUUID(), squants.Kilograms(2.4e10),
+      Cluster, moon,
+      allegiance, langs, industries) with Orbiting {
+      val orbit = new ConstantOrbit(0.0, geoSync, 299.56024.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less this^^
+      override def extraInfo = info;
+    }
+  }
+
+  object Salah extends Habitat("Salah (Calypso)", UUID.randomUUID(), Kilograms(4.8e10),
+    HamiltonCylinder(8.0.km, 1.0.km), Planets.Saturn,
+    Contested, Seq(Arabic, Punjabi, Turkish),
+    Seq(Finance, Religion)) with Orbiting {
+    val orbit = new L5(Planets.Saturn, Moons.Tethys);
+    override def extraInfo = Seq(("Population" -> "215 000"));
+  }
+
+  // TODO next add Epimetheus and Janus and string out the Twelve commons between them
+
   val list = Seq(Remembrance, Elegua, FreshKills, Hexagon, HotelCalifornia, Paradise, VoNguyen,
     SeleneStation, KorolevShipyards, MVCPR, Mitre, Tsukomo, Progress, Pontes, McClintock,
     LuXing, Ptah, Viriditas, Batteries123, Batteries456, Gerlach, Thought, FarReachII, Cythera, Frostfire,
@@ -699,5 +752,6 @@ object Habitats {
     Amalthea, Settlements.Ganymede.LibertyStation.Hab, TheCastle, TheHolySee, JSFAntimatterFactory,
     Aoede, Aitne, Kale, Taygete, Callirrhoe, Carpo, Euanthe, Helike,
     Locus, CSquat, CasaArturo, CatalHayuk, Exarchia, Lot49, Respect, Turing, Winter,
-    Volkograd, Bright, Kiviuq, MeatHab, IZulu);
+    Volkograd, Bright, Kiviuq, MeatHab, IZulu, PhelansRecourse, MarseillesPrometheus, KronosCluster.Hab,
+    Salah);
 }

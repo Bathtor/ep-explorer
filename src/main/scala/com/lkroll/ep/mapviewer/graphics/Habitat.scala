@@ -3,7 +3,7 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.lkroll.ep.mapviewer.data.{ Habitat => HabitatData, Orbiting, Habitats, ONeillCylinder, HamiltonCylinder, BernalSphere, ModifiedBernalSphere, Cluster, Torus, ModifiedTorus, Asteroid, AstronomicalObject, UnkownStation, NuestroShell, UniqueStation };
+import com.lkroll.ep.mapviewer.data.{ Habitat => HabitatData, Orbiting, Habitats, ONeillCylinder, HamiltonCylinder, BernalSphere, ModifiedBernalSphere, Cluster, Swarm, Torus, ModifiedTorus, Asteroid, AstronomicalObject, UnkownStation, NuestroShell, UniqueStation };
 import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
 
 import scala.scalajs.js
@@ -114,10 +114,13 @@ object Habitat extends Logging {
       case Cluster => { // FIXME come up with a better way to represent clusters
         new CylindricalHabitat(habitat, habitat.asInstanceOf[Orbiting], 100.0 * Main.scale, 10.0 * Main.scale);
       }
-      case UnkownStation => { // FIXME come up with a better way to represent clusters
+      case Swarm => { // FIXME come up with a better way to represent swarms
+        new SphericalHabitat(habitat, habitat.asInstanceOf[Orbiting], 100.0 * Main.scale)
+      }
+      case UnkownStation => {
         new SphericalHabitat(habitat, habitat.asInstanceOf[Orbiting], 1.0 * Main.scale)
       }
-      case UniqueStation(_) => { // FIXME come up with a better way to represent clusters
+      case UniqueStation(_) => { // FIXME come up with a better way to represent inque stuff
         new SphericalHabitat(habitat, habitat.asInstanceOf[Orbiting], 1.0 * Main.scale)
       }
       case BernalSphere(radius) => {

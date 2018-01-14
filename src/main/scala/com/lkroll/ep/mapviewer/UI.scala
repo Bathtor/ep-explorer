@@ -130,7 +130,7 @@ object UI extends Logging {
     }
   }
 
-  val infoContent = div(id := "info-block", "test").render;
+  val infoContent = div(id := "info-block", "Nothing").render;
 
   val info = div(
     id := "info",
