@@ -28,7 +28,6 @@ To build and run the project, check it out from git, cd into the project folder 
 
 ### Definitely
 Add habitats and settlements for and around
-- Saturn
 - Uranus
 - Neptune
 - Pluto
@@ -36,6 +35,7 @@ Add habitats and settlements for and around
 - Kuiper Belt
 
 ### Nice to have
+- Travel Calc
 - Add more moons if necessary
 - Region markers (e.g. Trojans, Greeks)
 - LOD
