@@ -674,7 +674,7 @@ object Habitats {
     UniqueStation("MeatHab"), Planets.Saturn,
     IndependentPolity, Seq(Mandarin, Polish, Turkish),
     Seq(Art)) with Orbiting {
-    val orbit = new LissajousOrbit(new L1(Planets.Saturn, Moons.Titan), 800.0.km, 200.0.km, RotationPeriod(Days(0.2)), RotationPeriod(Days(0.1)), 3.229, Degrees(0.0), Degrees(0.0));
+    val orbit = new L2(Planets.Saturn, Moons.Titan);
     override def extraInfo = Seq(("Population" -> "500"));
   }
 
@@ -737,9 +737,92 @@ object Habitats {
     override def extraInfo = Seq(("Population" -> "215 000"));
   }
 
-  // TODO next add Epimetheus and Janus and string out the Twelve commons between them
+  object Epimetheus extends Habitat("Twelve Commons (Epimetheus)", UUID.randomUUID(), Kilograms(5.266e17),
+    Asteroid("Beehive", 129.8.km, 114.km, 106.2.km), Planets.Saturn,
+    AA(Anarchists), Seq.empty,
+    Seq.empty) with Orbiting {
+    val orbit = new ConstantOrbit(0.0098, 151410.km, 2.83546.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+  }
 
-  val list = Seq(Remembrance, Elegua, FreshKills, Hexagon, HotelCalifornia, Paradise, VoNguyen,
+  object Janus extends Habitat("Twelve Commons (Janus Commons)", UUID.randomUUID(), Kilograms(1.8975e18),
+    Asteroid("Beehive", 203.km, 185.km, 152.6.km), Planets.Saturn,
+    AA(Anarchists), Seq(English, French, Spanish),
+    Seq(Art, Chemistry)) with Orbiting {
+    val orbit = new ConstantOrbit(0.0068, 151460.km, 2.64746.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    override def extraInfo = Seq(("Population" -> "900 000"));
+  }
+
+  object DIYShipyards extends Habitat("Twelve Commons (DIY Shipyards)", UUID.randomUUID(), Kilograms(2.4e10),
+    Cluster, Planets.Saturn,
+    AA(Anarchists), Seq(Arabic, Malay),
+    Seq(AerospaceEngineering, ZeroGManufacturing)) with Orbiting {
+    val orbit = new ConstantOrbit(0.0076, 151450.km, 2.648.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    override def extraInfo = Seq(("Population" -> "10 000"));
+  }
+
+  object LongHaul extends Habitat("Twelve Commons (Long Haul)", UUID.randomUUID(), Kilograms(2.4e10),
+    Torus(Kilometers(0.845), Kilometers(0.065)), Planets.Saturn,
+    AA(Anarchists), Seq(English, Hindi, Mandarin),
+    Seq.empty) with Orbiting {
+    val orbit = new ConstantOrbit(0.0072, 151440.km, 2.647.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    override def extraInfo = Seq(("Population" -> "20 000"));
+  }
+
+  object NguyensCompact extends Habitat("Twelve Commons (Nguyen's Compact)", UUID.randomUUID(), Kilograms(2.4e8),
+    Asteroid("Cole bubble", 8.0.km, 5.2.km, 4.0.km), Planets.Saturn,
+    AA(Anarchists), Seq(French, Khmer, Vietnamese),
+    Seq.empty) with Orbiting {
+    val orbit = new ConstantOrbit(0.0082, 151430.km, 2.644.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    override def extraInfo = Seq(("Population" -> "80 000"));
+  }
+
+  object RedEmmasDance extends Habitat("Twelve Commons (Red Emma's Dance)", UUID.randomUUID(), Kilograms(2.4e10),
+    Asteroid("Track", 15.0.km, 12.2.km, 6.0.km), Planets.Saturn,
+    AA(Anarchists), Seq(Greek, Italian),
+    Seq(Art, MorphDesign)) with Orbiting {
+    val orbit = new ConstantOrbit(0.0085, 151420.km, 2.640.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    override def extraInfo = Seq(("Population" -> "2 000"));
+  }
+
+  object SmallMajesties extends Habitat("Twelve Commons (Small Majesties)", UUID.randomUUID(), Kilograms(1.4e10),
+    Asteroid("Cluster", 13.0.km, 11.2.km, 4.0.km), Planets.Saturn,
+    AA(Anarchists), Seq(Spanish, Tagalog),
+    Seq(NanoTechnology)) with Orbiting {
+    val orbit = new ConstantOrbit(0.0089, 151455.km, 2.632.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    override def extraInfo = Seq(("Population" -> "80"));
+  }
+
+  object Phoebe extends Habitat("Phoebe", UUID.randomUUID(), Kilograms(8.292e18),
+    Asteroid("Cluster", 218.8.km, 217.0.km, 203.6.km), Moons.Titan,
+    Titanian, Seq(Skandinaviska, English),
+    Seq(Military)) with Orbiting {
+    val orbit = new L1(Planets.Saturn, Moons.Titan);
+    override def extraInfo = Seq(("Notes" -> "Home Port for Commonwealth Fleet"));
+  }
+
+  object Skathi extends Habitat("Skathi", UUID.randomUUID(), Kilograms(2.4e10),
+    Asteroid("Cluster", 8.km, 6.km, 3.km), Moons.Titan,
+    Titanian, Seq(Skandinaviska, English),
+    Seq(Military)) with Orbiting {
+    val orbit = new L4(Planets.Saturn, Moons.Titan);
+  }
+
+  object Abramsen extends Habitat("Abramsen (S/2007 S 2)", UUID.randomUUID(), Kilograms(2.4e9),
+    Asteroid("Cluster", 6.km, 5.km, 3.km), Moons.Titan,
+    Titanian, Seq(Skandinaviska, English),
+    Seq(Military)) with Orbiting {
+    val orbit = new L5(Planets.Saturn, Moons.Titan);
+  }
+
+  object Mankell extends Habitat("Mankell", UUID.randomUUID(), Kilograms(3.2e7),
+    Cluster, Moons.Titan,
+    Titanian, Seq(Skandinaviska, English),
+    Seq(ComSystems, ZeroGManufacturing)) with Orbiting {
+    val orbit = new ConstantOrbit(0.0034, 98000.0.km, 130.0.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // no idea
+    override def extraInfo = Seq(("Population" -> "50 000"));
+  }
+
+  val list: Seq[Habitat] = Seq(Remembrance, Elegua, FreshKills, Hexagon, HotelCalifornia, Paradise, VoNguyen,
     SeleneStation, KorolevShipyards, MVCPR, Mitre, Tsukomo, Progress, Pontes, McClintock,
     LuXing, Ptah, Viriditas, Batteries123, Batteries456, Gerlach, Thought, FarReachII, Cythera, Frostfire,
     Aten, HoovermanGeischeker, UkkoJylinä,
@@ -753,5 +836,6 @@ object Habitats {
     Aoede, Aitne, Kale, Taygete, Callirrhoe, Carpo, Euanthe, Helike,
     Locus, CSquat, CasaArturo, CatalHayuk, Exarchia, Lot49, Respect, Turing, Winter,
     Volkograd, Bright, Kiviuq, MeatHab, IZulu, PhelansRecourse, MarseillesPrometheus, KronosCluster.Hab,
-    Salah);
+    Salah, Epimetheus, Janus, DIYShipyards, LongHaul, NguyensCompact, RedEmmasDance, SmallMajesties,
+    Settlements.Titan.CommonwealthHub.Hab, Phoebe, Skathi, Abramsen, Mankell);
 }

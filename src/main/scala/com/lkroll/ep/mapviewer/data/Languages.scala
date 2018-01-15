@@ -33,6 +33,7 @@ object Languages {
   object Italian extends LangName("Italian")
   object Japanese extends LangName("Japanese")
   object Javanese extends LangName("Javanese")
+  object Khmer extends LangName("Khmer")
   object Korean extends LangName("Korean")
   object Kurdish extends LangName("Kurdish")
   object Latin extends LangName("Latin")

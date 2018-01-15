@@ -387,7 +387,7 @@ object Settlements {
       //override def extraInfo = Seq(("Population" -> "1 million"));
     }
   }
-  import Europa._
+  import Europa._;
 
   object SaturnSystem {
     object Thoroughgood extends Settlement("Thoroughgood", UUID.randomUUID(),
@@ -415,7 +415,66 @@ object Settlements {
       override def extraInfo = Seq(("Population" -> "200 000"));
     }
   }
-  import SaturnSystem._
+  import SaturnSystem._;
+
+  object Titan {
+    object Nyhavn extends Settlement("Nyhavn", UUID.randomUUID(),
+      (South(7, 0, 0), West(122, 0, 0)), Moons.Titan, 25.km,
+      Titanian, Seq(Skandinaviska, English, French),
+      Seq(Art, Entertainment, Politics, Research, Trade, Transport)) {
+      override def extraInfo = Seq(("Population" -> "12million+"), ("Notes" -> "Capital of the Commonwealth"));
+    }
+    object Aarhus extends Settlement("Aarhus", UUID.randomUUID(),
+      (South(58, 0, 0), West(183, 0, 0)), Moons.Titan, 4.km,
+      Titanian, Seq(Skandinaviska, English),
+      Seq(Art, Education, Politics, Research)) {
+      override def extraInfo = Seq(("Population" -> "5million+"), ("Notes" -> "Location of TAU and TTI campi"));
+    }
+    object NewQuebec extends Settlement("New Quebec", UUID.randomUUID(),
+      (South(4, 0, 0), East(20, 0, 0)), Moons.Titan, 3.km,
+      Titanian, Seq(English, French, Skandinaviska),
+      Seq(Crime, MorphProduction, Sports)) {
+      override def extraInfo = Seq(("Population" -> "1.5million+"));
+    }
+    object Huvudskar extends Settlement("Huvudskär", UUID.randomUUID(),
+      (North(78, 0, 0), East(89, 0, 0)), Moons.Titan, 0.5.km,
+      Titanian, Seq(Skandinaviska),
+      Seq.empty) {
+    }
+    object Longueil extends Settlement("Longueil", UUID.randomUUID(),
+      (North(16, 0, 0), East(101, 0, 0)), Moons.Titan, 1.km,
+      Titanian, Seq(French),
+      Seq.empty) {
+    }
+    object Stykkisholmur extends Settlement("Stykkishólmur", UUID.randomUUID(),
+      (South(22, 0, 0), East(99, 0, 0)), Moons.Titan, 1.km,
+      Titanian, Seq(Skandinaviska),
+      Seq(Mining, Tourism)) {
+    }
+    object CommonwealthHub {
+
+      val name = "Commonwealth Hub";
+      val moon = Moons.Titan;
+      val allegiance: Allegiance = Titanian;
+      val langs: Seq[Language] = Seq(Skandinaviska, English, French);
+      val industries: Seq[Industry] = Seq(Trade, Transport);
+      val geoSync: Length = 75573.4691.km;
+      val info = Seq(("Population" -> "200 000"));
+
+      object Atmos extends SyncOrbitStation(name, UUID.randomUUID(),
+        (South(0, 0, 0), West(122, 0, 0)), (geoSync - moon.radius), moon, // no idea where exactly it is
+        allegiance, langs, industries) {
+        override def extraInfo = info;
+      }
+      object Hab extends Habitat(name, UUID.randomUUID(), squants.Kilograms(2.4e10),
+        Cluster, moon,
+        allegiance, langs, industries) with Orbiting {
+        val orbit = new ConstantOrbit(0.0, geoSync, 299.56024.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less this^^
+        override def extraInfo = info;
+      }
+    }
+  }
+  import Titan._;
 
   val forPlanet: Map[UUID, Seq[AtmosphericObject]] = Map(
     Planets.Earth.id -> Seq(Greenwich, KilimanjaroSE, KilimanjaroSEOrbital, NewYorkCity, Bejing, PanamaCity, Tashkent, Moscow, Hawaii, RioDeJaneiro, CapeTown),
@@ -434,5 +493,6 @@ object Settlements {
     Moons.Enceladus.id -> Seq(Profunda),
     Moons.Mimas.id -> Seq(HarmoniusAnarchy),
     Moons.Rhea.id -> Seq(Habitats.KronosCluster.Atmos),
-    Moons.Tethys.id -> Seq(Godwinhead));
+    Moons.Tethys.id -> Seq(Godwinhead),
+    Moons.Titan.id -> Seq(Nyhavn, Aarhus, NewQuebec, Huvudskar, Longueil, Stykkisholmur, CommonwealthHub.Atmos));
 }
