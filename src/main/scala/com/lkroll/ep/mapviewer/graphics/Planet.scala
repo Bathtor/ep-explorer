@@ -3,7 +3,10 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.lkroll.ep.mapviewer.data.{ Planet => PlanetData, Orbiting, Rotating, Planets, ConstantOriginOrbit, Moons, AstronomicalObject, Settlements };
+import com.lkroll.ep.mapviewer.datamodel.{ Planet => PlanetData, Orbiting, Rotating, ConstantOriginOrbit, AstronomicalObject };
+import com.lkroll.ep.mapviewer.data.Planets
+import com.lkroll.ep.mapviewer.data.Settlements
+import com.lkroll.ep.mapviewer.data.Moons
 import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, ExtVector3, SceneContainer, Textures };
 
 import scala.scalajs.js

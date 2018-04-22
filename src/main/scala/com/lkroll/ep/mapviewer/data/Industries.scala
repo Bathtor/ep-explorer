@@ -1,12 +1,6 @@
 package com.lkroll.ep.mapviewer.data
 
-trait Industry {
-  def name: String;
-}
-
-class IndustryName(val name: String) extends Industry {
-  override def toString = name;
-}
+import com.lkroll.ep.mapviewer.datamodel._
 
 object Industries {
   object AerialConstruction extends IndustryName("Aerial Construction")
@@ -30,6 +24,7 @@ object Industries {
   object Entertainment extends IndustryName("Entertainment")
   object EnvironmentalData extends IndustryName("Environmental Data")
   object Exploration extends IndustryName("Exploration")
+  object Farcasting extends IndustryName("Farcasting")
   object Fashion extends IndustryName("Fashion")
   object FoodIndustry extends IndustryName("Food Industry")
   object Gambling extends IndustryName("Gambling")
@@ -49,6 +44,7 @@ object Industries {
   object MorphDesign extends IndustryName("Morph Design")
   object NanoTechnology extends IndustryName("Nano Technology")
   object Nanofabrication extends IndustryName("Nanofabrication")
+  object Pharmaceuticals extends IndustryName("Pharmaceuticals")
   object Politics extends IndustryName("Politics")
   object PowerGeneration extends IndustryName("Power Generation")
   object Prison extends IndustryName("Prison")

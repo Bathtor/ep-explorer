@@ -6,19 +6,22 @@ name := "Map Viewer"
 
 organization := "com.lkroll.ep"
 
-version := "0.3"
+version := "0.4"
 
 scalaVersion := "2.12.4"
 
 //resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases")
 resolvers += Resolver.mavenLocal
+resolvers += Resolver.bintrayRepo("lkrollcom", "maven")
 
-libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.4"
-libraryDependencies += "com.lihaoyi" %%% "scalatags" % "0.6.7"
-libraryDependencies += "org.scala-js" %%% "scalajs-java-time" % "0.2.3"
-libraryDependencies += "com.outr" %%% "scribe" % "1.4.5"
+libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.+"
+libraryDependencies += "com.lihaoyi" %%% "scalatags" % "0.6.+"
+libraryDependencies += "org.scala-js" %%% "scalajs-java-time" % "0.2.+"
+libraryDependencies += "com.outr" %%% "scribe" % "2.3.+"
 libraryDependencies += "org.denigma" %%% "threejs-facade" % "0.0.88-0.1.8"
-libraryDependencies += "com.squants"  %%% "squants"  % "0.6.3"
+//libraryDependencies += "com.squants"  %%% "squants"  % "0.6.3"
+libraryDependencies += "org.typelevel"  %%% "squants"  % "1.3.0"
+libraryDependencies += "com.lkroll.common" %%% "common-data-tools" % "1.+"
 
 jsDependencies += "org.webjars" % "three.js" % "r88" / "three.js" minified "three.min.js"
 jsDependencies += ProvidedJS / "CopyShader.js" dependsOn "three.js"
@@ -40,7 +43,7 @@ EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.ManagedClas
 
 //bootSnippet := "com.larskroll.ep.mapviewer.Main().main();"
 //refreshBrowsers <<= refreshBrowsers.triggeredBy(fastOptJS in Compile)
-localUrl := ("lkroll.sics.se", 12345)
-//localUrl := ("192.168.0.105", 12345)
+//localUrl := ("lkroll.sics.se", 12345)
+localUrl := ("192.168.0.103", 12345)
 //localUrl := ("192.168.178.208", 12345)
 //localUrl := ("localhost", 12345)

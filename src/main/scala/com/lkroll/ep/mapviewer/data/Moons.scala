@@ -1,5 +1,7 @@
 package com.lkroll.ep.mapviewer.data
 
+import com.lkroll.ep.mapviewer.datamodel._
+
 import java.util.UUID;
 import squants._
 import squants.space._
@@ -167,11 +169,18 @@ object Moons {
   }
   object Ariel extends Moon("Ariel", UUID.randomUUID(),
     Kilograms(1.353e21), Kilometers(578.9), Planets.Uranus, 1) with Orbiting with Rotating {
+    import Languages._;
+    import Polities._;
+
     val orbit = VariableOrbit(0.0012, Kilometers(191020), Degrees(98.03),
       ConstantAngle(Degrees(0.0)),
       ConstantAngle(Degrees(0.0)),
       Degrees(0.0), mass, Planets.Uranus);
     val rotation = ECR(142.8356681.ºd, 257.43.º, -15.10.º, 156.22.º, true);
+    override def extraInfo = Seq(
+      Allegiance(Ultimates),
+      PrimaryLanguages(English, Hindi, Mandarin),
+      ("Population" -> "2000"))
   }
   object Umbriel extends Moon("Umbriel", UUID.randomUUID(),
     Kilograms(1.172e21), Kilometers(584.7), Planets.Uranus, 2) with Orbiting with Rotating {

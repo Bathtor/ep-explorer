@@ -1,6 +1,12 @@
 package com.lkroll.ep.mapviewer.data
 
+import com.lkroll.ep.mapviewer.datamodel._
+
 class Polity(val designation: String, val adjective: String, val demonym: String)
+
+object Allegiance {
+  def apply(p: Polity): (String, String) = ("Allegiance" -> p.adjective)
+}
 
 object Polities {
   implicit class SinglePolityAllegiance(val polity: Polity) extends Allegiance {

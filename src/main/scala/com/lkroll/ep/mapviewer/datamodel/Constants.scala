@@ -1,4 +1,4 @@
-package com.lkroll.ep.mapviewer.data
+package com.lkroll.ep.mapviewer.datamodel
 
 import squants.Mass;
 import squants.space.Degrees;

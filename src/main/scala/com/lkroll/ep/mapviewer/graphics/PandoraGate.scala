@@ -1,6 +1,6 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import com.lkroll.ep.mapviewer.data.{ PandoraGate => PandoraGateData, AstronomicalObject }
+import com.lkroll.ep.mapviewer.datamodel.{ PandoraGate => PandoraGateData, AstronomicalObject }
 import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
 import org.denigma.threejs._
 

@@ -1,6 +1,6 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import com.lkroll.ep.mapviewer.data.{ Settlement => SettlementData, Aerostat => AerostatData, SyncOrbitStation => SyncOrbitStationData, PandoraGate => PandoraGateData, AstronomicalObject, AtmosphericObject => AtmosphericObjectData, Bathyscaphe => BathyscapheData, UndergroundSettlement => USData }
+import com.lkroll.ep.mapviewer.datamodel.{ Settlement => SettlementData, Aerostat => AerostatData, SyncOrbitStation => SyncOrbitStationData, PandoraGate => PandoraGateData, AstronomicalObject, AtmosphericObject => AtmosphericObjectData, Bathyscaphe => BathyscapheData, UndergroundSettlement => USData }
 
 object AtmosphericObject {
   def fromData(ao: AtmosphericObjectData): GraphicsObject = {

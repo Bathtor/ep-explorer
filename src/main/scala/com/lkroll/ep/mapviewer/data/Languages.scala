@@ -1,16 +1,14 @@
 package com.lkroll.ep.mapviewer.data
 
-trait Language {
-  def name: String;
-}
-
-class LangName(val name: String) extends Language {
-  override def toString = name;
-}
+import com.lkroll.ep.mapviewer.datamodel._
 
 object AnyLang extends Language {
   def name: String = "Any";
   override def toString = name;
+}
+
+object PrimaryLanguages {
+  def apply(langs: Language*): (String, String) = ("Primary Languages" -> langs.mkString(", "));
 }
 
 object Languages {

@@ -1,4 +1,4 @@
-package com.lkroll.ep.mapviewer.data
+package com.lkroll.ep.mapviewer.datamodel
 
 import squants.{ SiBaseUnit, MetricSystem }
 import squants.mass._
@@ -39,6 +39,7 @@ object ExtraUnits {
   implicit class ExtDoubles(val d: Double) extends AnyVal {
     def º(): Angle = Degrees(d);
     def ºd(): AngularVelocity = DegreesPerDay(d);
+    def m(): Length = Meters(d);
     def km(): Length = Kilometers(d);
     def kg(): Mass = Kilograms(d);
     def AU(): Length = AstronomicalUnits(d);

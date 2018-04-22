@@ -1,5 +1,7 @@
 package com.lkroll.ep.mapviewer.data
 
+import com.lkroll.ep.mapviewer.datamodel._
+
 import java.util.UUID;
 import squants._
 import squants.space._
@@ -822,6 +824,24 @@ object Habitats {
     override def extraInfo = Seq(("Population" -> "50 000"));
   }
 
+  // Kuiper Belt
+
+  object Langford extends Habitat("Langford", UUID.randomUUID(), Kilograms(3.2e7),
+    Torus(120.0.m, 40.0.m), Stars.Sol,
+    Argonauts, Seq(English, Skandinaviska, Mandarin, Russian),
+    Seq(Research, Pharmaceuticals)) with Orbiting {
+    val orbit = ConstantOriginOrbit(0.158, 37.98.AU, 1.14.º, 308.3.º, 53.8.º, 41.3.º, mass, this.centre.mass);
+    override def extraInfo = Seq(("Population" -> "300"));
+  }
+
+  object Xiphos extends Habitat("Xiphos", UUID.randomUUID(), Kilograms(3.2e10),
+    HamiltonCylinder(5.5.km, 1.0.km), Planets.Uranus,
+    Ultimates, Seq(English, German, Hindi),
+    Seq(Research, Security, HeavyIndustry, Sports)) with Orbiting {
+    val orbit = new ConstantOrbit(0.00319, 36500.0.km, 0.0.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // not sure if the rings are inclined to match the equator
+    override def extraInfo = Seq(("Population" -> "10 000"));
+  }
+
   val list: Seq[Habitat] = Seq(Remembrance, Elegua, FreshKills, Hexagon, HotelCalifornia, Paradise, VoNguyen,
     SeleneStation, KorolevShipyards, MVCPR, Mitre, Tsukomo, Progress, Pontes, McClintock,
     LuXing, Ptah, Viriditas, Batteries123, Batteries456, Gerlach, Thought, FarReachII, Cythera, Frostfire,
@@ -837,5 +857,6 @@ object Habitats {
     Locus, CSquat, CasaArturo, CatalHayuk, Exarchia, Lot49, Respect, Turing, Winter,
     Volkograd, Bright, Kiviuq, MeatHab, IZulu, PhelansRecourse, MarseillesPrometheus, KronosCluster.Hab,
     Salah, Epimetheus, Janus, DIYShipyards, LongHaul, NguyensCompact, RedEmmasDance, SmallMajesties,
-    Settlements.Titan.CommonwealthHub.Hab, Phoebe, Skathi, Abramsen, Mankell);
+    Settlements.Titan.CommonwealthHub.Hab, Phoebe, Skathi, Abramsen, Mankell,
+    Langford, Xiphos);
 }

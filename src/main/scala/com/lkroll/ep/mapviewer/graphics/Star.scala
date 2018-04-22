@@ -3,7 +3,7 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.lkroll.ep.mapviewer.data.{ Star => StarData, AstronomicalObject, Orbiting, Rotating, ExtraUnits };
+import com.lkroll.ep.mapviewer.datamodel.{ Star => StarData, AstronomicalObject, Orbiting, Rotating, ExtraUnits };
 import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer };
 
 import scala.scalajs.js

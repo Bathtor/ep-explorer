@@ -1,5 +1,7 @@
 package com.lkroll.ep.mapviewer.data
 
+import com.lkroll.ep.mapviewer.datamodel._
+
 class Corp(val name: String) {
   def asPolity(): Polity = Polities.CorpAsPolity(this);
 }

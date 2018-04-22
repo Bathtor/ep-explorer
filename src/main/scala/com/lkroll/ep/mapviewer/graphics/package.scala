@@ -8,18 +8,18 @@ package object graphics {
   object SingleView extends ViewType
   object SystemView extends ViewType
 
-  def objectForData(targetData: data.AstronomicalObject): GraphicsObject = {
+  def objectForData(targetData: datamodel.AstronomicalObject): GraphicsObject = {
     targetData match {
-      case star: data.Star => {
+      case star: datamodel.Star => {
         Star.fromStarData(star, SingleView)
       }
-      case planet: data.Planet => {
+      case planet: datamodel.Planet => {
         Planet.fromData(planet, SingleView) match {
           case Left(p)  => p
           case Right(p) => p
         }
       }
-      case moon: data.Moon => {
+      case moon: datamodel.Moon => {
         Moon.fromData(moon, SingleView) match {
           case Left(m)  => m
           case Right(m) => m

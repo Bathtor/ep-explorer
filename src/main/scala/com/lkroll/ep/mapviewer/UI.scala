@@ -7,7 +7,7 @@ import scalatags.JsDom.all._
 import scribe.Logging
 import scala.scalajs.js.Date
 
-import data._
+import datamodel._
 
 import squants.time._
 

@@ -3,7 +3,8 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.lkroll.ep.mapviewer.data.{ Habitat => HabitatData, Orbiting, Habitats, ONeillCylinder, HamiltonCylinder, BernalSphere, ModifiedBernalSphere, Cluster, Swarm, Torus, ModifiedTorus, Asteroid, AstronomicalObject, UnkownStation, NuestroShell, UniqueStation };
+import com.lkroll.ep.mapviewer.datamodel.{ Habitat => HabitatData, Orbiting, ONeillCylinder, HamiltonCylinder, BernalSphere, ModifiedBernalSphere, Cluster, Swarm, Torus, ModifiedTorus, Asteroid, AstronomicalObject, UnkownStation, NuestroShell, UniqueStation };
+import com.lkroll.ep.mapviewer.data.Habitats
 import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
 
 import scala.scalajs.js

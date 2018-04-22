@@ -1,4 +1,4 @@
-package com.lkroll.ep.mapviewer.data
+package com.lkroll.ep.mapviewer.datamodel
 
 trait Allegiance {
   def description: String;

@@ -12,7 +12,7 @@ The project makes use of WebGL via [three.js][three] and [Scala.js][scalajs] to 
 
 ## Status
 
-Currently in alpha stage with an experimental deployment at <http://epexplorer.lars-kroll.com/>.
+Currently in alpha stage with an experimental deployment at <http://epexplorer.lkroll.com/>.
 
 ## Dependencies
 
@@ -28,7 +28,6 @@ To build and run the project, check it out from git, cd into the project folder 
 
 ### Definitely
 Add habitats and settlements for and around
-- Uranus
 - Neptune
 - Pluto
 - Eris
@@ -42,3 +41,6 @@ Add habitats and settlements for and around
 - Object filters
 - Some hints at geography (at least for the planets)
 - Space elevators and transportation networks
+
+## Licenses
+The material is based on *Eclipse Phase* by [Posthuman Studios][ep] and is published under Creative Commons (BY-NC-SA) 3.0 (license)[https://creativecommons.org/licenses/by-nc-sa/3.0/] as is the original material.

@@ -1,4 +1,4 @@
-package com.lkroll.ep.mapviewer.data
+package com.lkroll.ep.mapviewer.datamodel
 
 import squants.space._
 import squants.time._

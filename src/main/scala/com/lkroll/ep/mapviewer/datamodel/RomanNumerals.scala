@@ -1,4 +1,4 @@
-package com.lkroll.ep.mapviewer.data
+package com.lkroll.ep.mapviewer.datamodel
 
 object RomanNumerals {
   def toRomanNumerals(number: Int): String = {

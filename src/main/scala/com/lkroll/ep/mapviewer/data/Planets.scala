@@ -1,5 +1,7 @@
 package com.lkroll.ep.mapviewer.data
 
+import com.lkroll.ep.mapviewer.datamodel._
+
 import java.util.UUID;
 import squants._
 import squants.space._

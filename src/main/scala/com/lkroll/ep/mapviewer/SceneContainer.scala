@@ -33,7 +33,7 @@ trait SceneContainer {
   }
 
   def uiInfo: String;
-  def systemTracking: Option[data.AstronomicalObject];
+  def systemTracking: Option[datamodel.AstronomicalObject];
   def sceneParams: QueryParams;
 
   def addSceneObject(obj: GraphicsObject, mesh: Object3D) {

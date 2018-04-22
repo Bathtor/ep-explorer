@@ -3,7 +3,7 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs.Vector3
 
 import com.lkroll.ep.mapviewer.SceneContainer
-import com.lkroll.ep.mapviewer.data.AstronomicalObject
+import com.lkroll.ep.mapviewer.datamodel.AstronomicalObject
 
 import squants.Time
 

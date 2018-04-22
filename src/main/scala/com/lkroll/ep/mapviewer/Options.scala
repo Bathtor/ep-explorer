@@ -2,7 +2,7 @@ package com.lkroll.ep.mapviewer
 
 import collection.mutable
 import util.{ Try, Success, Failure }
-import data.AstronomicalObject;
+import datamodel.AstronomicalObject;
 
 case class VerificationError(msg: String, parent: Throwable) extends Exception(msg, parent);
 

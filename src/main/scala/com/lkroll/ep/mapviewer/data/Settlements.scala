@@ -1,5 +1,7 @@
 package com.lkroll.ep.mapviewer.data
 
+import com.lkroll.ep.mapviewer.datamodel._
+
 import squants.space._
 import java.util.UUID
 
@@ -476,12 +478,87 @@ object Settlements {
   }
   import Titan._;
 
+  object UranusSystem {
+    // Uranus
+    object Varuna extends Aerostat("Varuna", UUID.randomUUID(),
+      (North(9, 32, 0), East(43, 7, 0)), 5.0.km, Planets.Uranus, // without surface, height makes little sense
+      Independent(Brinker), Seq(Hindi, Punjabi, Wu),
+      Seq(Mining, Bioengineering, Research)) {
+      override def extraInfo = Seq(
+        ("Population" -> "1000"));
+    }
+    // Oberon
+    object ChatNoir extends Settlement("Chat Noir", UUID.randomUUID(),
+      (South(16, 18, 0), West(37, 30, 0)), Moons.Oberon, 10.km,
+      AA(Anarchists), Seq(English, French, Mandarin),
+      Seq(Gatecrashing, Research, Transport)) {
+      override def extraInfo = Seq(
+        ("Population" -> "10 000"),
+        ("Collective" -> "Love and Rage"),
+        ("Notes" -> "Location of Fissure Gate"));
+    }
+    object Lear extends Settlement("Lear", UUID.randomUUID(),
+      (South(5, 24, 0), East(31, 30, 0)), Moons.Oberon, 5.km,
+      Argonauts, Seq(English, Mandarin, German),
+      Seq(Research)) {
+      override def extraInfo = Seq(
+        ("Population" -> "~300"));
+    }
+    object Cobweb extends Settlement("Cobweb", UUID.randomUUID(),
+      (South(66, 0, 0), East(42, 54, 0)), Moons.Oberon, 1.km,
+      AA(Anarchists), Seq(Dutch, English),
+      Seq(Farcasting, ComSystems, Security)) {
+      override def extraInfo = Seq(
+        ("Population" -> "50"),
+        ("Collective" -> "Gelderloos"),
+        ("Notes" -> "Mobile Farcaster Station"));
+    }
+    // Titania
+    object Crossing extends Settlement("Crossing", UUID.randomUUID(),
+      (South(33, 20, 0), West(25, 0, 0)), Moons.Titania, 10.km,
+      AA(Anarchists), Seq(English, Japanese),
+      Seq(Sports, Tourism)) {
+      override def extraInfo = Seq(
+        ("Population" -> "3000"));
+    }
+    object Lyod extends Settlement("Lyod", UUID.randomUUID(),
+      (South(3, 30, 0), East(12, 12, 0)), Moons.Titania, 10.km,
+      Independent(Brinker), Seq(Russian),
+      Seq(HeavyIndustry, Microfacturing)) {
+      override def extraInfo = Seq(
+        ("Population" -> "3000"));
+    }
+    object Xue extends Settlement("Xue", UUID.randomUUID(),
+      (South(38, 56, 0), West(32, 13, 0)), Moons.Titania, 10.km,
+      AA(Anarchists), Seq(Mandarin),
+      Seq(Transport, Trade)) {
+      override def extraInfo = Seq(
+        ("Population" -> "2000"));
+    }
+    object LakeEmma extends Settlement("Lake Emma", UUID.randomUUID(),
+      (South(11, 6, 0), East(2, 12, 0)), Moons.Titania, 10.km,
+      Hypercorp(Experia), Seq(Dutch, English),
+      Seq(Entertainment, ComSystems)) {
+      override def extraInfo = Seq(
+        ("Population" -> "2000"));
+    }
+    object Ursula extends Settlement("Ursula", UUID.randomUUID(),
+      (South(12, 24, 0), East(45, 12, 0)), Moons.Titania, 10.km,
+      Independent(Brinker), Seq.empty,
+      Seq.empty) {
+      override def extraInfo = Seq(
+        ("Cult" -> "Messiah's Children"))
+    }
+  }
+  import UranusSystem._
+
   val forPlanet: Map[UUID, Seq[AtmosphericObject]] = Map(
     Planets.Earth.id -> Seq(Greenwich, KilimanjaroSE, KilimanjaroSEOrbital, NewYorkCity, Bejing, PanamaCity, Tashkent, Moscow, Hawaii, RioDeJaneiro, CapeTown),
     Planets.Mars.id -> Seq(OlympusCity, Tether, VallesNewShanghai, NoctisQianjiao, Elysium, Ashoka, NewDazhai, PilsenerCity, PathfinderGate, PathfinderCity, Anyang, Qurain, Kartika),
     Planets.Venus.id -> Seq(Octavia, AphroditePrime, Lucifer, TheShack, Parvarti, Shukra, Etemenanki, DeepReach),
     Planets.Mercury.id -> Seq(AlHamadhanj, Caloris18, Cannon, DelacroixShelley, Lumina),
-    Planets.Ceres.id -> Seq(Aventine, Wujec, Piazzi.atmos, Proserpina));
+    Planets.Ceres.id -> Seq(Aventine, Wujec, Piazzi.atmos, Proserpina),
+    Planets.Uranus.id -> Seq(Varuna));
 
   val forMoon: Map[UUID, Seq[AtmosphericObject]] = Map(
     Moons.Luna.id -> Seq(Erato, Nectar, Shackle, CleverHands, TheColony, Feynman, Muir, NewMumbai),
@@ -494,5 +571,7 @@ object Settlements {
     Moons.Mimas.id -> Seq(HarmoniusAnarchy),
     Moons.Rhea.id -> Seq(Habitats.KronosCluster.Atmos),
     Moons.Tethys.id -> Seq(Godwinhead),
-    Moons.Titan.id -> Seq(Nyhavn, Aarhus, NewQuebec, Huvudskar, Longueil, Stykkisholmur, CommonwealthHub.Atmos));
+    Moons.Titan.id -> Seq(Nyhavn, Aarhus, NewQuebec, Huvudskar, Longueil, Stykkisholmur, CommonwealthHub.Atmos),
+    Moons.Oberon.id -> Seq(ChatNoir, Lear, Cobweb),
+    Moons.Titania.id -> Seq(Crossing, Lyod, Xue, LakeEmma, Ursula));
 }

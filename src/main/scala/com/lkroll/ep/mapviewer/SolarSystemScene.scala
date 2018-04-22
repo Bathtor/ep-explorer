@@ -13,7 +13,8 @@ import scalatags.JsDom.all._
 import scala.util.Random
 
 import graphics._
-import data.{ Planets, Stars, Habitats, AstronomicalObject }
+import data.{ Planets, Stars, Habitats }
+import datamodel.AstronomicalObject
 import scribe.Logging
 
 import squants._

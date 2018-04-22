@@ -1,4 +1,4 @@
-package com.lkroll.ep.mapviewer.data
+package com.lkroll.ep.mapviewer.datamodel
 
 import squants.time._
 
@@ -44,7 +44,7 @@ final class TimeScale(val t: Time, val standard: TimeStandard) {
 }
 
 object TimeScale {
-  private[data] def apply(n: Time, standard: TimeStandard) = new TimeScale(n, standard);
+  private[datamodel] def apply(n: Time, standard: TimeStandard) = new TimeScale(n, standard);
 }
 
 object Years extends TimeUnit {

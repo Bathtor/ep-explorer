@@ -1,6 +1,6 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import com.lkroll.ep.mapviewer.data.{ UndergroundSettlement => USData, AstronomicalObject }
+import com.lkroll.ep.mapviewer.datamodel.{ UndergroundSettlement => USData, AstronomicalObject }
 import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
 import org.denigma.threejs._
 

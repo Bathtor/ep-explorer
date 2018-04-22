@@ -14,7 +14,7 @@ import scalatags.JsDom.all._
 import scala.util.Random
 
 import graphics.{ IntersectionPriorities, GraphicsObject }
-import data.{ AstronomicalObject }
+import datamodel.{ AstronomicalObject }
 
 import squants.time._
 
