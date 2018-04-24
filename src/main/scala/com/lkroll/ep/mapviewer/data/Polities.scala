@@ -12,25 +12,28 @@ object Polities {
   implicit class SinglePolityAllegiance(val polity: Polity) extends Allegiance {
     override def description = polity.adjective;
   }
-  implicit class MultiPolityAllegiance(val polities: Seq[Polity]) extends Allegiance {
+  implicit class MultiPolityAllegiance(polities: Seq[Polity]) extends Allegiance {
     override def description = polities.map { p => p.adjective }.mkString(" / ");
   }
-  case class Independent(val polities: Polity*) extends Allegiance {
+  case class Independent(polities: Polity*) extends Allegiance {
     override def description = if (polities.isEmpty) { "Independent" } else {
       val pS = polities.map(_.adjective).mkString("(", " / ", ")");
       s"Independent $pS"
     };
   }
-  case class IndependentNamed(val name: String) extends Allegiance {
+  case class IndependentNamed(name: String) extends Allegiance {
     override def description = s"Independent($name)";
   }
   case class AA(val polity: Polity) extends Allegiance {
     override def description = s"${Autonomist.designation} (${polity.adjective})";
   }
-  case class CorpAsPolity(val corp: Corp) extends Polity(corp.name, corp.name, corp.name)
+  case class CorpAsPolity(corp: Corp) extends Polity(corp.name, corp.name, corp.name)
 
-  case class Protectorate(val protector: Polity, val protectee: Polity) extends Allegiance {
+  case class Protectorate(protector: Polity, protectee: Polity) extends Allegiance {
     override def description = s"${protectee.adjective} (${protector.adjective} Protectorate)";
+  }
+  case class CriminalNamed(name: String) extends Allegiance {
+    override def description = s"Criminal($name)";
   }
 
   object IndependentPolity extends Polity("Independent", "Independent", "Independent")
@@ -38,6 +41,7 @@ object Polities {
   object Private extends Polity("Private", "Private", "Private")
   object UnkownPolity extends Polity("Unkown", "Unkown", "Unkown")
   object Contested extends IndependentNamed("Contested");
+  object IHypercorp extends IndependentNamed("Hypercorp");
 
   // Major
   object Argonauts extends Polity("Argonauts", "Argonaut", "Argonaut")
@@ -55,8 +59,10 @@ object Polities {
   object CarmeCompact extends Polity("Carme Compact", "Carme Compact", "Compact")
   object CatholicChurch extends Polity("Roman Catholic Church", "Catholic Church", "Catholic")
   object Europan extends Polity("Europa", "Europan", "Europan")
+  object Exhumans extends Polity("Exhumans", "Exhuman", "Exhuman")
   object Hyperelite extends Polity("Hyperelites", "Hyperelite", "Hyperelite")
   object Israeli extends Polity("Israel", "Israeli", "Israeli")
+  object Mercurials extends Polity("Mercurials", "Mercurial", "Mercurial")
   object Preservationists extends Polity("Preservationists", "Preservationist", "Preservationist")
   object Scum extends Polity("Scum", "Scum", "Scum")
   object Sifter extends Polity("Sifters", "Sifter", "Sifter")

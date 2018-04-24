@@ -2,7 +2,7 @@ enablePlugins(WorkbenchPlugin)
 enablePlugins(ScalaJSPlugin)
 enablePlugins(BuildInfoPlugin)
 
-name := "Map Viewer"
+name := "EPMapViewer"
 
 organization := "com.lkroll.ep"
 

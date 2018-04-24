@@ -3,7 +3,7 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.lkroll.ep.mapviewer.datamodel.{ Habitat => HabitatData, Orbiting, ONeillCylinder, HamiltonCylinder, BernalSphere, ModifiedBernalSphere, Cluster, Swarm, Torus, ModifiedTorus, Asteroid, AstronomicalObject, UnkownStation, NuestroShell, UniqueStation };
+import com.lkroll.ep.mapviewer.datamodel.{ Habitat => HabitatData, Orbiting, Disc, ONeillCylinder, HamiltonCylinder, BernalSphere, ModifiedBernalSphere, Cluster, Swarm, Torus, ModifiedTorus, Asteroid, AstronomicalObject, UnkownStation, NuestroShell, UniqueStation, ProcessorLocus };
 import com.lkroll.ep.mapviewer.data.Habitats
 import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
 
@@ -115,6 +115,9 @@ object Habitat extends Logging {
       case Cluster => { // FIXME come up with a better way to represent clusters
         new CylindricalHabitat(habitat, habitat.asInstanceOf[Orbiting], 100.0 * Main.scale, 10.0 * Main.scale);
       }
+      case ProcessorLocus => { // FIXME come up with a better way to represent clusters
+        new CylindricalHabitat(habitat, habitat.asInstanceOf[Orbiting], 100.0 * Main.scale, 10.0 * Main.scale);
+      }
       case Swarm => { // FIXME come up with a better way to represent swarms
         new SphericalHabitat(habitat, habitat.asInstanceOf[Orbiting], 100.0 * Main.scale)
       }
@@ -134,6 +137,9 @@ object Habitat extends Logging {
         new SphericalHabitat(habitat, habitat.asInstanceOf[Orbiting], radius.toKilometers * Main.scale)
       }
       case Torus(radius, thickness) => {
+        new ToroidalHabitat(habitat, habitat.asInstanceOf[Orbiting], radius.toKilometers * Main.scale, thickness.toKilometers * Main.scale)
+      }
+      case Disc(radius, thickness) => {
         new ToroidalHabitat(habitat, habitat.asInstanceOf[Orbiting], radius.toKilometers * Main.scale, thickness.toKilometers * Main.scale)
       }
       case ModifiedTorus(radius, thickness) => {

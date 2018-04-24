@@ -20,6 +20,7 @@ object Languages {
   object Czech extends LangName("Czech")
   object Dutch extends LangName("Dutch")
   object English extends LangName("English")
+  object Estonian extends LangName("Estonian")
   object Farsi extends LangName("Farsi")
   object Finnish extends LangName("Finnish")
   object French extends LangName("French")

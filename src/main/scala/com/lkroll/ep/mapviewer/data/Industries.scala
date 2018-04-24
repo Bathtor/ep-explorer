@@ -45,6 +45,7 @@ object Industries {
   object NanoTechnology extends IndustryName("Nano Technology")
   object Nanofabrication extends IndustryName("Nanofabrication")
   object Pharmaceuticals extends IndustryName("Pharmaceuticals")
+  object Piracy extends IndustryName("Piracy")
   object Politics extends IndustryName("Politics")
   object PowerGeneration extends IndustryName("Power Generation")
   object Prison extends IndustryName("Prison")

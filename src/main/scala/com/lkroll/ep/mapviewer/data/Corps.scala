@@ -24,6 +24,7 @@ object Corps {
   object ExoTech extends Corp("ExoTech")
   object Experia extends Corp("Experia")
   object FaJing extends Corp("Fa Jing")
+  object Gonin extends Corp("Go-nin")
   object DirectAction extends Corp("Direct Action")
   object JaehonOffworld extends Corp("Jaehon Offworld")
   object MultipleCorps extends Corp("Multiple Corps")

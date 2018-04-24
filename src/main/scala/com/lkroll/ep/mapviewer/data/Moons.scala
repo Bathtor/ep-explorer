@@ -226,14 +226,7 @@ object Moons {
     val rotation = ECR(61.2572637.ºd, 299.36.º, 41.17.º, 296.53.º, true);
   }
 
-  object Proteus extends Moon("Proteus", UUID.randomUUID(),
-    Kilograms(4.4e19), Kilometers(21), Planets.Neptune, 8) with Orbiting with Rotating {
-    val orbit = VariableOrbit(0.00053, Kilometers(117647), Degrees(30.607975),
-      ConstantAngle(Degrees(0.0)),
-      ConstantAngle(Degrees(0.0)),
-      Degrees(0.0), mass, Planets.Neptune);
-    val rotation = ECR(320.7654228.ºd, 299.27.º, 42.91.º, 93.38.º);
-  }
+  // Proteus moved to Habitats
 
   object Naiad extends Moon("Naiad", UUID.randomUUID(),
     Kilograms(1.9e17), Kilometers(33), Planets.Neptune, 3) with Orbiting with Rotating {
@@ -368,7 +361,7 @@ object Moons {
     Planets.Jupiter.name -> Seq(Io, Europa, Ganymede, Callisto),
     Planets.Saturn.name -> Seq(Titan, Pandora, Iapetus, Rhea, Tethys, Enceladus, Dione, Mimas),
     Planets.Uranus.name -> Seq(Miranda, Ariel, Umbriel, Titania, Oberon),
-    Planets.Neptune.name -> Seq(Nereid, Triton, Proteus, Naiad, Thalassa, Despina, Galatea),
+    Planets.Neptune.name -> Seq(Nereid, Triton, Naiad, Thalassa, Despina, Galatea),
     Planets.Pluto.name -> Seq(Charon, Styx, Nix, Kerberos, Hydra),
     Planets.Eris.name -> Seq(Dysnomia));
   val colours = Map(
@@ -377,7 +370,7 @@ object Moons {
     Io.name -> 0xcfc063, Europa.name -> 0x848381, Ganymede.name -> 0x848381, Callisto.name -> 0x848381,
     Titan.name -> 0xcfc063, Iapetus.name -> 0x848381, Rhea.name -> 0x848381, Tethys.name -> 0x848381, Enceladus.name -> 0x848381, Dione.name -> 0x848381, Mimas.name -> 0x848381,
     Miranda.name -> 0x848381, Ariel.name -> 0x848381, Umbriel.name -> 0x646361, Titania.name -> 0x848381, Oberon.name -> 0x848381,
-    Nereid.name -> 0x848381, Triton.name -> 0x848381, Proteus.name -> 0x848381, Naiad.name -> 0x848381, Thalassa.name -> 0x848381, Despina.name -> 0x848381, Galatea.name -> 0x848381,
+    Nereid.name -> 0x848381, Triton.name -> 0x848381, Naiad.name -> 0x848381, Thalassa.name -> 0x848381, Despina.name -> 0x848381, Galatea.name -> 0x848381,
     Charon.name -> 0x848381, Styx.name -> 0x848381, Nix.name -> 0x848381, Kerberos.name -> 0x848381, Hydra.name -> 0x848381,
     Dysnomia.name -> 0x848381);
 }

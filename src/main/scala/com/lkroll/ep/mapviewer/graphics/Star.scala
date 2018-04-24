@@ -3,10 +3,11 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.lkroll.ep.mapviewer.datamodel.{ Star => StarData, AstronomicalObject, Orbiting, Rotating, ExtraUnits };
+import com.lkroll.ep.mapviewer.datamodel.{ Star => StarData, AstronomicalObject, Orbiting, Rotating, ExtraUnits, ConstantOriginOrbit };
 import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer };
 
 import scala.scalajs.js
+import js.JSConverters._
 
 import squants._
 import squants.space._
@@ -61,7 +62,10 @@ class Star(val star: StarData) extends GraphicsObject with Overlayed {
     overlay.moveTo(pos);
   }
 
+  val markers = createDistanceMarkers();
+
   def addToScene(scene: SceneContainer) {
+    markers.map(m => scene.addObject(this, m));
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
     scene.addObject(this, light);
@@ -84,6 +88,34 @@ class Star(val star: StarData) extends GraphicsObject with Overlayed {
   override def data: Option[AstronomicalObject] = Some(star);
 
   override def boundingRadius: Double = radius;
+
+  private def createDistanceMarkers(): List[Line] = {
+    val subAU = (1 until 10).map(i => (i.toDouble / 10.0).AU);
+    val singleAU = (1 until 10).map(i => (i.toDouble).AU);
+    val deciAU = (1 until 10).map(i => (i.toDouble * 10.0).AU);
+    val centAU = (1 until 10).map(i => (i.toDouble * 100.0).AU);
+    val millAU = (1 until 10).map(i => (i.toDouble * 1000.0).AU);
+    val all = List(subAU, singleAU, deciAU, centAU, millAU).flatten;
+    all.map(createDistanceMarker(_))
+  }
+  private def createDistanceMarker(distance: Length): Line = {
+    val co = ConstantOriginOrbit(0.0, distance, 0.0.º, 0.0.º, 0.0.º, 0.0.º, star.mass, 1.0.kg);
+    val path = co.path(360);
+    val curve = new CatmullRomCurve3(path.toJSArray);
+    val curveGeometry = {
+      val geom = new Geometry();
+      geom.vertices = curve.getPoints(360.0).map { p => p.asInstanceOf[Vector3] };
+      geom
+    };
+    val lineParams = js.Dynamic.literal(
+      color = 0x202020).asInstanceOf[LineBasicMaterialParameters]
+
+    val curveMaterial = new LineBasicMaterial(lineParams);
+
+    // Create the final Object3d to add to the scene
+    val ellipse = new Line(curveGeometry, curveMaterial);
+    ellipse
+  }
 
 }
 

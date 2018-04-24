@@ -552,13 +552,53 @@ object Settlements {
   }
   import UranusSystem._
 
+  object NeptunianSystem {
+    // Neptune
+    object Mushroom extends Aerostat("Mushroom", UUID.randomUUID(),
+      (North(5, 5, 0), East(5, 5, 0)), 20.0.km, Planets.Neptune, // without surface, height makes little sense...it should be 3atm
+      Independent(Brinker), Seq(Cantonese, English, Russian),
+      Seq.empty) {
+      override def extraInfo = Seq(
+        ("Population" -> "1200"));
+    }
+    object Jaques extends Aerostat("Jaques", UUID.randomUUID(),
+      (North(5, 5, 0), East(5, 5, 0)), 0.0.km, Planets.Neptune, // without surface, height makes little sense...it should be at 50atm
+      Independent(Brinker), Seq.empty,
+      Seq.empty) {
+      override def extraInfo = Seq(
+        ("Population" -> "5000"));
+    }
+  }
+  import NeptunianSystem._
+
+  object ErisSystem {
+    object Torii extends UndergroundSettlement("Torii", UUID.randomUUID(),
+      (South(0, 0, 0), East(0, 0, 0)), 1.0.km, Planets.Eris,
+      Hypercorp(Gonin), Seq(Japanese),
+      Seq(Gatecrashing)) {
+      override def extraInfo = Seq(
+        ("Population" -> "20 000"),
+        ("Note" -> "Location of Discord Gate"))
+    }
+    object Pharos extends UndergroundSettlement("Pharos", UUID.randomUUID(),
+      (South(0, 0, 0), East(0, 0, 0)), 1.0.km, Moons.Dysnomia,
+      Ultimates, Seq(English, Greek),
+      Seq(Security)) {
+      override def extraInfo = Seq(
+        ("Population" -> "Unknown"))
+    }
+  }
+  import ErisSystem._
+
   val forPlanet: Map[UUID, Seq[AtmosphericObject]] = Map(
     Planets.Earth.id -> Seq(Greenwich, KilimanjaroSE, KilimanjaroSEOrbital, NewYorkCity, Bejing, PanamaCity, Tashkent, Moscow, Hawaii, RioDeJaneiro, CapeTown),
     Planets.Mars.id -> Seq(OlympusCity, Tether, VallesNewShanghai, NoctisQianjiao, Elysium, Ashoka, NewDazhai, PilsenerCity, PathfinderGate, PathfinderCity, Anyang, Qurain, Kartika),
     Planets.Venus.id -> Seq(Octavia, AphroditePrime, Lucifer, TheShack, Parvarti, Shukra, Etemenanki, DeepReach),
     Planets.Mercury.id -> Seq(AlHamadhanj, Caloris18, Cannon, DelacroixShelley, Lumina),
     Planets.Ceres.id -> Seq(Aventine, Wujec, Piazzi.atmos, Proserpina),
-    Planets.Uranus.id -> Seq(Varuna));
+    Planets.Uranus.id -> Seq(Varuna),
+    Planets.Neptune.id -> Seq(Mushroom, Jaques),
+    Planets.Eris.id -> Seq(Torii));
 
   val forMoon: Map[UUID, Seq[AtmosphericObject]] = Map(
     Moons.Luna.id -> Seq(Erato, Nectar, Shackle, CleverHands, TheColony, Feynman, Muir, NewMumbai),
@@ -569,9 +609,10 @@ object Settlements {
     Moons.Dione.id -> Seq(Thoroughgood),
     Moons.Enceladus.id -> Seq(Profunda),
     Moons.Mimas.id -> Seq(HarmoniusAnarchy),
-    Moons.Rhea.id -> Seq(Habitats.KronosCluster.Atmos),
+    Moons.Rhea.id -> Seq(HabitatsRimward.KronosCluster.Atmos),
     Moons.Tethys.id -> Seq(Godwinhead),
     Moons.Titan.id -> Seq(Nyhavn, Aarhus, NewQuebec, Huvudskar, Longueil, Stykkisholmur, CommonwealthHub.Atmos),
     Moons.Oberon.id -> Seq(ChatNoir, Lear, Cobweb),
-    Moons.Titania.id -> Seq(Crossing, Lyod, Xue, LakeEmma, Ursula));
+    Moons.Titania.id -> Seq(Crossing, Lyod, Xue, LakeEmma, Ursula),
+    Moons.Dysnomia.id -> Seq(Pharos));
 }

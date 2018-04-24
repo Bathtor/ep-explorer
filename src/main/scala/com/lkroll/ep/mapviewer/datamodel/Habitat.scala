@@ -31,6 +31,10 @@ case object Cluster extends StationType {
   override def name = "Cluster"
 }
 
+case object ProcessorLocus extends StationType {
+  override def name = "Processor Locus"
+}
+
 case object Swarm extends StationType {
   override def name = "Nomadic Swarm"
 }
@@ -45,6 +49,10 @@ case class UniqueStation(_name: String) extends StationType {
 
 case class Torus(val radius: Length, val thickness: Length) extends StationType {
   override def name = "Torus"
+}
+
+case class Disc(val radius: Length, val thickness: Length) extends StationType {
+  override def name = "Disc"
 }
 
 case class ModifiedTorus(val radius: Length, val thickness: Length) extends StationType {
