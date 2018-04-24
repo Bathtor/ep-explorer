@@ -27,11 +27,8 @@ To build and run the project, check it out from git, cd into the project folder 
 ## TODO
 
 ### Definitely
-Add habitats and settlements for and around
-- Neptune
-- Pluto
-- Eris
-- Kuiper Belt
+- Add labels to distance indicator
+- Calculate light lag
 
 ### Nice to have
 - Travel Calc
