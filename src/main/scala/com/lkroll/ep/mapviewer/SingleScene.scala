@@ -103,6 +103,7 @@ class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement
   override def setOffset(t: Time): Unit = {
     time = t;
   }
+  override def currentTime: Time = time;
 
   override def animate() {
     if (running) {
@@ -117,5 +118,7 @@ class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement
   override def track(obj: graphics.GraphicsObject): Unit = {
     ctrls.track(obj);
   }
-
+  override def tracked: Option[graphics.GraphicsObject] = {
+    Some(ctrls.tracked)
+  }
 }

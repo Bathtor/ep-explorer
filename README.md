@@ -27,8 +27,6 @@ To build and run the project, check it out from git, cd into the project folder 
 ## TODO
 
 ### Definitely
-- Add labels to distance indicator
-- Calculate light lag
 
 ### Nice to have
 - Travel Calc

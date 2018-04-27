@@ -44,6 +44,8 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
   val sun = Star.fromStarData(Stars.Sol);
   sun.moveTo(centre);
   sun.addToScene(this);
+  val markers = DistanceMarkers.default();
+  markers.map(_.addToScene(this));
 
   planets.foreach(p => p.addToScene(this))
   habitats.foreach(p => p.addToScene(this))
@@ -114,6 +116,7 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
   override def setOffset(t: Time): Unit = {
     time = t;
   }
+  override def currentTime: Time = time;
 
   override def animate() {
     if (running) {
@@ -127,5 +130,8 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
 
   override def track(obj: graphics.GraphicsObject): Unit = {
     ctrls.track(obj);
+  }
+  override def tracked: Option[graphics.GraphicsObject] = {
+    Some(ctrls.tracked)
   }
 }

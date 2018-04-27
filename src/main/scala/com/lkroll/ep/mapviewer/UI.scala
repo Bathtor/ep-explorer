@@ -56,6 +56,16 @@ object UI extends Logging {
   private val data = datalist(id := "data").render;
   private val search = input(list := "data").render;
   private val track = button(`type` := "button", name := "track", "track").render;
+  private def currentlyTracked: Option[(AstronomicalObject, graphics.GraphicsObject)] = Main.scene match {
+    case Some(scene: Tracking) =>
+      scene.tracked.flatMap(g => g.data.map(a => (a, g)))
+    case _ => None
+  }
+  private def currentlyTime: Option[Time] = Main.scene match {
+    case Some(scene: TimeAnimatedScene) =>
+      Some(scene.currentTime)
+    case _ => None
+  }
   track.onclick = (e: MouseEvent) => {
     if (!search.value.isEmpty()) {
       searchObject(search.value) match {
@@ -244,12 +254,13 @@ object UI extends Logging {
       }
       case _ => // ignore
     }
-    obj match {
+    val orbitO = obj match {
       case orbiter: Orbiting => {
         infoB += ("Orbital Period" -> format(orbiter.orbit.orbitalPeriod.toDays, "days(TT)"));
+        Some(orbiter)
       }
-      case _ => // ignore
-    }
+      case _ => None // ignore
+    };
     obj match {
       case rot: Rotating => {
         infoB += ("Rotation Period" -> format(rot.rotation.rotationPeriod.toDays, "days(TT)"));
@@ -259,6 +270,31 @@ object UI extends Logging {
     infoB ++= obj.extraInfo.map { case (key, value) => (key -> stringFrag(value)) }; // convert to fragment type
     obj.description.foreach { d =>
       infoB += ("Description" -> d);
+    }
+    for {
+      (ao: AstronomicalObject with Orbiting, go) <- this.currentlyTracked;
+      oo <- orbitO;
+      t <- this.currentlyTime
+    } yield {
+      val dist = Distance.calc(t, ao, oo);
+      val distI = dist.instant;
+      val distS = if (distI.toKilometers > 999999.0) {
+        format(distI.toAstronomicalUnits, "AU")
+      } else {
+        format(distI.toKilometers, "km")
+      };
+      val lagI = dist.instantLag;
+      val lagS = if (lagI.toSeconds < 60.0) {
+        format(lagI.toSeconds, "s")
+      } else if (lagI.toMinutes < 60.0) {
+        format(lagI.toMinutes, "min")
+      } else if (lagI.toHours < 24.0) {
+        format(lagI.toHours, "h")
+      } else {
+        format(lagI.toDays, "days")
+      };
+      infoB += (s"Distance to ${ao.name}" -> distS);
+      infoB += (s"Light Lag to ${ao.name}" -> lagS);
     }
     infoB.result()
   }

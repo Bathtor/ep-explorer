@@ -8,11 +8,11 @@ import com.lkroll.ep.mapviewer.datamodel.AstronomicalObject
 import squants.Time
 
 trait GraphicsObject {
-  def moveTo(pos: Vector3);
+  def moveTo(pos: Vector3): Unit;
 
-  def addToScene(scene: SceneContainer);
+  def addToScene(scene: SceneContainer): Unit;
 
-  def update(time: Time);
+  def update(time: Time): Unit;
 
   def children: List[GraphicsObject];
 

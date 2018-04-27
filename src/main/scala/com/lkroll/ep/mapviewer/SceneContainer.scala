@@ -52,11 +52,15 @@ trait SceneContainer {
     scene.add(mesh);
   }
 
+  def addCSSObject(obj: GraphicsObject, mesh: Object3D) {
+    scene.add(mesh);
+  }
+
   def distance: Double = 2000.0 * Main.scaleDistance;
 
-  lazy val renderer: WebGLRenderer = this.initRenderer()
+  lazy val renderer: WebGLRenderer = this.initRenderer();
 
-  lazy val camera = initCamera()
+  lazy val camera = initCamera();
 
   def aspectRatio: Double = width / height
 

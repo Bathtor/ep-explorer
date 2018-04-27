@@ -8,6 +8,7 @@ trait TimeAnimatedScene {
   def stop(): Unit;
   def setSpeed(t: Time): Unit;
   def setOffset(t: Time): Unit;
+  def currentTime: Time;
 }
 
 trait Selecting {
@@ -15,5 +16,6 @@ trait Selecting {
 }
 
 trait Tracking {
-  def track(obj: graphics.GraphicsObject); Unit;
+  def track(obj: graphics.GraphicsObject): Unit;
+  def tracked: Option[graphics.GraphicsObject];
 }

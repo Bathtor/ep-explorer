@@ -4,10 +4,12 @@ import squants.Mass;
 import squants.space.Degrees;
 
 import org.denigma.threejs.Matrix3
+import squants.motion._
 
 object Constants {
   // Physical
   val G = 6.67408e-11; // gravitational constant in m^3/(kg*s^2)
+  val c = MetersPerSecond(299792458); // speed of light in vacuum
   // Time
   val secondsPerDay = 86400; //24.0*60.0*60.0;
   val daysPerYear = 365.25; // approximately
