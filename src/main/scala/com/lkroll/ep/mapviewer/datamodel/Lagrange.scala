@@ -22,8 +22,11 @@ class L12(val largerBody: Orbiting, val smallerBody: Orbiting, val sign: Double)
     def M = parent.M;
     def eclipticMatrix = parent.eclipticMatrix;
 
-    def project(pos: Vector3): Unit = {
+    override def project(pos: Vector3): Unit = {
       parent.project(pos);
+    }
+    override def path(segments: Int): Array[Vector3] = {
+      ??? // TODO
     }
   }
 
@@ -71,12 +74,15 @@ class L2(largerBody: Orbiting, smallerBody: Orbiting) extends L12(largerBody, sm
 class L3(val largerBody: Orbiting, val smallerBody: Orbiting) extends Lagrangian {
 
   case class OrbitalPosition(at: Time, pos: Vector3, posRaw: Vector3, r: Length, parent: OrbitalSnapshot) extends OrbitalSnapshot {
-    def v: Velocity = smallerBody.orbit.at(at).v; // FIXME: this is wrong, of course, only the angular velocity is the same
-    def M = parent.M;
-    def eclipticMatrix = parent.eclipticMatrix;
+    override def v: Velocity = smallerBody.orbit.at(at).v; // FIXME: this is wrong, of course, only the angular velocity is the same
+    override def M = parent.M;
+    override def eclipticMatrix = parent.eclipticMatrix;
 
-    def project(pos: Vector3): Unit = {
+    override def project(pos: Vector3): Unit = {
       parent.project(pos);
+    }
+    override def path(segments: Int): Array[Vector3] = {
+      ??? // TODO
     }
   }
 
@@ -121,12 +127,16 @@ class L3(val largerBody: Orbiting, val smallerBody: Orbiting) extends Lagrangian
 class L45(val largerBody: Orbiting, val smallerBody: Orbiting, val backwards: Boolean) extends Lagrangian {
 
   case class OrbitalPosition(at: Time, pos: Vector3, posRaw: Vector3, parent: OrbitalSnapshot) extends OrbitalSnapshot {
-    def v: Velocity = smallerBody.orbit.at(at).v; // FIXME: this is wrong, of course, only the angular velocity is the same
-    def M = parent.M;
-    def eclipticMatrix = parent.eclipticMatrix;
+    override def v: Velocity = smallerBody.orbit.at(at).v; // FIXME: this is wrong, of course, only the angular velocity is the same
+    override def M = parent.M;
+    override def eclipticMatrix = parent.eclipticMatrix;
 
-    def project(pos: Vector3): Unit = {
+    override def project(pos: Vector3): Unit = {
       parent.project(pos);
+    }
+
+    override def path(segments: Int): Array[Vector3] = {
+      ??? // TODO
     }
   }
 

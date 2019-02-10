@@ -15,7 +15,9 @@ import squants.space._
 
 import scribe.Logging
 
-abstract class Habitat(val habitat: HabitatData, val orbiter: Orbiting) extends GraphicsObject with Logging with Overlayed {
+abstract class Habitat(val habitat: HabitatData, val orbiter: Orbiting) extends GraphicsObject with Logging with Overlayed with OrbitalPath {
+
+  override def orbitColour: Int = 0x7679AF;
 
   protected def geometry: Geometry;
   protected def mesh: Mesh;
@@ -36,11 +38,13 @@ abstract class Habitat(val habitat: HabitatData, val orbiter: Orbiting) extends 
   override def addToScene(scene: SceneContainer) {
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
+    this.addEllipseToScene(scene);
   }
 
   override def update(t: Time) {
     val pos = orbiter.orbit.at(t).pos;
     moveTo(pos);
+    this.updateEllipse(t);
   }
 
   override def children = List.empty[GraphicsObject];

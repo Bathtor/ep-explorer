@@ -109,9 +109,11 @@ class PlanetSingle(val planet: PlanetData) extends PlanetObject {
   override def boundingRadius: Double = radius;
 }
 
-class Planet(val planet: PlanetData) extends PlanetObject with Logging with Overlayed {
+class Planet(val planet: PlanetData) extends PlanetObject with Logging with Overlayed with OrbitalPath {
 
-  val orbiter: Orbiting = planet match {
+  override def orbitColour: Int = 0xFCD19C;
+
+  override val orbiter: Orbiting = planet match {
     case o: Orbiting => o
     case _           => throw new RuntimeException("Planets better orbit^^")
   }
@@ -139,24 +141,6 @@ class Planet(val planet: PlanetData) extends PlanetObject with Logging with Over
 
   }
 
-  private val path = orbiter.orbit match {
-    case co: ConstantOriginOrbit => co.path(360)
-    case _                       => Array[Vector3]()
-  };
-  private val curve = new CatmullRomCurve3(path.toJSArray);
-  private val curveGeometry = {
-    val geom = new Geometry();
-    geom.vertices = curve.getPoints(360.0).map { p => p.asInstanceOf[Vector3] };
-    geom
-  };
-  private val lineParams = js.Dynamic.literal(
-    color = 0xFCD19C).asInstanceOf[LineBasicMaterialParameters]
-
-  private val curveMaterial = new LineBasicMaterial(lineParams);
-
-  // Create the final Object3d to add to the scene
-  private val ellipse = new Line(curveGeometry, curveMaterial);
-
   val moons = Moons.forPlanet.getOrElse(orbiter.name, Seq.empty).map { m => Moon.fromData(m) };
 
   lazy val children = {
@@ -179,13 +163,14 @@ class Planet(val planet: PlanetData) extends PlanetObject with Logging with Over
   override def addToScene(scene: SceneContainer) {
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
-    scene.addObject(this, ellipse);
+    this.addEllipseToScene(scene);
     children.foreach { c => c.addToScene(scene) }
   }
 
   override def update(t: Time) {
     val pos = orbiter.orbit.at(t).pos;
     moveTo(pos);
+    updateEllipse(t);
     val m = rotor.rotation.at(t).rotationMatrix;
     mesh.setRotationFromMatrix(m);
     children.foreach { c => c.update(t) }

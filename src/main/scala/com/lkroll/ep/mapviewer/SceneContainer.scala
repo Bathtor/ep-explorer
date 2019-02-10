@@ -51,6 +51,9 @@ trait SceneContainer {
   def addObject(obj: GraphicsObject, mesh: Object3D) {
     scene.add(mesh);
   }
+  def removeObject(mesh: Object3D) {
+    scene.remove(mesh);
+  }
 
   def addCSSObject(obj: GraphicsObject, mesh: Object3D) {
     scene.add(mesh);

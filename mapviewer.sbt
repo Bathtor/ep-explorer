@@ -6,9 +6,9 @@ name := "EPMapViewer"
 
 organization := "com.lkroll.ep"
 
-version := "0.5"
+version := "0.6"
 
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.8"
 
 //resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases")
 resolvers += Resolver.mavenLocal
@@ -43,6 +43,6 @@ EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.ManagedClas
 //bootSnippet := "com.larskroll.ep.mapviewer.Main().main();"
 //refreshBrowsers <<= refreshBrowsers.triggeredBy(fastOptJS in Compile)
 //localUrl := ("lkroll.sics.se", 12345)
-localUrl := ("192.168.0.104", 12345)
+localUrl := ("192.168.0.105", 12345)
 //localUrl := ("192.168.178.208", 12345)
 //localUrl := ("localhost", 12345)

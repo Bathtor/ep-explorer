@@ -101,9 +101,11 @@ class MoonSingle(val moon: MoonData) extends GraphicsObject {
   override def boundingRadius: Double = radius;
 }
 
-class Moon(val moon: MoonData) extends GraphicsObject with Overlayed {
+class Moon(val moon: MoonData) extends GraphicsObject with Overlayed with OrbitalPath {
 
-  val orbiter: Orbiting = moon match {
+  override def orbitColour: Int = 0x6CAF8F;
+
+  override val orbiter: Orbiting = moon match {
     case o: Orbiting => o
     case _           => throw new RuntimeException("Moons better orbit^^")
   }
@@ -141,12 +143,14 @@ class Moon(val moon: MoonData) extends GraphicsObject with Overlayed {
   override def addToScene(scene: SceneContainer) {
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
+    this.addEllipseToScene(scene);
     children.foreach { c => c.addToScene(scene) }
   }
 
   override def update(t: Time) {
     val pos = orbiter.orbit.at(t).pos;
     moveTo(pos);
+    this.updateEllipse(t);
     val m = rotor.rotation.at(t).rotationMatrix;
     mesh.setRotationFromMatrix(m);
     children.foreach { c => c.update(t) }

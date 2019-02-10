@@ -27,6 +27,7 @@ trait OrbitalSnapshot {
   def v: Velocity;
   def eclipticMatrix: Matrix4;
   def project(pos: Vector3): Unit;
+  def path(segments: Int): Array[Vector3];
 }
 
 trait Orbiting {
@@ -48,17 +49,18 @@ case class StaticOrbit(pos: Vector3) extends Orbit {
 
   case class OrbitalPosition(at: Time) extends OrbitalSnapshot {
     override def M: Angle = StaticOrbit.this.M;
-    def pos: Vector3 = StaticOrbit.this.pos;
-    def posRaw: Vector3 = StaticOrbit.this.pos;
-    def v: Velocity = StaticOrbit.this.v;
-    def eclipticMatrix: Matrix4 = StaticOrbit.this.eclipticMatrix;
-    def project(pos: Vector3): Unit = {
+    override def pos: Vector3 = StaticOrbit.this.pos;
+    override def posRaw: Vector3 = StaticOrbit.this.pos;
+    override def v: Velocity = StaticOrbit.this.v;
+    override def eclipticMatrix: Matrix4 = StaticOrbit.this.eclipticMatrix;
+    override def project(pos: Vector3): Unit = {
       pos.applyMatrix4(eclipticMatrix);
     }
+    override def path(segments: Int): Array[Vector3] = (1 to segments).map(_ => pos).toArray;
   }
 
-  def at(t: Time): OrbitalSnapshot = OrbitalPosition(t);
-  def orbitalPeriod: Time = Seconds(0.0);
+  override def at(t: Time): OrbitalSnapshot = OrbitalPosition(t);
+  override def orbitalPeriod: Time = Seconds(0.0);
 }
 
 /**
@@ -78,9 +80,20 @@ case class StaticOrbit(pos: Vector3) extends Orbit {
 case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val Omega: Angle, val omega: Angle, val M0: Angle, val m1: Mass, val m2: Mass, val retrograde: Boolean = false) extends Orbit {
 
   case class OrbitalPosition(at: Time, M: Angle, E: Angle, nu: Angle, pos: Vector3, posRaw: Vector3, v: Velocity) extends OrbitalSnapshot {
-    def eclipticMatrix = eulerMatrix;
-    def project(pos: Vector3) = {
+
+    override def eclipticMatrix = eulerMatrix;
+    override def project(pos: Vector3) = {
       pos.applyMatrix4(eulerMatrix);
+    }
+
+    override def path(segments: Int): Array[Vector3] = {
+      val inc = 360.0 / segments.doubleValue();
+      val points = (0 to segments) map { i =>
+        Degrees(i.doubleValue() * inc);
+      } map { M =>
+        positionFromM(M)
+      };
+      points.toArray
     }
   }
 
@@ -236,16 +249,6 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
     positionFromE(E)
   }
 
-  def path(segments: Int): Array[Vector3] = {
-    val inc = 360.0 / segments.doubleValue();
-    val points = (0 to segments) map { i =>
-      Degrees(i.doubleValue() * inc);
-    } map { M =>
-      positionFromM(M)
-    };
-    points.toArray
-  }
-
 }
 
 /**
@@ -266,10 +269,30 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
 case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: Angle, val omega: Angle, val M0: Angle, val m1: Mass, val centre: Orbiting, val retrograde: Boolean = false) extends Orbit {
 
   case class OrbitalPosition(at: Time, M: Angle, E: Angle, nu: Angle, pos: Vector3, posRaw: Vector3, v: Velocity, parentOrbit: OrbitalSnapshot) extends OrbitalSnapshot {
-    def eclipticMatrix = eulerMatrix;
-    def project(pos: Vector3) = {
+    override def eclipticMatrix = eulerMatrix;
+    override def project(pos: Vector3) = {
       parentOrbit.project(pos);
       pos.applyMatrix4(eulerMatrix);
+    }
+
+    private def positionFromE(E: Angle): Vector3 = {
+      val raw = rawPositionFromE(E);
+      scaledPosition(raw, parentOrbit);
+    }
+
+    private def positionFromM(M: Angle): Vector3 = {
+      val E = eccentricAnomaly(M);
+      positionFromE(E)
+    }
+
+    override def path(segments: Int): Array[Vector3] = {
+      val inc = 360.0 / segments.doubleValue();
+      val points = (0 to segments) map { i =>
+        Degrees(i.doubleValue() * inc);
+      } map { M =>
+        positionFromM(M)
+      };
+      points.toArray
     }
   }
 
@@ -372,26 +395,6 @@ case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
     return pos;
   }
 
-  //    private def positionFromE(E: Angle): Vector3 = {
-  //        val raw = rawPositionFromE(E);
-  //        scaledPosition(raw)
-  //    }
-  //
-  //    private def positionFromM(M: Angle): Vector3 = {
-  //        val E = eccentricAnomaly(M);
-  //        positionFromE(E)
-  //    }
-  //
-  //    def path(segments: Int): Array[Vector3] = {
-  //        val inc = 360.0 / segments.doubleValue();
-  //        val points = (0 to segments) map { i =>
-  //            Degrees(i.doubleValue() * inc);
-  //        } map { M =>
-  //            positionFromM(M)
-  //        };
-  //        points.toArray
-  //    }
-
 }
 
 sealed trait Progression {
@@ -440,9 +443,28 @@ case class ConstantAngle(val a0: Angle) extends VariableAngle {
  */
 case class VariableOrbit(val e: Double, val a: Length, val i: Angle, val Omega: VariableAngle, val omega: VariableAngle, val M0: Angle, val m1: Mass, val centre: Orbiting, val retrograde: Boolean = false) extends Orbit {
 
-  case class OrbitalPosition(at: Time, Omega: Angle, omega: Angle, eclipticMatrix: Matrix4, M: Angle, E: Angle, nu: Angle, pos: Vector3, posRaw: Vector3, v: Velocity) extends OrbitalSnapshot {
-    def project(pos: Vector3) = {
+  case class OrbitalPosition(at: Time, Omega: Angle, omega: Angle, eclipticMatrix: Matrix4, M: Angle, E: Angle, nu: Angle, pos: Vector3, posRaw: Vector3, v: Velocity, centrePos: Vector3) extends OrbitalSnapshot {
+    override def project(pos: Vector3) = {
       pos.applyMatrix4(eclipticMatrix);
+    }
+    private def positionFromE(E: Angle): Vector3 = {
+      val raw = rawPositionFromE(E);
+      scaledPosition(raw, eclipticMatrix, centrePos)
+    }
+
+    private def positionFromM(M: Angle): Vector3 = {
+      val E = eccentricAnomaly(M);
+      positionFromE(E)
+    }
+
+    override def path(segments: Int): Array[Vector3] = {
+      val inc = 360.0 / segments.doubleValue();
+      val points = (0 to segments) map { i =>
+        Degrees(i.doubleValue() * inc);
+      } map { M =>
+        positionFromM(M)
+      };
+      points.toArray
     }
   }
 
@@ -461,7 +483,7 @@ case class VariableOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
 
   def orbitalPeriod = T;
 
-  private var parameterCache: OrbitalPosition = OrbitalPosition(Seconds(Double.NaN), null, null, null, null, null, null, null, null, null);
+  private var parameterCache: OrbitalPosition = OrbitalPosition(Seconds(Double.NaN), null, null, null, null, null, null, null, null, null, null);
 
   override def at(t: Time): OrbitalPosition = {
     if (!parameterCache.at.equals(t)) {
@@ -476,7 +498,7 @@ case class VariableOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
       val pos = scaledPosition(rawPos, eulerMatrix, centrePos);
       val r = radius(nu);
       val v = speed(r);
-      parameterCache = OrbitalPosition(t, Omega, omega, eulerMatrix, M, E, nu, pos, rawPos, v)
+      parameterCache = OrbitalPosition(t, Omega, omega, eulerMatrix, M, E, nu, pos, rawPos, v, centrePos)
     }
     return parameterCache;
   }

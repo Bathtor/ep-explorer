@@ -19,7 +19,7 @@ class DistanceMarker(val distance: Length) extends GraphicsObject {
   import ExtraUnits._;
 
   val co = ConstantOriginOrbit(0.0, distance, 0.0.º, 0.0.º, 0.0.º, 0.0.º, Stars.Sol.mass, 1.0.kg);
-  val path = co.path(360);
+  val path = co.at(Main.starttime).path(360);
   val curve = new CatmullRomCurve3(path.toJSArray);
   val curveGeometry = {
     val geom = new Geometry();
