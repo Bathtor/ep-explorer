@@ -378,7 +378,7 @@ object HabitatsSunward {
     Asteroid("Beehive", 5.1.km, 5.0.km, 5.1.km), Stars.Sol,
     Independent(Hyperelite), Seq(English, Hindi, Japanese, Mandarin),
     Seq()) with Orbiting {
-    val orbit = new ConstantOriginOrbit(0.01671025, 1.00000010.AU, 0.00006.º, 348.73936.º, 114.20783.º, 308.05281.º, this.mass, Stars.Sol.mass);
+    val orbit = new ConstantOriginOrbit(0.51485, 0.99774.AU, 19.805.º, 126.23.º, 43.831.º, 257.46.º, this.mass, Stars.Sol.mass);
     //override def extraInfo = Seq(("Owner" -> "Nazareno Batista"));
   }
 
@@ -387,35 +387,35 @@ object HabitatsSunward {
     Torus(Kilometers(0.845), Kilometers(0.065)), Stars.Sol,
     PlanetaryConsortium(ExoTech), Seq(English),
     Seq(Research, AI, ImplantDesign)) with Orbiting {
-    val orbit = new LissajousOrbit(SolMarsL5, 2500000.0.km, 250000.0.km, RotationPeriod(Days(6.0)), RotationPeriod(Days(6.0)), 3.229, Degrees(0.0), Degrees(0.0));
+    val orbit = new LissajousOrbit(SolMarsL5, 2500000.0.km, 25000.0.km, RotationPeriod(Days(6.0)), RotationPeriod(Days(1.0)), 3.229, Degrees(78.0), Degrees(56.0));
     //override def extraInfo = Seq(("Owner" -> "Nazareno Batista"));
   }
   object MemoryHole extends Habitat("Memory Hole", UUID.randomUUID(), Kilograms(2.4e10),
     Torus(Kilometers(0.845), Kilometers(0.065)), Stars.Sol,
     PlanetaryConsortium(StellarIntelligence), Seq(English, Mandarin),
     Seq(SignalAnalysis, Research)) with Orbiting {
-    val orbit = new LissajousOrbit(SolMarsL4, 2000000.0.km, 250000.0.km, RotationPeriod(Days(5.0)), RotationPeriod(Days(5.0)), 3.229, Degrees(0.0), Degrees(0.0));
+    val orbit = new LissajousOrbit(SolMarsL4, 200000.0.km, 76538.0.km, RotationPeriod(Days(5.0)), RotationPeriod(Days(3.0)), 2.229, Degrees(23.0), Degrees(87.0));
     //override def extraInfo = Seq(("Owner" -> "Nazareno Batista"));
   }
   object Moustier extends Habitat("Moustier", UUID.randomUUID(), Kilograms(1.2e10),
     ONeillCylinder(Kilometers(4), Kilometers(0.5)), Stars.Sol,
     Independent(), Seq(English, French, German),
     Seq(SignalAnalysis, Research)) with Orbiting {
-    val orbit = new LissajousOrbit(SolMarsL5, 2000000.0.km, 250000.0.km, RotationPeriod(Days(5.0)), RotationPeriod(Days(5.0)), 3.229, Degrees(90.0), Degrees(180.0));
+    val orbit = new LissajousOrbit(SolMarsL5, 1050000.0.km, 350000.0.km, RotationPeriod(Days(3.0)), RotationPeriod(Days(1.5)), 1.229, Degrees(90.0), Degrees(180.0));
     //override def extraInfo = Seq(("Owner" -> "Nazareno Batista"));
   }
   object QingLong extends Habitat("Qing Long", UUID.randomUUID(), Kilograms(2.4e11),
     ONeillCylinder(Kilometers(140), Kilometers(8)), Stars.Sol,
     Seq(Polities.PlanetaryConsortium, Triad), Seq(Cantonese, Korean, Mandarin, Vietnamese),
     Seq(Trade, AerospaceEngineering, Crime, Gambling, Entertainment)) with Orbiting {
-    val orbit = new LissajousOrbit(SolMarsL5, 5000000.0.km, 200000.0.km, RotationPeriod(Days(12.0)), RotationPeriod(Days(12.0)), 3.229, Degrees(90.0), Degrees(180.0));
+    val orbit = new LissajousOrbit(SolMarsL5, 5000000.0.km, 200000.0.km, RotationPeriod(Days(12.0)), RotationPeriod(Days(12.0)), 3.829, Degrees(40.0), Degrees(120.0));
     override def extraInfo = Seq(("Population" -> "2 million+"));
   }
   object Transix extends Habitat("Transix", UUID.randomUUID(), Kilograms(8.4e11),
     Cluster, Stars.Sol,
     PlanetaryConsortium(ComEx), Seq(English, Russian),
     Seq(Shipping, Entertainment)) with Orbiting {
-    val orbit = new LissajousOrbit(SolMarsL4, 5000000.0.km, 200000.0.km, RotationPeriod(Days(12.0)), RotationPeriod(Days(12.0)), 3.229, Degrees(90.0), Degrees(180.0));
+    val orbit = new LissajousOrbit(SolMarsL4, 5000000.0.km, 2000000.0.km, RotationPeriod(Days(12.0)), RotationPeriod(Days(8.0)), 2.929, Degrees(120.0), Degrees(10.0));
     //override def extraInfo = Seq(("Population" -> "2 million+"));
   }
 
@@ -424,14 +424,14 @@ object HabitatsSunward {
     ONeillCylinder(Kilometers(64), Kilometers(8)), Stars.Sol,
     Independent(Brinker), Seq(English, Japanese),
     Seq()) with Orbiting {
-    val orbit = new LissajousOrbit(SolEarthL3, 1250000.0.km, 100000.0.km, RotationPeriod(Days(6.0)), RotationPeriod(Days(6.0)), 3.229, Degrees(0.0), Degrees(0.0));
+    val orbit = new LissajousOrbit(SolEarthL3, 1250000.0.km, 100000.0.km, RotationPeriod(Days(6.0)), RotationPeriod(Days(0.5)), 4.229, Degrees(0.0), Degrees(0.0));
     //override def extraInfo = Seq(("Population" -> "2 million+"));
   }
   object PEX extends Habitat("PEX", UUID.randomUUID(), Kilograms(2.4e10),
     Torus(Kilometers(0.845), Kilometers(0.065)), Stars.Sol,
     Polities.PlanetaryConsortium, Seq(English, Mandarin),
     Seq(Finance, Trade)) with Orbiting {
-    val orbit = new LissajousOrbit(SolMarsL2, 60000.0.km, 30000.0.km, RotationPeriod(Days(5.0)), RotationPeriod(Days(5.0)), 3.229, Degrees(0.0), Degrees(0.0));
+    val orbit = new LissajousOrbit(SolMarsL2, 60000.0.km, 30000.0.km, RotationPeriod(Days(5.0)), RotationPeriod(Days(2.5)), 2.229, Degrees(0.0), Degrees(0.0));
     override def extraInfo = Seq(("Note" -> "This station houses the Planetary Stock Exchange"));
   }
 

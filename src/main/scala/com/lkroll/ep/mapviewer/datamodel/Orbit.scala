@@ -88,8 +88,8 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
 
     override def path(segments: Int): Array[Vector3] = {
       val inc = 360.0 / segments.doubleValue();
-      val points = (0 to segments) map { i =>
-        Degrees(i.doubleValue() * inc);
+      val points = (0 until segments) map { i =>
+        (Degrees(i.doubleValue() * inc) + M).normalise()
       } map { M =>
         positionFromM(M)
       };
@@ -287,8 +287,8 @@ case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
 
     override def path(segments: Int): Array[Vector3] = {
       val inc = 360.0 / segments.doubleValue();
-      val points = (0 to segments) map { i =>
-        Degrees(i.doubleValue() * inc);
+      val points = (0 until segments) map { i =>
+        (Degrees(i.doubleValue() * inc) + M).normalise()
       } map { M =>
         positionFromM(M)
       };
@@ -459,8 +459,8 @@ case class VariableOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
 
     override def path(segments: Int): Array[Vector3] = {
       val inc = 360.0 / segments.doubleValue();
-      val points = (0 to segments) map { i =>
-        Degrees(i.doubleValue() * inc);
+      val points = (0 until segments) map { i =>
+        (Degrees(i.doubleValue() * inc) + M).normalise()
       } map { M =>
         positionFromM(M)
       };

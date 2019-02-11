@@ -31,7 +31,7 @@ class LissajousOrbit(val centre: Orbit, val eclipticAmplitude: Length, val zAmpl
     }
 
     private def positionFromt(t: Time): Vector3 = {
-      val parent = centre.at(t);
+      val parent = centre.at(at);
       val M = Degrees(lambda.toDegreesPerSecond * t.toSeconds + phi.toDegrees).normalise();
       val x = -eclipticAmplitude.toKilometers * M.cos;
       val y = k * eclipticAmplitude.toKilometers * M.sin;
@@ -49,7 +49,7 @@ class LissajousOrbit(val centre: Orbit, val eclipticAmplitude: Length, val zAmpl
       val cycleMin = Math.min(cycleLambda, cycleNu);
       val twoCycles = cycleMin * 2.0;
       val inc = twoCycles / segments.toDouble;
-      val points = (0 to segments) map { i =>
+      val points = (0 until segments) map { i =>
         Seconds(i.toDouble * inc) + at
       } map { t =>
         positionFromt(t)
