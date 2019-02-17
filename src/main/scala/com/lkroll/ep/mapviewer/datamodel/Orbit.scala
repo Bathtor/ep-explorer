@@ -8,15 +8,85 @@ import squants.mass._
 
 import org.denigma.threejs._
 
-import java.util.UUID;
+import java.util.UUID
+import scala.collection.immutable.TreeMap
 
-import com.lkroll.ep.mapviewer.Main;
+import com.lkroll.ep.mapviewer.Main
+import com.lkroll.ep.mapviewer.utils.PosCache
 
 import ExtraUnits._
+
+sealed trait OrbitDistance {
+  def ::(s: OrbitDistance.Step): OrbitDistance;
+  def :+(s: OrbitDistance.Step): OrbitDistance;
+  def reverse: OrbitDistance;
+}
+object OrbitDistance {
+  case object Zero extends OrbitDistance {
+    override def ::(s: OrbitDistance.Step): OrbitDistance = Path(s);
+    override def :+(s: OrbitDistance.Step): OrbitDistance = Path(s);
+    override def reverse: OrbitDistance = Zero;
+  }
+  case object Similar extends OrbitDistance {
+    override def ::(s: OrbitDistance.Step): OrbitDistance = Path(s);
+    override def :+(s: OrbitDistance.Step): OrbitDistance = Path(s);
+    override def reverse: OrbitDistance = Similar;
+  }
+  case object Infinite extends OrbitDistance {
+    override def ::(s: OrbitDistance.Step): OrbitDistance = Infinite;
+    override def :+(s: OrbitDistance.Step): OrbitDistance = Infinite;
+    override def reverse: OrbitDistance = Infinite;
+  }
+  case class Path(path: List[Step]) extends OrbitDistance {
+    override def ::(s: OrbitDistance.Step): OrbitDistance = Path(s :: path);
+    override def :+(s: OrbitDistance.Step): OrbitDistance = Path(path :+ s);
+    override def reverse: OrbitDistance = Path(path.reverse);
+
+    def upLength: Int = path.filter(_ == Step.Up).length;
+    def downLength: Int = path.filter(_ == Step.Down).length;
+  }
+  object Path {
+    def apply(s: Step*): Path = Path(s.toList);
+  }
+
+  sealed trait Step;
+  object Step {
+    case object Up extends Step;
+    case object Down extends Step;
+  }
+
+  implicit def step2dist(s: Step): OrbitDistance = Path(s);
+  def min(l: List[OrbitDistance]): OrbitDistance = {
+    var shortest: OrbitDistance = Infinite;
+    var shortestLength: Int = Int.MaxValue;
+    l.foreach { dist =>
+      dist match {
+        case Zero => {
+          shortest = dist;
+          shortestLength = 0;
+        }
+        case Similar if shortestLength > 0 => {
+          shortest = dist;
+          shortestLength = 0;
+        }
+        case Path(p) if p.length < shortestLength => {
+          shortest = dist;
+          shortestLength = p.length;
+        }
+        case _ => () // no change
+      }
+    }
+    return shortest;
+  }
+}
+import OrbitDistance.step2dist
 
 trait Orbit {
   def at(t: Time): OrbitalSnapshot;
   def orbitalPeriod: Time;
+
+  def pathTo(other: Orbit): OrbitDistance;
+  def parents: List[Orbit];
 }
 
 trait OrbitalSnapshot {
@@ -61,6 +131,25 @@ case class StaticOrbit(pos: Vector3) extends Orbit {
 
   override def at(t: Time): OrbitalSnapshot = OrbitalPosition(t);
   override def orbitalPeriod: Time = Seconds(0.0);
+
+  override def pathTo(other: Orbit): OrbitDistance = {
+    other match {
+      case StaticOrbit(otherPos) => {
+        if (otherPos == pos) {
+          OrbitDistance.Zero
+        } else {
+          OrbitDistance.Similar // this one shouldn't occur, really
+        }
+      }
+      case _: ConstantOriginOrbit => {
+        OrbitDistance.Step.Down
+      }
+      case _ if !other.parents.isEmpty => {
+        OrbitDistance.min(other.parents.map(pathTo)) :+ OrbitDistance.Step.Down
+      }
+    }
+  }
+  override def parents: List[Orbit] = Nil;
 }
 
 /**
@@ -79,6 +168,15 @@ case class StaticOrbit(pos: Vector3) extends Orbit {
  */
 case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val Omega: Angle, val omega: Angle, val M0: Angle, val m1: Mass, val m2: Mass, val retrograde: Boolean = false) extends Orbit {
 
+  private lazy val anomalyCache: PosCache[Vector3] = {
+    PosCache.fill(720, (i: Int) => {
+      val M = (Degrees(i.doubleValue() * 0.5)).normalise();
+      val E = eccentricAnomaly(M);
+      val pos = positionFromE(E);
+      (M.toDegrees -> pos)
+    }, circular = true)
+  };
+
   case class OrbitalPosition(at: Time, M: Angle, E: Angle, nu: Angle, pos: Vector3, posRaw: Vector3, v: Velocity) extends OrbitalSnapshot {
 
     override def eclipticMatrix = eulerMatrix;
@@ -86,12 +184,24 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
       pos.applyMatrix4(eulerMatrix);
     }
 
+    private def positionFromM(M: Angle): Vector3 = {
+      //val E = eccentricAnomaly(M);
+      val mdeg = M.toDegrees;
+      val ((floorAngle, floorPos), (ceilAngle, ceilPos)) = anomalyCache.neighbours(mdeg);
+      val diffAngle = Math.min(ceilAngle - floorAngle, floorAngle - ceilAngle);
+      val floorDiff = Math.min(mdeg - floorAngle, floorAngle - mdeg) / diffAngle;
+      val path = ceilPos.clone();
+      path.sub(floorPos);
+      path.multiplyScalar(floorDiff);
+      val output = floorPos.clone();
+      output.add(path) // linear interpolate
+    }
+
     override def path(segments: Int): Array[Vector3] = {
       val inc = 360.0 / segments.doubleValue();
       val points = (0 until segments) map { i =>
-        (Degrees(i.doubleValue() * inc) + M).normalise()
-      } map { M =>
-        positionFromM(M)
+        val pathM = (Degrees(i.doubleValue() * inc) + M).normalise();
+        positionFromM(pathM)
       };
       points.toArray
     }
@@ -107,51 +217,6 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
     m.makeRotationFromEuler(new Euler(i.toRadians, 0.0, Omega.toRadians, "ZXY"));
     m2.makeRotationFromEuler(new Euler(0.0, 0.0, omega.toRadians, "ZXY"));
     m.multiply(m2);
-    //        m.set(Omega.cos * omega.cos - Omega.sin * i.cos * omega.sin,
-    //            Omega.sin * omega.cos + Omega.cos * i.cos * omega.sin,
-    //            i.sin * omega.sin,
-    //            0.0,
-    //            -Omega.cos * omega.sin - Omega.sin * i.cos * omega.cos,
-    //            -Omega.sin * omega.sin + Omega.cos * i.cos * omega.cos,
-    //            i.sin * omega.cos,
-    //            0.0,
-    //            i.sin * Omega.sin,
-    //            -i.sin * Omega.cos,
-    //            i.cos,
-    //            0.0,
-    //            0.0, 0.0, 0.0, 0.1);
-    //        m.set( // row 1
-    //            Omega.cos * omega.cos - Omega.sin * i.cos * omega.sin,
-    //            -Omega.cos * omega.sin - Omega.sin * i.cos * omega.cos,
-    //            i.sin * Omega.sin,
-    //            0.0,
-    //            // row 2
-    //            Omega.sin * omega.cos + Omega.cos * i.cos * omega.sin,
-    //            -Omega.sin * omega.sin + Omega.cos * i.cos * omega.cos,
-    //            -i.sin * omega.cos,
-    //            0.0,
-    //            // row 3
-    //            i.sin * omega.sin,
-    //            i.sin * Omega.cos,
-    //            i.cos,
-    //            0.0,
-    //            // row 4
-    //            0.0, 0.0, 0.0, 0.1);
-
-    //        val half = 1.0/2.0;
-    //        val phi1 = Omega;
-    //        val phi2 = i;
-    //        val phi3 = omega;
-    //        val phi2half = phi2*half;
-    //        val phi1p3half = half*(phi1+phi3);
-    //        val phi1m3half = half*(phi1-phi3);
-    //        val q = new Quaternion(
-    //                phi2half.cos*phi1p3half.cos,
-    //                phi2half.sin*phi1m3half.cos,
-    //                phi2half.sin*phi1m3half.sin,
-    //                phi2half.cos*phi1p3half.sin
-    //                );
-    //        m.makeRotationFromQuaternion(q);
     m
   };
 
@@ -249,6 +314,21 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
     positionFromE(E)
   }
 
+  override def pathTo(other: Orbit): OrbitDistance = {
+    other match {
+      case StaticOrbit(otherPos) => OrbitDistance.Step.Up
+      case _: ConstantOriginOrbit => if (other == this) {
+        OrbitDistance.Zero
+      } else {
+        OrbitDistance.Path(OrbitDistance.Step.Up :: OrbitDistance.Step.Down :: Nil)
+      }
+      case _ if !other.parents.isEmpty => {
+        OrbitDistance.min(other.parents.map(pathTo)) :+ OrbitDistance.Step.Down
+      }
+    }
+  }
+  override def parents: List[Orbit] = Nil;
+
 }
 
 /**
@@ -268,6 +348,15 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
  */
 case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: Angle, val omega: Angle, val M0: Angle, val m1: Mass, val centre: Orbiting, val retrograde: Boolean = false) extends Orbit {
 
+  private lazy val anomalyCache: PosCache[Vector3] = {
+    PosCache.fill(720, (i: Int) => {
+      val M = (Degrees(i.doubleValue() * 0.5)).normalise();
+      val E = eccentricAnomaly(M);
+      val pos = rawPositionFromE(E);
+      (M.toDegrees -> pos)
+    }, circular = true)
+  };
+
   case class OrbitalPosition(at: Time, M: Angle, E: Angle, nu: Angle, pos: Vector3, posRaw: Vector3, v: Velocity, parentOrbit: OrbitalSnapshot) extends OrbitalSnapshot {
     override def eclipticMatrix = eulerMatrix;
     override def project(pos: Vector3) = {
@@ -281,8 +370,18 @@ case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
     }
 
     private def positionFromM(M: Angle): Vector3 = {
-      val E = eccentricAnomaly(M);
-      positionFromE(E)
+      //val E = eccentricAnomaly(M);
+      //positionFromE(E)
+      val mdeg = M.toDegrees;
+      val ((floorAngle, floorPos), (ceilAngle, ceilPos)) = anomalyCache.neighbours(mdeg);
+      val diffAngle = Math.min(ceilAngle - floorAngle, floorAngle - ceilAngle);
+      val floorDiff = Math.min(mdeg - floorAngle, floorAngle - mdeg) / diffAngle;
+      val path = ceilPos.clone();
+      path.sub(floorPos);
+      path.multiplyScalar(floorDiff);
+      val rawPos = floorPos.clone();
+      rawPos.add(path) // linear interpolate
+      scaledPosition(rawPos, parentOrbit);
     }
 
     override def path(segments: Int): Array[Vector3] = {
@@ -394,6 +493,19 @@ case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
     pos.add(osP.pos);
     return pos;
   }
+
+  override def pathTo(other: Orbit): OrbitDistance = {
+    other match {
+      case _: StaticOrbit | _: ConstantOriginOrbit => OrbitDistance.Step.Up :: centre.orbit.pathTo(other);
+      case _ if other == this                      => OrbitDistance.Zero
+      case _ if !other.parents.isEmpty => {
+        val searchUp = OrbitDistance.Step.Up :: centre.orbit.pathTo(other);
+        val searchDown = OrbitDistance.min(other.parents.map(pathTo)) :+ OrbitDistance.Step.Down;
+        OrbitDistance.min(searchUp :: searchDown :: Nil)
+      }
+    }
+  }
+  override def parents: List[Orbit] = List(centre.orbit);
 
 }
 
@@ -568,4 +680,16 @@ case class VariableOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
     m.multiply(m2);
   };
 
+  override def pathTo(other: Orbit): OrbitDistance = {
+    other match {
+      case _: StaticOrbit | _: ConstantOriginOrbit => OrbitDistance.Step.Up :: centre.orbit.pathTo(other);
+      case _ if other == this                      => OrbitDistance.Zero
+      case _ if !other.parents.isEmpty => {
+        val searchUp = OrbitDistance.Step.Up :: centre.orbit.pathTo(other);
+        val searchDown = OrbitDistance.min(other.parents.map(pathTo)) :+ OrbitDistance.Step.Down;
+        OrbitDistance.min(searchUp :: searchDown :: Nil)
+      }
+    }
+  }
+  override def parents: List[Orbit] = List(centre.orbit);
 }

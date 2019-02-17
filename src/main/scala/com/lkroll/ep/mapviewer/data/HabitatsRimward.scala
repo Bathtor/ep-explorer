@@ -234,7 +234,7 @@ object HabitatsRimward {
     Asteroid("Beehive", 40.8.km, 35.4.km, 18.8.km), Planets.Saturn,
     Hypercorp(Volkov), Seq(Czech, Slovak),
     Seq(Mining, Shipping)) with Orbiting {
-    val orbit = new ConstantOrbit(0.0012, 0.137670e6.km, 0.003.º, 0.500.º, 331.521.º, 129.760.º, this.mass, this.centre); // wrong Epoch (2453005.5 JED)
+    val orbit = new ConstantOrbit(0.0012, 0.137670e6.km, 29.523.º, 0.500.º, 331.521.º, 129.760.º, this.mass, this.centre); // wrong Epoch (2453005.5 JED)
     override def extraInfo = Seq(("Population" -> "50 000"));
   }
 
@@ -242,7 +242,7 @@ object HabitatsRimward {
     HamiltonCylinder(8.0.km, 1.0.km), Planets.Saturn,
     Hypercorp(Acumenic), Seq(English, German, Mandarin),
     Seq(Research)) with Orbiting {
-    val orbit = new L4(Planets.Saturn, Moons.Tethys);
+    val orbit = new LissajousOrbit(new L4(Planets.Saturn, Moons.Tethys), 1205.0.km, 798.0.km, RotationPeriod(Days(0.3)), RotationPeriod(Days(0.14)), 2.934, 213.0.º, 67.0.º);
     override def extraInfo = Seq(("Population" -> "30 000")); // conflicting data on the same page (7000)
   }
 
@@ -259,7 +259,7 @@ object HabitatsRimward {
     UniqueStation("MeatHab"), Planets.Saturn,
     IndependentPolity, Seq(Mandarin, Polish, Turkish),
     Seq(Art)) with Orbiting {
-    val orbit = new L2(Planets.Saturn, Moons.Titan);
+    val orbit = new ConstantOrbit(0.000144, 335847.0.km, 29.3.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre, retrograde = true); // no idea
     override def extraInfo = Seq(("Population" -> "500"));
   }
 
@@ -267,7 +267,7 @@ object HabitatsRimward {
     Asteroid("Beehive", 34.4.km, 31.4.km, 20.8.km), Planets.Saturn,
     Autonomist, Seq(Afrikaans, English, Xhosa, Zulu),
     Seq(SoftwareDesign)) with Orbiting {
-    val orbit = new ConstantOrbit(0.0000144, 133584.0.km, 2.48456.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // no idea
+    val orbit = new ConstantOrbit(0.0000144, 133584.0.km, 29.219.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // no idea
     override def extraInfo = Seq(("Population" -> "1.1 million"));
   }
 
@@ -286,7 +286,7 @@ object HabitatsRimward {
     Asteroid("Beehive", 135.6.km, 79.4.km, 59.4.km), Planets.Saturn,
     AA(Titanian), Seq(French, Skandinaviska, Vietnamese),
     Seq(Antimatter, Chemistry, Mining, Transport)) with Orbiting {
-    val orbit = new ConstantOrbit(0.0022, 139380.0.km, 2.49246.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // no idea
+    val orbit = new ConstantOrbit(0.0022, 139380.0.km, 29.223.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // no idea
     override def extraInfo = Seq(("Population" -> "800 000"));
   }
 
@@ -318,7 +318,7 @@ object HabitatsRimward {
     HamiltonCylinder(8.0.km, 1.0.km), Planets.Saturn,
     Contested, Seq(Arabic, Punjabi, Turkish),
     Seq(Finance, Religion)) with Orbiting {
-    val orbit = new L5(Planets.Saturn, Moons.Tethys);
+    val orbit = new LissajousOrbit(new L5(Planets.Saturn, Moons.Tethys), 1215.0.km, 788.0.km, RotationPeriod(Days(0.365)), RotationPeriod(Days(0.12)), 2.534, 0.0.º, 0.0.º);
     override def extraInfo = Seq(("Population" -> "215 000"));
   }
 
@@ -326,14 +326,14 @@ object HabitatsRimward {
     Asteroid("Beehive", 129.8.km, 114.km, 106.2.km), Planets.Saturn,
     AA(Anarchists), Seq.empty,
     Seq.empty) with Orbiting {
-    val orbit = new ConstantOrbit(0.0098, 151410.km, 2.83546.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    val orbit = new ConstantOrbit(0.0098, 151410.km, 28.986.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
   }
 
   object Janus extends Habitat("Twelve Commons (Janus Commons)", UUID.randomUUID(), Kilograms(1.8975e18),
     Asteroid("Beehive", 203.km, 185.km, 152.6.km), Planets.Saturn,
     AA(Anarchists), Seq(English, French, Spanish),
     Seq(Art, Chemistry)) with Orbiting {
-    val orbit = new ConstantOrbit(0.0068, 151460.km, 2.64746.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    val orbit = new ConstantOrbit(0.0068, 151460.km, 29.123.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
     override def extraInfo = Seq(("Population" -> "900 000"));
   }
 
@@ -341,7 +341,7 @@ object HabitatsRimward {
     Cluster, Planets.Saturn,
     AA(Anarchists), Seq(Arabic, Malay),
     Seq(AerospaceEngineering, ZeroGManufacturing)) with Orbiting {
-    val orbit = new ConstantOrbit(0.0076, 151450.km, 2.648.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    val orbit = new ConstantOrbit(0.0076, 151450.km, 29.203.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
     override def extraInfo = Seq(("Population" -> "10 000"));
   }
 
@@ -349,7 +349,7 @@ object HabitatsRimward {
     Torus(Kilometers(0.845), Kilometers(0.065)), Planets.Saturn,
     AA(Anarchists), Seq(English, Hindi, Mandarin),
     Seq.empty) with Orbiting {
-    val orbit = new ConstantOrbit(0.0072, 151440.km, 2.647.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    val orbit = new ConstantOrbit(0.0072, 151440.km, 29.263.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
     override def extraInfo = Seq(("Population" -> "20 000"));
   }
 
@@ -357,7 +357,7 @@ object HabitatsRimward {
     Asteroid("Cole bubble", 8.0.km, 5.2.km, 4.0.km), Planets.Saturn,
     AA(Anarchists), Seq(French, Khmer, Vietnamese),
     Seq.empty) with Orbiting {
-    val orbit = new ConstantOrbit(0.0082, 151430.km, 2.644.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    val orbit = new ConstantOrbit(0.0082, 151430.km, 29.262.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
     override def extraInfo = Seq(("Population" -> "80 000"));
   }
 
@@ -365,7 +365,7 @@ object HabitatsRimward {
     Asteroid("Track", 15.0.km, 12.2.km, 6.0.km), Planets.Saturn,
     AA(Anarchists), Seq(Greek, Italian),
     Seq(Art, MorphDesign)) with Orbiting {
-    val orbit = new ConstantOrbit(0.0085, 151420.km, 2.640.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    val orbit = new ConstantOrbit(0.0085, 151420.km, 29.260.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
     override def extraInfo = Seq(("Population" -> "2 000"));
   }
 
@@ -373,7 +373,7 @@ object HabitatsRimward {
     Asteroid("Cluster", 13.0.km, 11.2.km, 4.0.km), Planets.Saturn,
     AA(Anarchists), Seq(Spanish, Tagalog),
     Seq(NanoTechnology)) with Orbiting {
-    val orbit = new ConstantOrbit(0.0089, 151455.km, 2.632.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
+    val orbit = new ConstantOrbit(0.0089, 151455.km, 29.258.º, 0.0.º, 0.0.º, 0.0.º, this.mass, this.centre); // more or less...
     override def extraInfo = Seq(("Population" -> "80"));
   }
 
@@ -381,7 +381,7 @@ object HabitatsRimward {
     Asteroid("Cluster", 218.8.km, 217.0.km, 203.6.km), Moons.Titan,
     Titanian, Seq(Skandinaviska, English),
     Seq(Military)) with Orbiting {
-    val orbit = new L1(Planets.Saturn, Moons.Titan);
+    val orbit = new LissajousOrbit(new L1(Planets.Saturn, Moons.Titan), 1205.0.km, 780.0.km, RotationPeriod(Days(0.3)), RotationPeriod(Days(0.14)), 1.94, 0.0.º, 0.0.º);
     override def extraInfo = Seq(("Notes" -> "Home Port for Commonwealth Fleet"));
   }
 
@@ -389,14 +389,14 @@ object HabitatsRimward {
     Asteroid("Cluster", 8.km, 6.km, 3.km), Moons.Titan,
     Titanian, Seq(Skandinaviska, English),
     Seq(Military)) with Orbiting {
-    val orbit = new L4(Planets.Saturn, Moons.Titan);
+    val orbit = new LissajousOrbit(new L4(Planets.Saturn, Moons.Titan), 32005.0.km, 17008.0.km, RotationPeriod(Days(1.96)), RotationPeriod(Days(1.49)), 1.84, 0.0.º, 0.0.º);
   }
 
   object Abramsen extends Habitat("Abramsen (S/2007 S 2)", UUID.randomUUID(), Kilograms(2.4e9),
     Asteroid("Cluster", 6.km, 5.km, 3.km), Moons.Titan,
     Titanian, Seq(Skandinaviska, English),
     Seq(Military)) with Orbiting {
-    val orbit = new L5(Planets.Saturn, Moons.Titan);
+    val orbit = new LissajousOrbit(new L5(Planets.Saturn, Moons.Titan), 32000.0.km, 17000.0.km, RotationPeriod(Days(1.91)), RotationPeriod(Days(1.41)), 3.84, 0.0.º, 0.0.º);
   }
 
   object Mankell extends Habitat("Mankell", UUID.randomUUID(), Kilograms(3.2e7),

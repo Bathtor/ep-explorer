@@ -25,31 +25,49 @@ trait OrbitalPath { self: GraphicsObject =>
 
   def orbitColour: Int;
 
-  lazy val constantOrigin: Boolean = orbiter.orbit match {
-    case _: StaticOrbit         => true
-    case _: ConstantOriginOrbit => false
-    case _                      => false
+  private var off: Boolean = true;
+
+  def activatePathRender(): Unit = {
+    if (off && !redundant) {
+      this.off = false;
+      currentOrbit = Some(calculateOrbit(Main.starttime));
+      scene.addObject(self, currentOrbit.get);
+    }
+  }
+  def deactivatePathRender(): Unit = {
+    if (!off && !redundant) {
+      this.off = true;
+      scene.removeObject(currentOrbit.get);
+      currentOrbit.get.geometry.dispose();
+      currentOrbit = None;
+    }
+  }
+
+  private lazy val fixed: Boolean = orbiter.orbit match {
+    case _: StaticOrbit => true
+    case _              => false
   };
 
-  lazy val redundant: Boolean = orbiter.orbit match {
+  private lazy val redundant: Boolean = orbiter.orbit match {
     case _: StaticOrbit => true
     case _: Lagrangian  => true
     case _              => false
   }
 
-  var currentOrbit: Option[Line] = None;
+  private var currentOrbit: Option[Line] = None;
 
-  var scene: SceneContainer = null;
+  private var scene: SceneContainer = null;
 
   def addEllipseToScene(scene: SceneContainer): Unit = {
-    if (redundant) { return ; }
     this.scene = scene;
-    currentOrbit = Some(calculateOrbit(Main.starttime));
-    scene.addObject(self, currentOrbit.get);
+    if (!off) { // just act based on default value
+      activatePathRender();
+    }
   }
+
   def updateEllipse(t: Time): Unit = {
-    if (redundant) { return ; }
-    if (!constantOrigin) {
+    if (redundant || off) { return ; }
+    if (!fixed) {
       currentOrbit match {
         case Some(orbit) => {
           val os = orbiter.orbit.at(t);
@@ -66,6 +84,7 @@ trait OrbitalPath { self: GraphicsObject =>
         case None => {
           val newOrbit = calculateOrbit(t);
           scene.addObject(self, newOrbit);
+          currentOrbit = Some(newOrbit);
         }
       }
       //      val newOrbit = calculateOrbit(t);
@@ -98,11 +117,12 @@ trait OrbitalPath { self: GraphicsObject =>
   //    geom.vertices = curve.getPoints(360.0).map { p => p.asInstanceOf[Vector3] };
   //    geom
   //  };
-  val indices = (0 until SEGMENTS).toArray.toJSArray;
-  val colours = indices.map(i => {
+  //val indices = (0 until SEGMENTS).toArray.toJSArray;
+  def colours = (0 until SEGMENTS).map(i => {
     val colour = new Color(orbitColour);
     // colour.multiplyScalar(2.0 / Math.sqrt(i.toDouble));
-    colour.multiplyScalar(1.0 - 0.0027 * i.toDouble);
+    // colour.multiplyScalar(1.0 - 0.0027 * i.toDouble);
+    colour.multiplyScalar(1.0 / Math.log(i.toDouble / 2.0));
     colour
   }).toJSArray;
   private def curveGeometry(path: Array[Vector3]): Geometry = {

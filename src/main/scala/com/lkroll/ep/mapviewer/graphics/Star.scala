@@ -14,18 +14,20 @@ import squants.space._
 import squants.time._
 import squants.motion._
 
-class Star(val star: StarData) extends GraphicsObject with Overlayed {
+class Star(val star: StarData) extends GraphicsObject with Overlayed with OrbitalPath {
 
   import ExtraUnits._
 
-  val orbiter: Orbiting = star match {
+  override val orbitColour: Int = 0x000000; // not going to be drawn anyway
+
+  override val orbiter: Orbiting = star match {
     case o: Orbiting => o
-    case _           => throw new RuntimeException("Planets better orbit^^")
+    case _           => throw new RuntimeException("Stars better orbit^^")
   }
 
   val rotor: Rotating = star match {
     case r: Rotating => r
-    case _           => throw new RuntimeException("Planets usually rotate, even if very slowly")
+    case _           => throw new RuntimeException("Stars usually rotate, even if very slowly")
   }
 
   private val (radius, faces) = {

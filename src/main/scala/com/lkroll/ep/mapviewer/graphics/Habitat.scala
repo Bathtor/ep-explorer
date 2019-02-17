@@ -56,6 +56,7 @@ abstract class Habitat(val habitat: HabitatData, val orbiter: Orbiting) extends 
   override def id = mesh.id;
 
   override def data: Option[AstronomicalObject] = Some(habitat);
+
 }
 
 class CylindricalHabitat(habitat: HabitatData, orbiter: Orbiting, val length: Double, val radius: Double) extends Habitat(habitat, orbiter) {

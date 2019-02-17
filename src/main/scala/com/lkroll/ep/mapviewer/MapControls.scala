@@ -14,6 +14,13 @@ class MapControls(_cam: Camera, _el: HTMLElement, sc: SceneContainer,
                   _width: Double, _height: Double, _tracked: graphics.GraphicsObject, _isPriority: IntersectionPriority)
   extends TrackingCameraControls(_cam, _el, sc.scene, _width, _height, _tracked, _isPriority) with Logging {
 
+  override def markLocal(obj: GraphicsObject): Unit = {
+    sc.markLocal(obj);
+  }
+  override def unmarkLocal(obj: GraphicsObject): Unit = {
+    sc.unmarkLocal(obj);
+  }
+
   override def sceneObjects: Array[Object3D] = sc.sceneObjects.toArray
 
   override def overlayObjects: Array[Object3D] = sc.overlayObjects.toArray

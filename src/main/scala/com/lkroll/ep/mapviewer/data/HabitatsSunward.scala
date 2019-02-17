@@ -22,7 +22,7 @@ object HabitatsSunward {
     ONeillCylinder(Kilometers(70), Kilometers(8)), Planets.Earth,
     LunarLagrangeAlliance, Seq(English, Hindi, Wu),
     Seq(Shipping, Trade, Information, Politics)) with Orbiting {
-    val orbit = new LissajousOrbit(EarthLunaL4, Kilometers(35000.0), Kilometers(25000.0), DegreesPerSecond(0.02015), DegreesPerSecond(0.02015), 3.229, Degrees(0.0), Degrees(0.0));
+    val orbit = new LissajousOrbit(EarthLunaL4, Kilometers(3500.0), Kilometers(2500.0), DegreesPerSecond(0.02015), DegreesPerSecond(0.0115), 3.229, Degrees(0.0), Degrees(0.0));
     override def extraInfo = Seq(("Population" -> "2 million+"));
     //        override def description = Some("""
     //The center of the Lunar-Lagrange Alliance and the largest station near Earth, Remembrance dominates the Earth-Luna L4 point and houses over two million people. Though it is the largest O’Neill cylinder in existence, it is still overpopulated, so most of the station is cramped, dirty, smelly, and dangerous. The station itself actually consists of two counter-rotating cylinders laid end-to-end, each 35 kilometers in length and 8 kilometers in diameter, and providing approximate Earth gravity. The most crowded cylinder, home to the more impoverished residents and indentures, is continuously pushing its environmental systems to their maximum, and suffers regular breakdowns – as evidenced by the septic growths and smells. The other half of the habitat fares slightly better, thanks to better air scrubbers, and it is here that the towers of the upper-class elites, including the LLA officials, rise above all, clean and airy and shining. There have been several proposals to expand Remembrance itself, adding another cylinder in order to accommodate its increased population, but doing so would require a substantial amount of cred. Most of the elite refuse to be bothered; after all, they’re not the ones being crowded. Still, the effects do spill over into the business section and even around the towers, and Remembrance suffers an unfortunate amount of vice and crime.
@@ -58,7 +58,7 @@ object HabitatsSunward {
     Asteroid("Beehive/Dome", Kilometers(3.0), Kilometers(1.2), Kilometers(1.5)), Planets.Earth,
     Independent(Brinker), Seq(Bengali, Hindi),
     Seq()) with Orbiting {
-    val orbit = new LissajousOrbit(EarthLunaL4, Kilometers(70000.0), Kilometers(42000.0), DegreesPerSecond(0.017), DegreesPerSecond(0.034), 3.82387286764706, Degrees(35.0), Degrees(125.0));
+    val orbit = new LissajousOrbit(EarthLunaL4, Kilometers(7000.0), Kilometers(4200.0), DegreesPerSecond(0.017), DegreesPerSecond(0.034), 3.82387286764706, Degrees(35.0), Degrees(125.0));
     //override def extraInfo = Seq(("Population" -> "120 000"));
   }
 

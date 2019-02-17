@@ -164,6 +164,7 @@ class Planet(val planet: PlanetData) extends PlanetObject with Logging with Over
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
     this.addEllipseToScene(scene);
+    //this.activatePathRender(); // planets always render paths
     children.foreach { c => c.addToScene(scene) }
   }
 

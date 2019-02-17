@@ -66,6 +66,19 @@ class L12(val largerBody: Orbiting, val smallerBody: Orbiting, val sign: Double)
   }
 
   def orbitalPeriod: Time = smallerBody.orbit.orbitalPeriod;
+
+  override def pathTo(other: Orbit): OrbitDistance = {
+    other match {
+      case _: StaticOrbit | _: ConstantOriginOrbit => OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
+      case _ if other == this                      => OrbitDistance.Zero
+      case _ if !other.parents.isEmpty => {
+        val searchUp = OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
+        val searchDown = OrbitDistance.min(other.parents.map(pathTo)) :+ OrbitDistance.Step.Down;
+        OrbitDistance.min(searchUp :: searchDown :: Nil)
+      }
+    }
+  }
+  override def parents: List[Orbit] = List(smallerBody.orbit, largerBody.orbit);
 }
 
 class L1(largerBody: Orbiting, smallerBody: Orbiting) extends L12(largerBody, smallerBody, -1.0)
@@ -122,6 +135,19 @@ class L3(val largerBody: Orbiting, val smallerBody: Orbiting) extends Lagrangian
   }
 
   def orbitalPeriod: Time = smallerBody.orbit.orbitalPeriod;
+
+  override def pathTo(other: Orbit): OrbitDistance = {
+    other match {
+      case _: StaticOrbit | _: ConstantOriginOrbit => OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
+      case _ if other == this                      => OrbitDistance.Zero
+      case _ if !other.parents.isEmpty => {
+        val searchUp = OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
+        val searchDown = OrbitDistance.min(other.parents.map(pathTo)) :+ OrbitDistance.Step.Down;
+        OrbitDistance.min(searchUp :: searchDown :: Nil)
+      }
+    }
+  }
+  override def parents: List[Orbit] = List(smallerBody.orbit, largerBody.orbit);
 }
 
 class L45(val largerBody: Orbiting, val smallerBody: Orbiting, val backwards: Boolean) extends Lagrangian {
@@ -170,6 +196,19 @@ class L45(val largerBody: Orbiting, val smallerBody: Orbiting, val backwards: Bo
   }
 
   def orbitalPeriod: Time = smallerBody.orbit.orbitalPeriod;
+
+  override def pathTo(other: Orbit): OrbitDistance = {
+    other match {
+      case _: StaticOrbit | _: ConstantOriginOrbit => OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
+      case _ if other == this                      => OrbitDistance.Zero
+      case _ if !other.parents.isEmpty => {
+        val searchUp = OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
+        val searchDown = OrbitDistance.min(other.parents.map(pathTo)) :+ OrbitDistance.Step.Down;
+        OrbitDistance.min(searchUp :: searchDown :: Nil)
+      }
+    }
+  }
+  override def parents: List[Orbit] = List(smallerBody.orbit, largerBody.orbit);
 }
 
 class L4(largerBody: Orbiting, smallerBody: Orbiting) extends L45(largerBody, smallerBody, false)

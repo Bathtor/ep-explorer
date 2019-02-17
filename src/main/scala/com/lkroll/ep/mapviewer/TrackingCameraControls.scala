@@ -26,12 +26,16 @@ abstract class TrackingCameraControls(
   val isPriority: IntersectionPriority)
   extends CameraControls with IntersectionControls with Logging {
 
+  def markLocal(obj: GraphicsObject): Unit;
+  def unmarkLocal(obj: GraphicsObject): Unit;
+
   tracked match {
     case o: graphics.Overlayed => {
       o.overlay.select();
     }
     case _ => // nothing
   }
+  markLocal(tracked);
   UI.replaceTracking(tracked.data);
 
   private val orbitControl = {
@@ -67,12 +71,14 @@ abstract class TrackingCameraControls(
       }
       case _ => // nothing
     }
+    unmarkLocal(oldObj);
     obj match {
       case o: graphics.Overlayed => {
         o.overlay.select();
       }
       case _ => // nothing
     }
+    markLocal(obj);
     UI.replaceTracking(tracked.data)
   }
 

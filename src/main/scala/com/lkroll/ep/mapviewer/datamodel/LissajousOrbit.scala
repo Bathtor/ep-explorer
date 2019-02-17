@@ -84,4 +84,17 @@ class LissajousOrbit(val centre: Orbit, val eclipticAmplitude: Length, val zAmpl
     return parameterCache;
   }
   def orbitalPeriod: Time = Seconds(Double.PositiveInfinity); // these orbits typically don't repeat
+
+  override def pathTo(other: Orbit): OrbitDistance = {
+    other match {
+      case _: StaticOrbit | _: ConstantOriginOrbit => OrbitDistance.Step.Up :: centre.pathTo(other);
+      case _ if other == this                      => OrbitDistance.Zero
+      case _ if !other.parents.isEmpty => {
+        val searchUp = OrbitDistance.Step.Up :: centre.pathTo(other);
+        val searchDown = OrbitDistance.min(other.parents.map(pathTo)) :+ OrbitDistance.Step.Down;
+        OrbitDistance.min(searchUp :: searchDown :: Nil)
+      }
+    }
+  }
+  override def parents: List[Orbit] = List(centre);
 }

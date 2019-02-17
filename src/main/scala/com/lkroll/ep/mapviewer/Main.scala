@@ -24,6 +24,7 @@ import squants.time._
 
 object Main extends Logging {
 
+  val renderUp: Boolean = false;
   val scale = 1e-6;
   val scaleDistance = 1e-6;
   val pixelRatio = dom.window.devicePixelRatio;
