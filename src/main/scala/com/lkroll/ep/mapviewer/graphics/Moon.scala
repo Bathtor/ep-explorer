@@ -3,9 +3,9 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.lkroll.ep.mapviewer.datamodel.{ Moon => MoonData, Orbiting, Rotating, AstronomicalObject };
+import com.lkroll.ep.mapviewer.datamodel.{Moon => MoonData, Orbiting, Rotating, AstronomicalObject};
 import com.lkroll.ep.mapviewer.data.Settlements
-import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer, Textures }
+import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer, Textures}
 
 import scala.scalajs.js
 import js.JSConverters._
@@ -51,7 +51,9 @@ class MoonSingle(val moon: MoonData) extends GraphicsObject {
   }
   val light = new PointLight(0xFFFFFF, 1.0, 0.0);
 
-  val settlements = Settlements.forMoon.getOrElse(moon.id, Seq.empty).map { ao => AtmosphericObject.fromData(ao) };
+  val settlements = Settlements.forMoon.getOrElse(moon.id, Seq.empty).map { ao =>
+    AtmosphericObject.fromData(ao)
+  };
 
   lazy val children = {
     val cB = List.newBuilder[GraphicsObject];
@@ -69,7 +71,9 @@ class MoonSingle(val moon: MoonData) extends GraphicsObject {
     if (Main.opts.debug()) {
       scene.addObject(this, arrow);
     }
-    children.foreach { c => c.addToScene(scene) }
+    children.foreach { c =>
+      c.addToScene(scene)
+    }
   }
 
   val inverseScale = -1.0 / Main.scaleDistance;
@@ -87,7 +91,9 @@ class MoonSingle(val moon: MoonData) extends GraphicsObject {
     val m = rotor.rotation.at(t).rotationMatrix;
     mesh.setRotationFromMatrix(m);
 
-    children.foreach { c => c.update(t) }
+    children.foreach { c =>
+      c.update(t)
+    }
   }
 
   override def name = mesh.name;
@@ -144,7 +150,9 @@ class Moon(val moon: MoonData) extends GraphicsObject with Overlayed with Orbita
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
     this.addEllipseToScene(scene);
-    children.foreach { c => c.addToScene(scene) }
+    children.foreach { c =>
+      c.addToScene(scene)
+    }
   }
 
   override def update(t: Time) {
@@ -153,7 +161,9 @@ class Moon(val moon: MoonData) extends GraphicsObject with Overlayed with Orbita
     this.updateEllipse(t);
     val m = rotor.rotation.at(t).rotationMatrix;
     mesh.setRotationFromMatrix(m);
-    children.foreach { c => c.update(t) }
+    children.foreach { c =>
+      c.update(t)
+    }
   }
 
   override def children = List.empty[GraphicsObject];
@@ -171,12 +181,15 @@ class Moon(val moon: MoonData) extends GraphicsObject with Overlayed with Orbita
 
 object Moon {
 
-  def materialParams(name: String, transp: Boolean): MeshPhongMaterialParameters = js.Dynamic.literal(
-    //color = new Color(Moons.colours(name)), //, wireframe = true
-    map = Textures("planet"),
-    transparent = transp,
-    opacity = 0.5,
-    side = THREE.DoubleSide).asInstanceOf[MeshPhongMaterialParameters];
+  def materialParams(name: String, transp: Boolean): MeshPhongMaterialParameters =
+    js.Dynamic
+      .literal(
+               //color = new Color(Moons.colours(name)), //, wireframe = true
+               map = Textures("planet"),
+               transparent = transp,
+               opacity = 0.5,
+               side = THREE.DoubleSide)
+      .asInstanceOf[MeshPhongMaterialParameters];
 
   def fromData(moon: MoonData): Moon = {
     fromData(moon, SystemView).left.get

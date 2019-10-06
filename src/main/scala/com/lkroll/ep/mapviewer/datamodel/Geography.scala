@@ -4,7 +4,7 @@ import java.util.UUID;
 import scala.language.implicitConversions
 import squants.space._
 import squants.time._
-import org.denigma.threejs.{ Vector3, Matrix4 }
+import org.denigma.threejs.{Matrix4, Vector3}
 import ExtraUnits._
 
 object Geography {
@@ -63,7 +63,8 @@ object Geography {
   }
 
   implicit def pairToPos(p: Tuple2[Latitude, Longitude]): Position = Position(p._1, p._2);
-  implicit def tripleToAngle(t: Tuple3[Int, Int, Int]): Angle = Degrees(t._1 + (t._2.toDouble / 60.0) + (t._3.toDouble / 3600.0))
+  implicit def tripleToAngle(t: Tuple3[Int, Int, Int]): Angle =
+    Degrees(t._1 + (t._2.toDouble / 60.0) + (t._3.toDouble / 3600.0))
   implicit class GeoAngle(value: Angle) {
     def N = Latitude(value, North);
     def S = Latitude(value, South);
@@ -89,46 +90,79 @@ case class EquatorialPosition(val rotor: Rotating, val alpha: Angle, val delta: 
   }
 }
 
-abstract class AtmosphericObject(val pos: Geography.Position, val height: Length, val location: Rotating, _name: String, _id: UUID) extends AstronomicalObject(_name, _id) {
+abstract class AtmosphericObject(val pos: Geography.Position,
+                                 val height: Length,
+                                 val location: Rotating,
+                                 _name: String,
+                                 _id: UUID)
+    extends AstronomicalObject(_name, _id) {
   val position = EquatorialPosition(location, pos.rightascension, pos.declination, location.radius + height);
 }
 
-abstract class SurfaceObject(_pos: Geography.Position, _location: Rotating, _name: String, _id: UUID) extends AtmosphericObject(_pos, Meters(0.0), _location, _name: String, _id: UUID) {
+abstract class SurfaceObject(_pos: Geography.Position, _location: Rotating, _name: String, _id: UUID)
+    extends AtmosphericObject(_pos, Meters(0.0), _location, _name: String, _id: UUID) {}
 
-}
-
-class Settlement(_name: String, _id: UUID, _pos: Geography.Position, _location: Rotating, val size: Length,
-                 val allegiance: Allegiance, val langs: Seq[Language], val industries: Seq[Industry])
-  extends SurfaceObject(_pos, _location, _name: String, _id: UUID) {
+class Settlement(_name: String,
+                 _id: UUID,
+                 _pos: Geography.Position,
+                 _location: Rotating,
+                 val size: Length,
+                 val allegiance: Allegiance,
+                 val langs: Seq[Language],
+                 val industries: Seq[Industry])
+    extends SurfaceObject(_pos, _location, _name: String, _id: UUID) {
   override def `type` = "Settlement";
 }
 
-class UndergroundSettlement(_name: String, _id: UUID, _pos: Geography.Position, _depth: Length, _location: Rotating,
-                            val allegiance: Allegiance, val langs: Seq[Language], val industries: Seq[Industry])
-  extends AtmosphericObject(_pos, -_depth, _location, _name: String, _id: UUID) {
+class UndergroundSettlement(_name: String,
+                            _id: UUID,
+                            _pos: Geography.Position,
+                            _depth: Length,
+                            _location: Rotating,
+                            val allegiance: Allegiance,
+                            val langs: Seq[Language],
+                            val industries: Seq[Industry])
+    extends AtmosphericObject(_pos, -_depth, _location, _name: String, _id: UUID) {
   override def `type` = "Underground Settlement";
 }
 
-class PandoraGate(_name: String, _id: UUID, _pos: Geography.Position, _location: Rotating,
-                  val allegiance: Allegiance)
-  extends SurfaceObject(_pos, _location, _name: String, _id: UUID) {
+class PandoraGate(_name: String, _id: UUID, _pos: Geography.Position, _location: Rotating, val allegiance: Allegiance)
+    extends SurfaceObject(_pos, _location, _name: String, _id: UUID) {
   override def `type` = "Pandora Gate";
 }
 
-class Aerostat(_name: String, _id: UUID, _pos: Geography.Position, _height: Length, _location: Rotating,
-               val allegiance: Allegiance, val langs: Seq[Language], val industries: Seq[Industry])
-  extends AtmosphericObject(_pos, _height, _location, _name: String, _id: UUID) {
+class Aerostat(_name: String,
+               _id: UUID,
+               _pos: Geography.Position,
+               _height: Length,
+               _location: Rotating,
+               val allegiance: Allegiance,
+               val langs: Seq[Language],
+               val industries: Seq[Industry])
+    extends AtmosphericObject(_pos, _height, _location, _name: String, _id: UUID) {
   override def `type` = "Aerostat";
 }
 
-class SyncOrbitStation(_name: String, _id: UUID, _pos: Geography.Position, _height: Length, _location: Rotating,
-                       val allegiance: Allegiance, val langs: Seq[Language], val industries: Seq[Industry])
-  extends AtmosphericObject(_pos, _height, _location, _name: String, _id: UUID) {
+class SyncOrbitStation(_name: String,
+                       _id: UUID,
+                       _pos: Geography.Position,
+                       _height: Length,
+                       _location: Rotating,
+                       val allegiance: Allegiance,
+                       val langs: Seq[Language],
+                       val industries: Seq[Industry])
+    extends AtmosphericObject(_pos, _height, _location, _name: String, _id: UUID) {
   override def `type` = "Synchronous Orbit Station";
 }
 
-class Bathyscaphe(_name: String, _id: UUID, _pos: Geography.Position, _depth: Length, _location: Rotating,
-                  val allegiance: Allegiance, val langs: Seq[Language], val industries: Seq[Industry])
-  extends AtmosphericObject(_pos, -_depth, _location, _name: String, _id: UUID) {
+class Bathyscaphe(_name: String,
+                  _id: UUID,
+                  _pos: Geography.Position,
+                  _depth: Length,
+                  _location: Rotating,
+                  val allegiance: Allegiance,
+                  val langs: Seq[Language],
+                  val industries: Seq[Industry])
+    extends AtmosphericObject(_pos, -_depth, _location, _name: String, _id: UUID) {
   override def `type` = "Bathyscaphe";
 }

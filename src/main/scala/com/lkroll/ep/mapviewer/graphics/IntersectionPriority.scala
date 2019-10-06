@@ -1,11 +1,13 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import org.denigma.threejs.{ Object3D, Intersection }
+import org.denigma.threejs.{Intersection, Object3D}
 
 trait IntersectionPriority {
   def prioritiseIntersection(intersections: List[Intersection]): Option[GraphicsObject] = {
     val sorted = intersections.sortWith((a, b) => a.distance < b.distance);
-    prioritiseObject(sorted.map { i => i.`object` })
+    prioritiseObject(sorted.map { i =>
+      i.`object`
+    })
   }
 
   def prioritiseObject(objects: List[Object3D]): Option[GraphicsObject];
@@ -40,9 +42,10 @@ object IntersectionPriorities {
                 firstMoon = Some(moon)
               }
             }
-            case Some(x) => if (!other.isDefined) {
-              other = Some(x)
-            }
+            case Some(x) =>
+              if (!other.isDefined) {
+                other = Some(x)
+              }
             case None => // ignore
           }
         }

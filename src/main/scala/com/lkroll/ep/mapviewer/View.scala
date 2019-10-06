@@ -20,4 +20,3 @@ object View {
     val label = "single";
   }
 }
-

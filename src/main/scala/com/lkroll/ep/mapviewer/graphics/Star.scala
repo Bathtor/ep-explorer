@@ -3,8 +3,15 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.lkroll.ep.mapviewer.datamodel.{ Star => StarData, AstronomicalObject, Orbiting, Rotating, ExtraUnits, ConstantOriginOrbit };
-import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer };
+import com.lkroll.ep.mapviewer.datamodel.{
+  Star => StarData,
+  AstronomicalObject,
+  Orbiting,
+  Rotating,
+  ExtraUnits,
+  ConstantOriginOrbit
+};
+import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer};
 
 import scala.scalajs.js
 import js.JSConverters._
@@ -40,8 +47,8 @@ class Star(val star: StarData) extends GraphicsObject with Overlayed with Orbita
 
   val color: Color = star.temperature.toRGB();
 
-  private val materialParams = js.Dynamic.literal(
-    color = color, wireframe = false, transparent = true).asInstanceOf[MeshBasicMaterialParameters]
+  private val materialParams =
+    js.Dynamic.literal(color = color, wireframe = false, transparent = true).asInstanceOf[MeshBasicMaterialParameters]
 
   private val material = new MeshBasicMaterial(materialParams);
 

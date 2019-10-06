@@ -1,7 +1,7 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import com.lkroll.ep.mapviewer.datamodel.{ PandoraGate => PandoraGateData, AstronomicalObject }
-import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
+import com.lkroll.ep.mapviewer.datamodel.{PandoraGate => PandoraGateData, AstronomicalObject}
+import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer}
 import org.denigma.threejs._
 
 import scala.scalajs.js
@@ -73,9 +73,12 @@ class PandoraGate(val settlement: PandoraGateData) extends GraphicsObject with O
 
 object PandoraGate {
 
-  def materialParams(name: String): MeshPhongMaterialParameters = js.Dynamic.literal(
-    color = new Color(0xAC5334) // wireframe = true
-  ).asInstanceOf[MeshPhongMaterialParameters];
+  def materialParams(name: String): MeshPhongMaterialParameters =
+    js.Dynamic
+      .literal(
+        color = new Color(0xAC5334) // wireframe = true
+      )
+      .asInstanceOf[MeshPhongMaterialParameters];
 
   def fromData(data: PandoraGateData): PandoraGate = {
     new PandoraGate(data)

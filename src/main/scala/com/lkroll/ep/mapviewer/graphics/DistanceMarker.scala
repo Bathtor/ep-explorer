@@ -3,9 +3,9 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.lkroll.ep.mapviewer.datamodel.{ AstronomicalObject, ExtraUnits, ConstantOriginOrbit }
+import com.lkroll.ep.mapviewer.datamodel.{AstronomicalObject, ConstantOriginOrbit, ExtraUnits}
 import com.lkroll.ep.mapviewer.data.Stars
-import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer };
+import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer};
 
 import squants._
 import squants.space._
@@ -23,11 +23,12 @@ class DistanceMarker(val distance: Length) extends GraphicsObject {
   val curve = new CatmullRomCurve3(path.toJSArray);
   val curveGeometry = {
     val geom = new Geometry();
-    geom.vertices = curve.getPoints(360.0).map { p => p.asInstanceOf[Vector3] };
+    geom.vertices = curve.getPoints(360.0).map { p =>
+      p.asInstanceOf[Vector3]
+    };
     geom
   };
-  val lineParams = js.Dynamic.literal(
-    color = DistanceMarkers.colour).asInstanceOf[LineBasicMaterialParameters]
+  val lineParams = js.Dynamic.literal(color = DistanceMarkers.colour).asInstanceOf[LineBasicMaterialParameters]
 
   val curveMaterial = new LineBasicMaterial(lineParams);
 

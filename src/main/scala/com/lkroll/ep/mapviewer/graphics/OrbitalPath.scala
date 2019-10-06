@@ -3,8 +3,16 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.lkroll.ep.mapviewer.datamodel.{ Orbiting, Rotating, OrbitalSnapshot, AstronomicalObject, StaticOrbit, ConstantOriginOrbit, Lagrangian };
-import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, ExtVector3, SceneContainer, Textures };
+import com.lkroll.ep.mapviewer.datamodel.{
+  AstronomicalObject,
+  ConstantOriginOrbit,
+  Lagrangian,
+  OrbitalSnapshot,
+  Orbiting,
+  Rotating,
+  StaticOrbit
+};
+import com.lkroll.ep.mapviewer.{ExtObject3D, ExtVector3, Main, SceneContainer, Textures};
 
 import scala.scalajs.js
 import js.JSConverters._
@@ -66,7 +74,9 @@ trait OrbitalPath { self: GraphicsObject =>
   }
 
   def updateEllipse(t: Time): Unit = {
-    if (redundant || off) { return ; }
+    if (redundant || off) {
+      return;
+    }
     if (!fixed) {
       currentOrbit match {
         case Some(orbit) => {
@@ -118,13 +128,16 @@ trait OrbitalPath { self: GraphicsObject =>
   //    geom
   //  };
   //val indices = (0 until SEGMENTS).toArray.toJSArray;
-  def colours = (0 until SEGMENTS).map(i => {
-    val colour = new Color(orbitColour);
-    // colour.multiplyScalar(2.0 / Math.sqrt(i.toDouble));
-    // colour.multiplyScalar(1.0 - 0.0027 * i.toDouble);
-    colour.multiplyScalar(1.0 / Math.log(i.toDouble / 2.0));
-    colour
-  }).toJSArray;
+  def colours =
+    (0 until SEGMENTS)
+      .map(i => {
+        val colour = new Color(orbitColour);
+        // colour.multiplyScalar(2.0 / Math.sqrt(i.toDouble));
+        // colour.multiplyScalar(1.0 - 0.0027 * i.toDouble);
+        colour.multiplyScalar(1.0 / Math.log(i.toDouble / 2.0));
+        colour
+      })
+      .toJSArray;
   private def curveGeometry(path: Array[Vector3]): Geometry = {
     val geom = new Geometry();
     geom.vertices = path.toJSArray;
@@ -137,8 +150,9 @@ trait OrbitalPath { self: GraphicsObject =>
   };
   //  private val lineParams = js.Dynamic.literal(
   //    color = orbitColour).asInstanceOf[LineBasicMaterialParameters]
-  private val lineParams = js.Dynamic.literal(
-    vertexColors = THREE.VertexColors, depthTest = false, depthWrite = false).asInstanceOf[LineBasicMaterialParameters];
+  private val lineParams = js.Dynamic
+    .literal(vertexColors = THREE.VertexColors, depthTest = false, depthWrite = false)
+    .asInstanceOf[LineBasicMaterialParameters];
   private val curveMaterial = new LineBasicMaterial(lineParams);
 
   // Create the final Object3d to add to the scene

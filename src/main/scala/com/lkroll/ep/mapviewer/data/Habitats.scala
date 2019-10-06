@@ -5,12 +5,12 @@ import com.lkroll.ep.mapviewer.datamodel._
 import java.util.UUID;
 import squants._
 import squants.space._
-import squants.space.{ AstronomicalUnits => AU }
+import squants.space.{AstronomicalUnits => AU}
 import squants.time._
 import squants.motion._
 
 import Languages._
-import Polities.{ PlanetaryConsortium => _, _ }
+import Polities.{PlanetaryConsortium => _, _}
 import Corps._
 import Industries._
 

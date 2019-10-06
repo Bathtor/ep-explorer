@@ -23,17 +23,13 @@ object Constants {
   val rotate60DZ = {
     val m = new Matrix3();
     val angle = Degrees(60);
-    m.set(angle.cos, -angle.sin, 0.0,
-      angle.sin, angle.cos, 0.0,
-      0.0, 0.0, 1.0);
+    m.set(angle.cos, -angle.sin, 0.0, angle.sin, angle.cos, 0.0, 0.0, 0.0, 1.0);
     m
   }
   val rotateMinus60DZ = {
     val m = new Matrix3();
     val angle = Degrees(-60);
-    m.set(angle.cos, -angle.sin, 0.0,
-      angle.sin, angle.cos, 0.0,
-      0.0, 0.0, 1.0);
+    m.set(angle.cos, -angle.sin, 0.0, angle.sin, angle.cos, 0.0, 0.0, 0.0, 1.0);
     m
   }
 }

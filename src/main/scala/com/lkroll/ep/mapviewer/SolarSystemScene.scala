@@ -13,13 +13,18 @@ import scalatags.JsDom.all._
 import scala.util.Random
 
 import graphics._
-import data.{ Planets, Stars, Habitats }
+import data.{Habitats, Planets, Stars}
 import datamodel.AstronomicalObject
 import scribe.Logging
 
 import squants._
 
-class SolarSystemScene(val container: HTMLElement, val width: Double, val height: Double) extends SceneContainer with TimeAnimatedScene with Tracking with Selecting with Logging {
+class SolarSystemScene(val container: HTMLElement, val width: Double, val height: Double)
+    extends SceneContainer
+    with TimeAnimatedScene
+    with Tracking
+    with Selecting
+    with Logging {
 
   protected def nodeTagFromTitle(title: String) = p(title, `class` := s"ui large message").render
 
@@ -85,14 +90,24 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
     r
   }
 
-  val ctrls = new MapControls(camera, this.container, this, width, height, initialTrackingObject.getOrElse(sun), IntersectionPriorities.FirstLargest); //planets("Saturn").mesh);
+  val ctrls = new MapControls(camera,
+                              this.container,
+                              this,
+                              width,
+                              height,
+                              initialTrackingObject.getOrElse(sun),
+                              IntersectionPriorities.FirstLargest); //planets("Saturn").mesh);
 
   override val controls: CameraControls = ctrls;
 
   private def updatePositions() {
     sun.update(time)
-    planets.foreach { p => p.update(time) }
-    habitats.foreach { p => p.update(time) }
+    planets.foreach { p =>
+      p.update(time)
+    }
+    habitats.foreach { p =>
+      p.update(time)
+    }
   }
 
   private var running = false;

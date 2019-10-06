@@ -1,11 +1,11 @@
 package com.lkroll.ep.mapviewer
 
-import org.denigma.threejs.extensions.animations.{ Animation, Scheduler }
-import org.denigma.threejs.extensions.controls.{ CameraControls }
-import org.denigma.threejs.{ Camera, Scene, Vector3, Object3D }
+import org.denigma.threejs.extensions.animations.{Animation, Scheduler}
+import org.denigma.threejs.extensions.controls.{CameraControls}
+import org.denigma.threejs.{Camera, Object3D, Scene, Vector3}
 import org.denigma.threejs.extras.OrbitControls
 import org.scalajs.dom
-import org.scalajs.dom.raw.{ Element, Event, HTMLElement }
+import org.scalajs.dom.raw.{Element, Event, HTMLElement}
 import org.scalajs.dom.MouseEvent
 
 import scala.concurrent.duration
@@ -13,18 +13,20 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.duration.MILLISECONDS
 import scala.language.postfixOps
 
-import com.lkroll.ep.mapviewer.graphics.{ GraphicsObject, GraphicsObjects, IntersectionPriority }
+import com.lkroll.ep.mapviewer.graphics.{GraphicsObject, GraphicsObjects, IntersectionPriority}
 
 import scribe.Logging
 
-abstract class TrackingCameraControls(
-  val camera:  Camera,
-  val element: HTMLElement, //scalastyle:ignore
-  val scene:   Scene,
-  val width:   Double, val height: Double,
-  var tracked:    GraphicsObject,
-  val isPriority: IntersectionPriority)
-  extends CameraControls with IntersectionControls with Logging {
+abstract class TrackingCameraControls(val camera: Camera,
+                                      val element: HTMLElement, //scalastyle:ignore
+                                      val scene: Scene,
+                                      val width: Double,
+                                      val height: Double,
+                                      var tracked: GraphicsObject,
+                                      val isPriority: IntersectionPriority)
+    extends CameraControls
+    with IntersectionControls
+    with Logging {
 
   def markLocal(obj: GraphicsObject): Unit;
   def unmarkLocal(obj: GraphicsObject): Unit;
@@ -109,10 +111,11 @@ abstract class TrackingCameraControls(
   def onDoubleClick(event: MouseEvent): Unit = {
     val objO = isPriority.prioritiseIntersection(this.intersections);
     objO match {
-      case Some(obj) => obj match {
-        case o if (o.id == tracked.id) => dom.console.info(s"Already tracking ${o.name}")
-        case o                         => track(o)
-      }
+      case Some(obj) =>
+        obj match {
+          case o if (o.id == tracked.id) => dom.console.info(s"Already tracking ${o.name}")
+          case o                         => track(o)
+        }
       case None => dom.console.info("Nothing intersected with click!") // nothing
     }
   }

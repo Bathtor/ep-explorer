@@ -1,6 +1,6 @@
 package com.lkroll.ep.mapviewer.datamodel
 
-import squants.{ SiBaseUnit, MetricSystem }
+import squants.{MetricSystem, SiBaseUnit}
 import squants.mass._
 import squants.space._
 import squants.motion._
@@ -88,7 +88,13 @@ object ExtraUnits {
     }
 
     private def clampByte(d: Double): Double = {
-      if (d < 0.0) { 0.0 } else if (d > 255.0) { 255.0 } else { d }
+      if (d < 0.0) {
+        0.0
+      } else if (d > 255.0) {
+        255.0
+      } else {
+        d
+      }
     }
   }
   def normaliseDegrees(d: Double): Double = {

@@ -26,11 +26,10 @@ object UI extends Logging {
     val errors = failures.map { f =>
       val e = f.exception;
       val cause = e.getCause;
-      div(
-        h3(e.getClass.getSimpleName),
-        p(e.getMessage),
-        h4(s"Caused by ${cause.getClass.getSimpleName}"),
-        p(cause.getMessage))
+      div(h3(e.getClass.getSimpleName),
+          p(e.getMessage),
+          h4(s"Caused by ${cause.getClass.getSimpleName}"),
+          p(cause.getMessage))
     }
     document.body.appendChild(div(id := "fatalerror", errors).render);
   }
@@ -49,7 +48,8 @@ object UI extends Logging {
   }
 
   def label(text: String) = span(text, cls := "color-primary-0", style := "font-weight: bold;")
-  def label(text: String, extracls: String) = span(text, cls := "color-primary-0 " + extracls, style := "font-weight: bold;")
+  def label(text: String, extracls: String) =
+    span(text, cls := "color-primary-0 " + extracls, style := "font-weight: bold;")
 
   val trackingContent = span("Nothing").render;
 
@@ -120,9 +120,12 @@ object UI extends Logging {
     img(src := "eclipse_phase.png", id := "logo"),
     span("Solar System Explorer", id := "title"),
     span(s"v${build.BuildInfo.version}", id := "version"),
-    label("View: ", "leftSpace"), viewContent,
-    label("Currently Tracking: ", "leftSpace"), trackingContent,
-    div(id := "search", label("Search"), data, search, track, infoButton));
+    label("View: ", "leftSpace"),
+    viewContent,
+    label("Currently Tracking: ", "leftSpace"),
+    trackingContent,
+    div(id := "search", label("Search"), data, search, track, infoButton)
+  );
 
   //    def updateData(items: Seq[String]) {
   //        data.innerHTML = "";
@@ -142,10 +145,7 @@ object UI extends Logging {
 
   val infoContent = div(id := "info-block", "Nothing").render;
 
-  val info = div(
-    id := "info",
-    h3("Info", cls := "color-primary-0"),
-    infoContent);
+  val info = div(id := "info", h3("Info", cls := "color-primary-0"), infoContent);
 
   def replaceTracking(objO: Option[AstronomicalObject]): Unit = {
     trackingContent.innerHTML = "";
@@ -165,7 +165,7 @@ object UI extends Logging {
     val combined = Main.scene match {
       case Some(sc) => sc.sceneParams ++ params
       case None => {
-        return ; // don't update url until scene is set
+        return; // don't update url until scene is set
       }
     }
     val url = Main.getUrlFor(combined);

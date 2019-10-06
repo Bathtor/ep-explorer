@@ -9,9 +9,7 @@ import org.scalajs.dom.Node
 
 @js.native
 @JSGlobal("THREE.CSS3DRenderer")
-class CSS3DRenderer extends js.Any {
-
-}
+class CSS3DRenderer extends js.Any {}
 
 @js.native
 @JSGlobal("THREE.CSS3DObject")

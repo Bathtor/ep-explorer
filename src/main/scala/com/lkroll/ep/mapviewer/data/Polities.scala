@@ -13,13 +13,21 @@ object Polities {
     override def description = polity.adjective;
   }
   implicit class MultiPolityAllegiance(polities: Seq[Polity]) extends Allegiance {
-    override def description = polities.map { p => p.adjective }.mkString(" / ");
+    override def description =
+      polities
+        .map { p =>
+          p.adjective
+        }
+        .mkString(" / ");
   }
   case class Independent(polities: Polity*) extends Allegiance {
-    override def description = if (polities.isEmpty) { "Independent" } else {
-      val pS = polities.map(_.adjective).mkString("(", " / ", ")");
-      s"Independent $pS"
-    };
+    override def description =
+      if (polities.isEmpty) {
+        "Independent"
+      } else {
+        val pS = polities.map(_.adjective).mkString("(", " / ", ")");
+        s"Independent $pS"
+      };
   }
   case class IndependentNamed(name: String) extends Allegiance {
     override def description = s"Independent($name)";

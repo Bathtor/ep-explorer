@@ -1,7 +1,11 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import com.lkroll.ep.mapviewer.datamodel.{ Aerostat => AerostatData, SyncOrbitStation => SyncOrbitStationData, AstronomicalObject }
-import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
+import com.lkroll.ep.mapviewer.datamodel.{
+  Aerostat => AerostatData,
+  SyncOrbitStation => SyncOrbitStationData,
+  AstronomicalObject
+}
+import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer}
 import org.denigma.threejs._
 
 import scala.scalajs.js
@@ -73,9 +77,12 @@ class SyncOrbitStation(val settlement: SyncOrbitStationData) extends GraphicsObj
 }
 
 object SyncOrbitStation {
-  def materialParams(name: String): MeshPhongMaterialParameters = js.Dynamic.literal(
-    color = new Color(0xFCD19C) // wireframe = true
-  ).asInstanceOf[MeshPhongMaterialParameters];
+  def materialParams(name: String): MeshPhongMaterialParameters =
+    js.Dynamic
+      .literal(
+        color = new Color(0xFCD19C) // wireframe = true
+      )
+      .asInstanceOf[MeshPhongMaterialParameters];
 
   def fromData(data: SyncOrbitStationData): SyncOrbitStation = {
     new SyncOrbitStation(data)

@@ -3,9 +3,27 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.lkroll.ep.mapviewer.datamodel.{ Habitat => HabitatData, Orbiting, Disc, ONeillCylinder, HamiltonCylinder, BernalSphere, ModifiedBernalSphere, Cluster, Swarm, Torus, ModifiedTorus, Asteroid, AstronomicalObject, UnkownStation, NuestroShell, UniqueStation, ProcessorLocus };
+import com.lkroll.ep.mapviewer.datamodel.{
+  Habitat => HabitatData,
+  Orbiting,
+  Disc,
+  ONeillCylinder,
+  HamiltonCylinder,
+  BernalSphere,
+  ModifiedBernalSphere,
+  Cluster,
+  Swarm,
+  Torus,
+  ModifiedTorus,
+  Asteroid,
+  AstronomicalObject,
+  UnkownStation,
+  NuestroShell,
+  UniqueStation,
+  ProcessorLocus
+};
 import com.lkroll.ep.mapviewer.data.Habitats
-import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
+import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer}
 
 import scala.scalajs.js
 import js.JSConverters._
@@ -15,7 +33,11 @@ import squants.space._
 
 import scribe.Logging
 
-abstract class Habitat(val habitat: HabitatData, val orbiter: Orbiting) extends GraphicsObject with Logging with Overlayed with OrbitalPath {
+abstract class Habitat(val habitat: HabitatData, val orbiter: Orbiting)
+    extends GraphicsObject
+    with Logging
+    with Overlayed
+    with OrbitalPath {
 
   override def orbitColour: Int = 0x7679AF;
 
@@ -59,7 +81,8 @@ abstract class Habitat(val habitat: HabitatData, val orbiter: Orbiting) extends 
 
 }
 
-class CylindricalHabitat(habitat: HabitatData, orbiter: Orbiting, val length: Double, val radius: Double) extends Habitat(habitat, orbiter) {
+class CylindricalHabitat(habitat: HabitatData, orbiter: Orbiting, val length: Double, val radius: Double)
+    extends Habitat(habitat, orbiter) {
   protected val geometry = new CylinderGeometry(radius, radius, length, 24.0, 1.0, false);
   protected val mesh: Mesh = {
     val m = new Mesh(geometry, material);
@@ -81,7 +104,8 @@ class SphericalHabitat(habitat: HabitatData, orbiter: Orbiting, val radius: Doub
   override def boundingRadius: Double = radius;
 }
 
-class ToroidalHabitat(habitat: HabitatData, orbiter: Orbiting, val radius: Double, val thickness: Double) extends Habitat(habitat, orbiter) {
+class ToroidalHabitat(habitat: HabitatData, orbiter: Orbiting, val radius: Double, val thickness: Double)
+    extends Habitat(habitat, orbiter) {
   protected val geometry = new TorusGeometry(radius, thickness, 24.0);
   protected val mesh: Mesh = {
     val m = new Mesh(geometry, material);
@@ -92,7 +116,12 @@ class ToroidalHabitat(habitat: HabitatData, orbiter: Orbiting, val radius: Doubl
   override def boundingRadius: Double = radius + thickness;
 }
 
-class AsteroidHabitat(habitat: HabitatData, orbiter: Orbiting, val length: Double, val width: Double, val height: Double) extends Habitat(habitat, orbiter) {
+class AsteroidHabitat(habitat: HabitatData,
+                      orbiter: Orbiting,
+                      val length: Double,
+                      val width: Double,
+                      val height: Double)
+    extends Habitat(habitat, orbiter) {
   protected val geometry = new BoxGeometry(length, width, height);
   protected val mesh: Mesh = {
     val m = new Mesh(geometry, material);
@@ -105,17 +134,26 @@ class AsteroidHabitat(habitat: HabitatData, orbiter: Orbiting, val length: Doubl
 
 object Habitat extends Logging {
 
-  def materialParams(name: String): MeshLambertMaterialParameters = js.Dynamic.literal(
-    color = new Color(0xC0C0C0) // wireframe = true
-  ).asInstanceOf[MeshLambertMaterialParameters]
+  def materialParams(name: String): MeshLambertMaterialParameters =
+    js.Dynamic
+      .literal(
+        color = new Color(0xC0C0C0) // wireframe = true
+      )
+      .asInstanceOf[MeshLambertMaterialParameters]
 
   def fromData(habitat: HabitatData): Habitat = {
     habitat.stationType match {
       case ONeillCylinder(length, radius) => {
-        new CylindricalHabitat(habitat, habitat.asInstanceOf[Orbiting], length.toKilometers * Main.scale, radius.toKilometers * Main.scale);
+        new CylindricalHabitat(habitat,
+                               habitat.asInstanceOf[Orbiting],
+                               length.toKilometers * Main.scale,
+                               radius.toKilometers * Main.scale);
       }
       case HamiltonCylinder(length, radius) => {
-        new CylindricalHabitat(habitat, habitat.asInstanceOf[Orbiting], length.toKilometers * Main.scale, radius.toKilometers * Main.scale);
+        new CylindricalHabitat(habitat,
+                               habitat.asInstanceOf[Orbiting],
+                               length.toKilometers * Main.scale,
+                               radius.toKilometers * Main.scale);
       }
       case Cluster => { // FIXME come up with a better way to represent clusters
         new CylindricalHabitat(habitat, habitat.asInstanceOf[Orbiting], 100.0 * Main.scale, 10.0 * Main.scale);
@@ -142,16 +180,29 @@ object Habitat extends Logging {
         new SphericalHabitat(habitat, habitat.asInstanceOf[Orbiting], radius.toKilometers * Main.scale)
       }
       case Torus(radius, thickness) => {
-        new ToroidalHabitat(habitat, habitat.asInstanceOf[Orbiting], radius.toKilometers * Main.scale, thickness.toKilometers * Main.scale)
+        new ToroidalHabitat(habitat,
+                            habitat.asInstanceOf[Orbiting],
+                            radius.toKilometers * Main.scale,
+                            thickness.toKilometers * Main.scale)
       }
       case Disc(radius, thickness) => {
-        new ToroidalHabitat(habitat, habitat.asInstanceOf[Orbiting], radius.toKilometers * Main.scale, thickness.toKilometers * Main.scale)
+        new ToroidalHabitat(habitat,
+                            habitat.asInstanceOf[Orbiting],
+                            radius.toKilometers * Main.scale,
+                            thickness.toKilometers * Main.scale)
       }
       case ModifiedTorus(radius, thickness) => {
-        new ToroidalHabitat(habitat, habitat.asInstanceOf[Orbiting], radius.toKilometers * Main.scale, thickness.toKilometers * Main.scale)
+        new ToroidalHabitat(habitat,
+                            habitat.asInstanceOf[Orbiting],
+                            radius.toKilometers * Main.scale,
+                            thickness.toKilometers * Main.scale)
       }
       case Asteroid(_, length, width, height) => {
-        new AsteroidHabitat(habitat, habitat.asInstanceOf[Orbiting], length.toKilometers * Main.scale, width.toKilometers * Main.scale, height.toKilometers * Main.scale)
+        new AsteroidHabitat(habitat,
+                            habitat.asInstanceOf[Orbiting],
+                            length.toKilometers * Main.scale,
+                            width.toKilometers * Main.scale,
+                            height.toKilometers * Main.scale)
       }
       case x => logger.error(s"Unkown habitat type: ${x.getClass}"); null
     }

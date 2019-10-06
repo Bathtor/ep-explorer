@@ -2,8 +2,7 @@ package com.lkroll.ep.mapviewer.graphics
 
 import org.denigma.threejs._
 
-case class ScreenTransform(val width: Double, val height: Double,
-                           val left: Double = 0.0, val top: Double = 0.0) {
+case class ScreenTransform(val width: Double, val height: Double, val left: Double = 0.0, val top: Double = 0.0) {
 
   def toNormalizedCameraSpace(in: Vector2): Vector2 = {
     val v = new Vector2();

@@ -1,7 +1,7 @@
 package com.lkroll.ep.mapviewer
 
 import collection.mutable
-import util.{ Try, Success, Failure }
+import util.{Failure, Success, Try}
 import datamodel.AstronomicalObject;
 
 case class VerificationError(msg: String, parent: Throwable) extends Exception(msg, parent);
@@ -22,7 +22,10 @@ case class BiConverter[T](from: String => T, to: T => String) extends ParamConve
 
 abstract class Options(val params: QueryParams) {
 
-  case class Opt[T](key: String, converter: ParamConverter[T], default: () => Option[T] = () => None, required: Boolean = false) {
+  case class Opt[T](key: String,
+                    converter: ParamConverter[T],
+                    default: () => Option[T] = () => None,
+                    required: Boolean = false) {
     def apply(): T = this.get.get;
     def get: Option[T] = {
       cache.get(key) match {
@@ -55,13 +58,24 @@ abstract class Options(val params: QueryParams) {
   //protected def opt(key: String, required: Boolean = false): Opt[String] = addOpt(Opt(key, identity, None, required));
   //protected def opt(key: String, default: String, required: Boolean = false): Opt[String] = addOpt(Opt(key, identity, Some(default), required));
   //protected def opt[T](key: String, required: Boolean = false)(implicit converter: String => T): Opt[T] = addOpt(Opt(key, converter, None, required));
-  protected def opt[T](key: String, default: => Option[T] = None, required: Boolean = false)(implicit converter: ParamConverter[T]): Opt[T] = addOpt(Opt(key, converter, default _, required));
+  protected def opt[T](key: String, default: => Option[T] = None, required: Boolean = false)(
+      implicit converter: ParamConverter[T]
+  ): Opt[T] = addOpt(Opt(key, converter, default _, required));
 
   def verify(): List[Failure[Unit]] = {
     val res = opts.map { o =>
       val loaded = Try(o.get);
-      val checked = loaded.map(r => if (o.required) { o.get; () } else ());
-      checked.transform(_ => Success(()), (f: Throwable) => Failure(VerificationError(s"Could not verify option '${o.key}' for supplied value '${params.get(o.key)}'", f)));
+      val checked = loaded.map(
+        r =>
+          if (o.required) {
+            o.get; ()
+          } else ()
+      );
+      checked.transform(
+        _ => Success(()),
+        (f: Throwable) =>
+          Failure(VerificationError(s"Could not verify option '${o.key}' for supplied value '${params.get(o.key)}'", f))
+      );
     };
     res.collect { case f: Failure[Unit] => f };
   }

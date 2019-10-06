@@ -2,9 +2,7 @@ package com.lkroll.ep.mapviewer.utils
 
 import java.util.Comparator
 
-class PosCache[T](
-  private val data: Array[(Double, T)],
-  val circular:     Boolean) {
+class PosCache[T](private val data: Array[(Double, T)], val circular: Boolean) {
 
   val comp = PosCache.comp[T];
 

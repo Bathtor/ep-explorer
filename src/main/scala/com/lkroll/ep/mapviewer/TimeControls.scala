@@ -21,7 +21,8 @@ object TimeControls extends Logging {
     option(value := "BF", "BF"),
     option(value := "J2000", "J2000"),
     option(value := "JD", "JD"),
-    option(value := "Unix", "Unix")).render;
+    option(value := "Unix", "Unix")
+  ).render;
   private val yearField = input(`type` := "number", min := "-9999", max := "9999").render;
   private val dayField = input(`type` := "number", min := "1", max := "365").render;
   private val hourField = input(`type` := "number", min := "0", max := "23").render;
@@ -29,12 +30,11 @@ object TimeControls extends Logging {
   private val secondField = input(`type` := "number", min := "0", max := "59").render;
   private val timeFields = Seq(hourField, minuteField, secondField, dayField, yearField);
   // second row
-  private val speed = select(
-    size := "1",
-    option(value := "s", "1s"),
-    option(value := "m", "1min", selected),
-    option(value := "h", "1h"),
-    option(value := "d", "1d")).render;
+  private val speed = select(size := "1",
+                             option(value := "s", "1s"),
+                             option(value := "m", "1min", selected),
+                             option(value := "h", "1h"),
+                             option(value := "d", "1d")).render;
   private val play = button(`type` := "button", name := "play", raw("&#x25B6;")).render;
   play.onclick = (e: MouseEvent) => {
     if (editing) {
@@ -156,12 +156,16 @@ object TimeControls extends Logging {
 
   private def editMode(on: Boolean) = {
     if (on) {
-      timeFields.foreach { f => f.disabled = false }
+      timeFields.foreach { f =>
+        f.disabled = false
+      }
       stop.disabled = true;
       play.disabled = false;
       editing = true;
     } else {
-      timeFields.foreach { f => f.disabled = true }
+      timeFields.foreach { f =>
+        f.disabled = true
+      }
       stop.disabled = false;
       play.disabled = true;
       editing = false;
@@ -172,6 +176,12 @@ object TimeControls extends Logging {
     id := "time",
     table(
       tr(th("Time"), th("Day"), th("Year"), th("Epoch"), th("")),
-      tr(td(hourField, ":", minuteField, ":", secondField), td(dayField), td(yearField), td(epoch), td("TT"))),
-    UI.label("Speed"), speed, play, stop, step).render;
+      tr(td(hourField, ":", minuteField, ":", secondField), td(dayField), td(yearField), td(epoch), td("TT"))
+    ),
+    UI.label("Speed"),
+    speed,
+    play,
+    stop,
+    step
+  ).render;
 }

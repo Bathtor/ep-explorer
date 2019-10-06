@@ -27,13 +27,14 @@ trait Rotating {
   def id(): UUID;
   def radius: Length;
 }
+
 /**
- * @param T The time in which the object rotates around its axis by 360º
- * @param tilt The tilt of the axis to the ecliptic of the orbit
- * @param alpha right ascension
- * @param delta declination
- * @param M0 mean anomaly at the J2000 epoch
- */
+  * @param T The time in which the object rotates around its axis by 360º
+  * @param tilt The tilt of the axis to the ecliptic of the orbit
+  * @param alpha right ascension
+  * @param delta declination
+  * @param M0 mean anomaly at the J2000 epoch
+  */
 case object EarthEquatorConstantRotation extends Rotation {
 
   val M0 = Degrees(0.0); // at J2000 noon the sun is directly over the 0 meridian
@@ -76,7 +77,12 @@ object TidalLock {
   }
 }
 
-case class EquatorialConstantRotation(val n: AngularVelocity, val alpha: Angle, val delta: Angle, val M0: Angle, val retrograde: Boolean = false) extends Rotation {
+case class EquatorialConstantRotation(val n: AngularVelocity,
+                                      val alpha: Angle,
+                                      val delta: Angle,
+                                      val M0: Angle,
+                                      val retrograde: Boolean = false)
+    extends Rotation {
 
   val T = Seconds(360.0 / n.toDegreesPerSecond);
 
@@ -101,10 +107,10 @@ case class EquatorialConstantRotation(val n: AngularVelocity, val alpha: Angle, 
   }
   override def at(t: Time): RotationSnap = {
     val M = (if (retrograde) {
-      M0 - Degrees(n.toDegreesPerSecond * t.toSeconds)
-    } else {
-      M0 + Degrees(n.toDegreesPerSecond * t.toSeconds)
-    }).normalise();
+               M0 - Degrees(n.toDegreesPerSecond * t.toSeconds)
+             } else {
+               M0 + Degrees(n.toDegreesPerSecond * t.toSeconds)
+             }).normalise();
     val aM = axialRotation(M);
     val rM = new Matrix4();
     rM.multiplyMatrices(eclipticRotation, aM);

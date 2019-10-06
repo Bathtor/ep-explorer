@@ -9,16 +9,16 @@ import org.denigma.threejs._
 
 import java.util.UUID;
 
-import com.lkroll.ep.mapviewer.{ Main, ExtVector3 };
+import com.lkroll.ep.mapviewer.{ExtVector3, Main};
 
-trait Lagrangian extends Orbit {
-
-}
+trait Lagrangian extends Orbit {}
 
 class L12(val largerBody: Orbiting, val smallerBody: Orbiting, val sign: Double) extends Lagrangian {
 
-  case class OrbitalPosition(at: Time, pos: Vector3, posRaw: Vector3, r: Length, parent: OrbitalSnapshot) extends OrbitalSnapshot {
-    def v: Velocity = smallerBody.orbit.at(at).v; // FIXME: this is wrong, of course, only the angular velocity is the same
+  case class OrbitalPosition(at: Time, pos: Vector3, posRaw: Vector3, r: Length, parent: OrbitalSnapshot)
+      extends OrbitalSnapshot {
+    def v: Velocity =
+      smallerBody.orbit.at(at).v; // FIXME: this is wrong, of course, only the angular velocity is the same
     def M = parent.M;
     def eclipticMatrix = parent.eclipticMatrix;
 
@@ -69,8 +69,9 @@ class L12(val largerBody: Orbiting, val smallerBody: Orbiting, val sign: Double)
 
   override def pathTo(other: Orbit): OrbitDistance = {
     other match {
-      case _: StaticOrbit | _: ConstantOriginOrbit => OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
-      case _ if other == this                      => OrbitDistance.Zero
+      case _: StaticOrbit | _: ConstantOriginOrbit =>
+        OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
+      case _ if other == this => OrbitDistance.Zero
       case _ if !other.parents.isEmpty => {
         val searchUp = OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
         val searchDown = OrbitDistance.min(other.parents.map(pathTo)) :+ OrbitDistance.Step.Down;
@@ -86,8 +87,10 @@ class L2(largerBody: Orbiting, smallerBody: Orbiting) extends L12(largerBody, sm
 
 class L3(val largerBody: Orbiting, val smallerBody: Orbiting) extends Lagrangian {
 
-  case class OrbitalPosition(at: Time, pos: Vector3, posRaw: Vector3, r: Length, parent: OrbitalSnapshot) extends OrbitalSnapshot {
-    override def v: Velocity = smallerBody.orbit.at(at).v; // FIXME: this is wrong, of course, only the angular velocity is the same
+  case class OrbitalPosition(at: Time, pos: Vector3, posRaw: Vector3, r: Length, parent: OrbitalSnapshot)
+      extends OrbitalSnapshot {
+    override def v: Velocity =
+      smallerBody.orbit.at(at).v; // FIXME: this is wrong, of course, only the angular velocity is the same
     override def M = parent.M;
     override def eclipticMatrix = parent.eclipticMatrix;
 
@@ -138,8 +141,9 @@ class L3(val largerBody: Orbiting, val smallerBody: Orbiting) extends Lagrangian
 
   override def pathTo(other: Orbit): OrbitDistance = {
     other match {
-      case _: StaticOrbit | _: ConstantOriginOrbit => OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
-      case _ if other == this                      => OrbitDistance.Zero
+      case _: StaticOrbit | _: ConstantOriginOrbit =>
+        OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
+      case _ if other == this => OrbitDistance.Zero
       case _ if !other.parents.isEmpty => {
         val searchUp = OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
         val searchDown = OrbitDistance.min(other.parents.map(pathTo)) :+ OrbitDistance.Step.Down;
@@ -153,7 +157,8 @@ class L3(val largerBody: Orbiting, val smallerBody: Orbiting) extends Lagrangian
 class L45(val largerBody: Orbiting, val smallerBody: Orbiting, val backwards: Boolean) extends Lagrangian {
 
   case class OrbitalPosition(at: Time, pos: Vector3, posRaw: Vector3, parent: OrbitalSnapshot) extends OrbitalSnapshot {
-    override def v: Velocity = smallerBody.orbit.at(at).v; // FIXME: this is wrong, of course, only the angular velocity is the same
+    override def v: Velocity =
+      smallerBody.orbit.at(at).v; // FIXME: this is wrong, of course, only the angular velocity is the same
     override def M = parent.M;
     override def eclipticMatrix = parent.eclipticMatrix;
 
@@ -199,8 +204,9 @@ class L45(val largerBody: Orbiting, val smallerBody: Orbiting, val backwards: Bo
 
   override def pathTo(other: Orbit): OrbitDistance = {
     other match {
-      case _: StaticOrbit | _: ConstantOriginOrbit => OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
-      case _ if other == this                      => OrbitDistance.Zero
+      case _: StaticOrbit | _: ConstantOriginOrbit =>
+        OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
+      case _ if other == this => OrbitDistance.Zero
       case _ if !other.parents.isEmpty => {
         val searchUp = OrbitDistance.Step.Up :: OrbitDistance.min(parents.map(_.pathTo(other)));
         val searchDown = OrbitDistance.min(other.parents.map(pathTo)) :+ OrbitDistance.Step.Down;

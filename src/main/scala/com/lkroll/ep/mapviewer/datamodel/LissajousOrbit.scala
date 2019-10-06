@@ -9,15 +9,22 @@ import org.denigma.threejs._
 
 import java.util.UUID;
 
-import com.lkroll.ep.mapviewer.{ Main, ExtVector3 };
+import com.lkroll.ep.mapviewer.{ExtVector3, Main};
 
 import ExtraUnits._
 
-class LissajousOrbit(val centre: Orbit, val eclipticAmplitude: Length, val zAmplitude: Length,
-                     val lambda: AngularVelocity, val nu: AngularVelocity, val k: Double,
-                     val phi: Angle, val psi: Angle) extends Orbit {
+class LissajousOrbit(val centre: Orbit,
+                     val eclipticAmplitude: Length,
+                     val zAmplitude: Length,
+                     val lambda: AngularVelocity,
+                     val nu: AngularVelocity,
+                     val k: Double,
+                     val phi: Angle,
+                     val psi: Angle)
+    extends Orbit {
 
-  case class OrbitalPosition(at: Time, pos: Vector3, posRaw: Vector3, val M: Angle, parent: OrbitalSnapshot) extends OrbitalSnapshot {
+  case class OrbitalPosition(at: Time, pos: Vector3, posRaw: Vector3, val M: Angle, parent: OrbitalSnapshot)
+      extends OrbitalSnapshot {
     override def v: Velocity = MetersPerSecond(Double.NaN); // FIXME: no idea how to calculate this
     override def eclipticMatrix = parent.eclipticMatrix;
     //        lazy val dir = {

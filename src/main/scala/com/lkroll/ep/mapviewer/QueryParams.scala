@@ -30,7 +30,7 @@ class QueryParams private (val params: Map[String, String]) {
   def getDouble(name: String): Option[Double] = get(name).flatMap(str => Try(str.toDouble).toOption);
 
   def toURI(baseURI: String): String = {
-    s"$baseURI?${params.map{ case (key, value) => s"$key=$value" }.mkString("&")}"
+    s"$baseURI?${params.map { case (key, value) => s"$key=$value" }.mkString("&")}"
   }
 
   def +(kv: (String, String)): QueryParams = {

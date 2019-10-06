@@ -149,4 +149,3 @@ object AFTT extends TimeStandard {
 //        JulianDateTT(adjustedDate)
 //    }
 //}
-

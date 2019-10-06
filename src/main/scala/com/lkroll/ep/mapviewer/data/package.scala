@@ -10,11 +10,38 @@ package object data {
     if (Stars.Sol.name.equalsIgnoreCase(name)) {
       return Some(Stars.Sol);
     }
-    Planets.list.foreach { p => if (p.name.equalsIgnoreCase(name)) { return Some(p); } }
-    Moons.forPlanet.flatMap(_._2).foreach { m => if (m.name.equalsIgnoreCase(name)) { return Some(m); } }
-    Habitats.list.foreach(h => if (h.name.equalsIgnoreCase(name)) { return Some(h) })
-    Settlements.forPlanet.flatMap(_._2).foreach(s => if (s.name.equalsIgnoreCase(name)) { return Some(s) })
-    Settlements.forMoon.flatMap(_._2).foreach(s => if (s.name.equalsIgnoreCase(name)) { return Some(s) })
+    Planets.list.foreach { p =>
+      if (p.name.equalsIgnoreCase(name)) {
+        return Some(p);
+      }
+    }
+    Moons.forPlanet.flatMap(_._2).foreach { m =>
+      if (m.name.equalsIgnoreCase(name)) {
+        return Some(m);
+      }
+    }
+    Habitats.list.foreach(
+      h =>
+        if (h.name.equalsIgnoreCase(name)) {
+          return Some(h)
+        }
+    )
+    Settlements.forPlanet
+      .flatMap(_._2)
+      .foreach(
+        s =>
+          if (s.name.equalsIgnoreCase(name)) {
+            return Some(s)
+          }
+      )
+    Settlements.forMoon
+      .flatMap(_._2)
+      .foreach(
+        s =>
+          if (s.name.equalsIgnoreCase(name)) {
+            return Some(s)
+          }
+      )
     return None;
   }
 }

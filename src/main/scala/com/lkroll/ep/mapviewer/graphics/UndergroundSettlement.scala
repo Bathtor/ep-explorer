@@ -1,7 +1,7 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import com.lkroll.ep.mapviewer.datamodel.{ UndergroundSettlement => USData, AstronomicalObject }
-import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
+import com.lkroll.ep.mapviewer.datamodel.{UndergroundSettlement => USData, AstronomicalObject}
+import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer}
 import org.denigma.threejs._
 
 import scala.scalajs.js
@@ -72,9 +72,12 @@ class UndergroundSettlement(val settlement: USData) extends GraphicsObject with 
 }
 
 object UndergroundSettlement {
-  def materialParams(name: String): MeshLambertMaterialParameters = js.Dynamic.literal(
-    color = new Color(0xFCD19C) // wireframe = true
-  ).asInstanceOf[MeshLambertMaterialParameters];
+  def materialParams(name: String): MeshLambertMaterialParameters =
+    js.Dynamic
+      .literal(
+        color = new Color(0xFCD19C) // wireframe = true
+      )
+      .asInstanceOf[MeshLambertMaterialParameters];
 
   def fromData(data: USData): UndergroundSettlement = {
     new UndergroundSettlement(data)

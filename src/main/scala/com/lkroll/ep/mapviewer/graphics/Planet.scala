@@ -3,11 +3,17 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
 
-import com.lkroll.ep.mapviewer.datamodel.{ Planet => PlanetData, Orbiting, Rotating, ConstantOriginOrbit, AstronomicalObject };
+import com.lkroll.ep.mapviewer.datamodel.{
+  Planet => PlanetData,
+  Orbiting,
+  Rotating,
+  ConstantOriginOrbit,
+  AstronomicalObject
+};
 import com.lkroll.ep.mapviewer.data.Planets
 import com.lkroll.ep.mapviewer.data.Settlements
 import com.lkroll.ep.mapviewer.data.Moons
-import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, ExtVector3, SceneContainer, Textures };
+import com.lkroll.ep.mapviewer.{ExtObject3D, ExtVector3, Main, SceneContainer, Textures};
 
 import scala.scalajs.js
 import js.JSConverters._
@@ -61,7 +67,9 @@ class PlanetSingle(val planet: PlanetData) extends PlanetObject {
   }
   val light = new PointLight(0xFFFFFF, 1.0, 0.0);
 
-  val settlements = Settlements.forPlanet.getOrElse(planet.id, Seq.empty).map { ao => AtmosphericObject.fromData(ao) };
+  val settlements = Settlements.forPlanet.getOrElse(planet.id, Seq.empty).map { ao =>
+    AtmosphericObject.fromData(ao)
+  };
 
   lazy val children = {
     val cB = List.newBuilder[GraphicsObject];
@@ -79,7 +87,9 @@ class PlanetSingle(val planet: PlanetData) extends PlanetObject {
     if (Main.opts.debug()) {
       scene.addObject(this, arrow);
     }
-    children.foreach { c => c.addToScene(scene) }
+    children.foreach { c =>
+      c.addToScene(scene)
+    }
   }
 
   val inverseScale = -1.0 / Main.scaleDistance;
@@ -97,7 +107,9 @@ class PlanetSingle(val planet: PlanetData) extends PlanetObject {
     val m = rotor.rotation.at(t).rotationMatrix;
     mesh.setRotationFromMatrix(m);
 
-    children.foreach { c => c.update(t) }
+    children.foreach { c =>
+      c.update(t)
+    }
   }
 
   override def position = mesh.position;
@@ -141,7 +153,9 @@ class Planet(val planet: PlanetData) extends PlanetObject with Logging with Over
 
   }
 
-  val moons = Moons.forPlanet.getOrElse(orbiter.name, Seq.empty).map { m => Moon.fromData(m) };
+  val moons = Moons.forPlanet.getOrElse(orbiter.name, Seq.empty).map { m =>
+    Moon.fromData(m)
+  };
 
   lazy val children = {
     val cB = List.newBuilder[GraphicsObject];
@@ -165,7 +179,9 @@ class Planet(val planet: PlanetData) extends PlanetObject with Logging with Over
     scene.addOverlayObject(this, overlay.mesh);
     this.addEllipseToScene(scene);
     //this.activatePathRender(); // planets always render paths
-    children.foreach { c => c.addToScene(scene) }
+    children.foreach { c =>
+      c.addToScene(scene)
+    }
   }
 
   override def update(t: Time) {
@@ -174,7 +190,9 @@ class Planet(val planet: PlanetData) extends PlanetObject with Logging with Over
     updateEllipse(t);
     val m = rotor.rotation.at(t).rotationMatrix;
     mesh.setRotationFromMatrix(m);
-    children.foreach { c => c.update(t) }
+    children.foreach { c =>
+      c.update(t)
+    }
   }
 
   override def position = mesh.position;
@@ -188,12 +206,15 @@ class Planet(val planet: PlanetData) extends PlanetObject with Logging with Over
 
 object Planet {
 
-  def materialParams(name: String, transp: Boolean): MeshPhongMaterialParameters = js.Dynamic.literal(
-    //color = new Color(Planets.colours(name)), //, wireframe = true
-    map = Textures("planet"),
-    transparent = transp,
-    opacity = 0.5,
-    side = THREE.DoubleSide).asInstanceOf[MeshPhongMaterialParameters];
+  def materialParams(name: String, transp: Boolean): MeshPhongMaterialParameters =
+    js.Dynamic
+      .literal(
+               //color = new Color(Planets.colours(name)), //, wireframe = true
+               map = Textures("planet"),
+               transparent = transp,
+               opacity = 0.5,
+               side = THREE.DoubleSide)
+      .asInstanceOf[MeshPhongMaterialParameters];
 
   def fromData(planet: PlanetData): Planet = {
     fromData(planet, SystemView).left.get

@@ -6,9 +6,9 @@ name := "EPMapViewer"
 
 organization := "com.lkroll.ep"
 
-version := "0.6"
+version := "0.6.1"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.12.10"
 
 //resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases")
 resolvers += Resolver.mavenLocal
@@ -38,11 +38,10 @@ scalaJSUseMainModuleInitializer := true
 skip in packageJSDependencies := false
 buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion)
 buildInfoPackage := "com.lkroll.ep.mapviewer.build"
-EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.ManagedClasses
 
 //bootSnippet := "com.larskroll.ep.mapviewer.Main().main();"
 //refreshBrowsers <<= refreshBrowsers.triggeredBy(fastOptJS in Compile)
 //localUrl := ("lkroll.sics.se", 12345)
-localUrl := ("192.168.0.105", 12345)
+localUrl := ("192.168.0.106", 12345)
 //localUrl := ("10.112.11.78", 12345)
 //localUrl := ("localhost", 12345)

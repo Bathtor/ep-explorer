@@ -153,20 +153,29 @@ case class StaticOrbit(pos: Vector3) extends Orbit {
 }
 
 /**
- * Descriptor for an orbit
- *
- * See {@link: https://en.wikipedia.org/wiki/Orbital_elements}
- *
- * @param e Eccentricity
- * @param a Semimajor Axis
- * @param i Inclination
- * @param Omega Longitude of the ascending node
- * @param omega Argument of periapsis
- * @param M0 Mean Anomaly at epoch 0
- * @param m1 Mass of the orbiting body
- * @param m2 Mass of the orbited body
- */
-case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val Omega: Angle, val omega: Angle, val M0: Angle, val m1: Mass, val m2: Mass, val retrograde: Boolean = false) extends Orbit {
+  * Descriptor for an orbit
+  *
+  * See {@link: https://en.wikipedia.org/wiki/Orbital_elements}
+  *
+  * @param e Eccentricity
+  * @param a Semimajor Axis
+  * @param i Inclination
+  * @param Omega Longitude of the ascending node
+  * @param omega Argument of periapsis
+  * @param M0 Mean Anomaly at epoch 0
+  * @param m1 Mass of the orbiting body
+  * @param m2 Mass of the orbited body
+  */
+case class ConstantOriginOrbit(val e: Double,
+                               val a: Length,
+                               val i: Angle,
+                               val Omega: Angle,
+                               val omega: Angle,
+                               val M0: Angle,
+                               val m1: Mass,
+                               val m2: Mass,
+                               val retrograde: Boolean = false)
+    extends Orbit {
 
   private lazy val anomalyCache: PosCache[Vector3] = {
     PosCache.fill(720, (i: Int) => {
@@ -177,7 +186,8 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
     }, circular = true)
   };
 
-  case class OrbitalPosition(at: Time, M: Angle, E: Angle, nu: Angle, pos: Vector3, posRaw: Vector3, v: Velocity) extends OrbitalSnapshot {
+  case class OrbitalPosition(at: Time, M: Angle, E: Angle, nu: Angle, pos: Vector3, posRaw: Vector3, v: Velocity)
+      extends OrbitalSnapshot {
 
     override def eclipticMatrix = eulerMatrix;
     override def project(pos: Vector3) = {
@@ -229,7 +239,8 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
   private val b = a * fak;
   private val focalDiff = a - rper;
 
-  private var parameterCache: OrbitalPosition = OrbitalPosition(Seconds(Double.NaN), null, null, null, null, null, null);
+  private var parameterCache
+      : OrbitalPosition = OrbitalPosition(Seconds(Double.NaN), null, null, null, null, null, null);
 
   override def at(t: Time): OrbitalPosition = {
     if (!parameterCache.at.equals(t)) {
@@ -269,7 +280,11 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
   private def eccentricAnomaly(M: Angle): Angle = {
     var i = 0;
     val m = M.toRadians;
-    var E = if (e < 0.8) { m } else { Math.PI };
+    var E = if (e < 0.8) {
+      m
+    } else {
+      Math.PI
+    };
     var F = E - e * Math.sin(E) - m;
 
     while ((Math.abs(F) > Constants.delta) && (i < Constants.maxIter)) {
@@ -317,11 +332,12 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
   override def pathTo(other: Orbit): OrbitDistance = {
     other match {
       case StaticOrbit(otherPos) => OrbitDistance.Step.Up
-      case _: ConstantOriginOrbit => if (other == this) {
-        OrbitDistance.Zero
-      } else {
-        OrbitDistance.Path(OrbitDistance.Step.Up :: OrbitDistance.Step.Down :: Nil)
-      }
+      case _: ConstantOriginOrbit =>
+        if (other == this) {
+          OrbitDistance.Zero
+        } else {
+          OrbitDistance.Path(OrbitDistance.Step.Up :: OrbitDistance.Step.Down :: Nil)
+        }
       case _ if !other.parents.isEmpty => {
         OrbitDistance.min(other.parents.map(pathTo)) :+ OrbitDistance.Step.Down
       }
@@ -332,21 +348,30 @@ case class ConstantOriginOrbit(val e: Double, val a: Length, val i: Angle, val O
 }
 
 /**
- * Descriptor for an orbit
- *
- * See {@link: https://en.wikipedia.org/wiki/Orbital_elements}
- *
- * @param e Eccentricity
- * @param a Semimajor Axis
- * @param i Inclination
- * @param Omega Longitude of the ascending node
- * @param omega Argument of periapsis
- * @param M0 Mean Anomaly at epoch 0
- * @param m1 Mass of the orbiting body
- * @param centre Orbited body
- * @param retrograde whether or not the orbit is going counter clock wise, so to say
- */
-case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: Angle, val omega: Angle, val M0: Angle, val m1: Mass, val centre: Orbiting, val retrograde: Boolean = false) extends Orbit {
+  * Descriptor for an orbit
+  *
+  * See {@link: https://en.wikipedia.org/wiki/Orbital_elements}
+  *
+  * @param e Eccentricity
+  * @param a Semimajor Axis
+  * @param i Inclination
+  * @param Omega Longitude of the ascending node
+  * @param omega Argument of periapsis
+  * @param M0 Mean Anomaly at epoch 0
+  * @param m1 Mass of the orbiting body
+  * @param centre Orbited body
+  * @param retrograde whether or not the orbit is going counter clock wise, so to say
+  */
+case class ConstantOrbit(val e: Double,
+                         val a: Length,
+                         val i: Angle,
+                         val Omega: Angle,
+                         val omega: Angle,
+                         val M0: Angle,
+                         val m1: Mass,
+                         val centre: Orbiting,
+                         val retrograde: Boolean = false)
+    extends Orbit {
 
   private lazy val anomalyCache: PosCache[Vector3] = {
     PosCache.fill(720, (i: Int) => {
@@ -357,7 +382,15 @@ case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
     }, circular = true)
   };
 
-  case class OrbitalPosition(at: Time, M: Angle, E: Angle, nu: Angle, pos: Vector3, posRaw: Vector3, v: Velocity, parentOrbit: OrbitalSnapshot) extends OrbitalSnapshot {
+  case class OrbitalPosition(at: Time,
+                             M: Angle,
+                             E: Angle,
+                             nu: Angle,
+                             pos: Vector3,
+                             posRaw: Vector3,
+                             v: Velocity,
+                             parentOrbit: OrbitalSnapshot)
+      extends OrbitalSnapshot {
     override def eclipticMatrix = eulerMatrix;
     override def project(pos: Vector3) = {
       parentOrbit.project(pos);
@@ -417,7 +450,8 @@ case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
   private val b = a * fak;
   private val focalDiff = a - rper;
 
-  private var parameterCache: OrbitalPosition = OrbitalPosition(Seconds(Double.NaN), null, null, null, null, null, null, null);
+  private var parameterCache: OrbitalPosition =
+    OrbitalPosition(Seconds(Double.NaN), null, null, null, null, null, null, null);
 
   override def at(t: Time): OrbitalPosition = {
     if (!parameterCache.at.equals(t)) {
@@ -458,7 +492,11 @@ case class ConstantOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
   private def eccentricAnomaly(M: Angle): Angle = {
     var i = 0;
     val m = M.toRadians;
-    var E = if (e < 0.8) { m } else { Math.PI };
+    var E = if (e < 0.8) {
+      m
+    } else {
+      Math.PI
+    };
     var F = E - e * Math.sin(E) - m;
 
     while ((Math.abs(F) > Constants.delta) && (i < Constants.maxIter)) {
@@ -530,7 +568,11 @@ case class ShiftingAngle(val a0: Angle, val period: Time, val direction: Progres
   def at(t: Time): Angle = {
     val raw = a0.toDegrees + t.toSeconds * progression.toDegreesPerSecond;
     val cropped = raw % 360.0;
-    val normalised = if (cropped < 0.0) { cropped + 360.0 } else { cropped };
+    val normalised = if (cropped < 0.0) {
+      cropped + 360.0
+    } else {
+      cropped
+    };
     Degrees(normalised)
   }
 }
@@ -540,22 +582,42 @@ case class ConstantAngle(val a0: Angle) extends VariableAngle {
 }
 
 /**
- * Descriptor for an orbit
- *
- * See {@link: https://en.wikipedia.org/wiki/Orbital_elements}
- *
- * @param e Eccentricity
- * @param a Semimajor Axis
- * @param i Inclination
- * @param Omega Longitude of the ascending node
- * @param omega Argument of periapsis
- * @param M0 Mean Anomaly at epoch 0
- * @param m1 Mass of the orbiting body
- * @param centre the orbited body
- */
-case class VariableOrbit(val e: Double, val a: Length, val i: Angle, val Omega: VariableAngle, val omega: VariableAngle, val M0: Angle, val m1: Mass, val centre: Orbiting, val retrograde: Boolean = false) extends Orbit {
+  * Descriptor for an orbit
+  *
+  * See {@link: https://en.wikipedia.org/wiki/Orbital_elements}
+  *
+  * @param e Eccentricity
+  * @param a Semimajor Axis
+  * @param i Inclination
+  * @param Omega Longitude of the ascending node
+  * @param omega Argument of periapsis
+  * @param M0 Mean Anomaly at epoch 0
+  * @param m1 Mass of the orbiting body
+  * @param centre the orbited body
+  */
+case class VariableOrbit(val e: Double,
+                         val a: Length,
+                         val i: Angle,
+                         val Omega: VariableAngle,
+                         val omega: VariableAngle,
+                         val M0: Angle,
+                         val m1: Mass,
+                         val centre: Orbiting,
+                         val retrograde: Boolean = false)
+    extends Orbit {
 
-  case class OrbitalPosition(at: Time, Omega: Angle, omega: Angle, eclipticMatrix: Matrix4, M: Angle, E: Angle, nu: Angle, pos: Vector3, posRaw: Vector3, v: Velocity, centrePos: Vector3) extends OrbitalSnapshot {
+  case class OrbitalPosition(at: Time,
+                             Omega: Angle,
+                             omega: Angle,
+                             eclipticMatrix: Matrix4,
+                             M: Angle,
+                             E: Angle,
+                             nu: Angle,
+                             pos: Vector3,
+                             posRaw: Vector3,
+                             v: Velocity,
+                             centrePos: Vector3)
+      extends OrbitalSnapshot {
     override def project(pos: Vector3) = {
       pos.applyMatrix4(eclipticMatrix);
     }
@@ -595,7 +657,8 @@ case class VariableOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
 
   def orbitalPeriod = T;
 
-  private var parameterCache: OrbitalPosition = OrbitalPosition(Seconds(Double.NaN), null, null, null, null, null, null, null, null, null, null);
+  private var parameterCache: OrbitalPosition =
+    OrbitalPosition(Seconds(Double.NaN), null, null, null, null, null, null, null, null, null, null);
 
   override def at(t: Time): OrbitalPosition = {
     if (!parameterCache.at.equals(t)) {
@@ -637,7 +700,11 @@ case class VariableOrbit(val e: Double, val a: Length, val i: Angle, val Omega: 
   private def eccentricAnomaly(M: Angle): Angle = {
     var i = 0;
     val m = M.toRadians;
-    var E = if (e < 0.8) { m } else { Math.PI };
+    var E = if (e < 0.8) {
+      m
+    } else {
+      Math.PI
+    };
     var F = E - e * Math.sin(E) - m;
 
     while ((Math.abs(F) > Constants.delta) && (i < Constants.maxIter)) {

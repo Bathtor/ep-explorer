@@ -1,7 +1,7 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import com.lkroll.ep.mapviewer.datamodel.{ Bathyscaphe => BathyscapheData, AstronomicalObject }
-import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
+import com.lkroll.ep.mapviewer.datamodel.{Bathyscaphe => BathyscapheData, AstronomicalObject}
+import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer}
 import org.denigma.threejs._
 
 import scala.scalajs.js
@@ -68,9 +68,12 @@ class Bathyscaphe(val settlement: BathyscapheData) extends GraphicsObject with O
 }
 
 object Bathyscaphe {
-  def materialParams(name: String): MeshLambertMaterialParameters = js.Dynamic.literal(
-    color = new Color(0xFCD19C) // wireframe = true
-  ).asInstanceOf[MeshLambertMaterialParameters];
+  def materialParams(name: String): MeshLambertMaterialParameters =
+    js.Dynamic
+      .literal(
+        color = new Color(0xFCD19C) // wireframe = true
+      )
+      .asInstanceOf[MeshLambertMaterialParameters];
 
   def fromData(data: BathyscapheData): Bathyscaphe = {
     new Bathyscaphe(data)

@@ -13,14 +13,19 @@ import scalatags.JsDom.all._
 
 import scala.util.Random
 
-import graphics.{ IntersectionPriorities, GraphicsObject }
-import datamodel.{ AstronomicalObject }
+import graphics.{GraphicsObject, IntersectionPriorities}
+import datamodel.{AstronomicalObject}
 
 import squants.time._
 
 import scribe.Logging
 
-class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement, val width: Double, val height: Double) extends SceneContainer with TimeAnimatedScene with Tracking with Selecting with Logging {
+class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement, val width: Double, val height: Double)
+    extends SceneContainer
+    with TimeAnimatedScene
+    with Tracking
+    with Selecting
+    with Logging {
 
   lazy val target = {
     val t = graphics.objectForData(targetData);
@@ -38,7 +43,13 @@ class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement
     r
   }
 
-  val ctrls = new MapControls(camera, this.container, this, width, height, initialTrackingObject.getOrElse(target), IntersectionPriorities.FirstSmallest);
+  val ctrls = new MapControls(camera,
+                              this.container,
+                              this,
+                              width,
+                              height,
+                              initialTrackingObject.getOrElse(target),
+                              IntersectionPriorities.FirstSmallest);
   override val controls: CameraControls = ctrls;
 
   override def distance: Double = 3.0 * target.boundingRadius
@@ -58,12 +69,15 @@ class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement
 
   val plane = {
     val geometry = new PlaneGeometry(3.0 * target.boundingRadius, 3.0 * target.boundingRadius, 2);
-    val material = new MeshPhongMaterial(js.Dynamic.literal(
-      color = new Color(0xffff00),
-      side = THREE.DoubleSide,
-      opacity = 0.8,
-      transparent = true,
-      depthWrite = false).asInstanceOf[MeshPhongMaterialParameters]);
+    val material = new MeshPhongMaterial(
+      js.Dynamic
+        .literal(color = new Color(0xffff00),
+                 side = THREE.DoubleSide,
+                 opacity = 0.8,
+                 transparent = true,
+                 depthWrite = false)
+        .asInstanceOf[MeshPhongMaterialParameters]
+    );
     val p = new Mesh(geometry, material);
     p.name = "XY-plane"
     p

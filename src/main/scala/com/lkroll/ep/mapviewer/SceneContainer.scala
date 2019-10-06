@@ -1,14 +1,24 @@
 package com.lkroll.ep.mapviewer
 
 import com.lkroll.ep.mapviewer.datamodel.OrbitDistance
-import org.denigma.threejs.extensions.controls.{ HoverControls, CameraControls }
+import org.denigma.threejs.extensions.controls.{CameraControls, HoverControls}
 import org.denigma.threejs.extras.HtmlRenderer
-import org.denigma.threejs.{ Object3D, Color, Vector2, Vector3, Scene, WebGLRendererParameters, WebGLRenderer, PerspectiveCamera, Renderer }
-import org.scalajs.dom.{ MouseEvent, Event }
+import org.denigma.threejs.{
+  Color,
+  Object3D,
+  PerspectiveCamera,
+  Renderer,
+  Scene,
+  Vector2,
+  Vector3,
+  WebGLRenderer,
+  WebGLRendererParameters
+}
+import org.scalajs.dom.{Event, MouseEvent}
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLElement
 
-import scala.scalajs.js.{ Array, Dynamic }
+import scala.scalajs.js.{Array, Dynamic}
 import collection.mutable;
 
 import com.lkroll.ep.mapviewer.graphics.GraphicsObject
@@ -52,37 +62,35 @@ trait SceneContainer extends Logging {
 
   def markLocal(obj: GraphicsObject): Unit = {
     obj match {
-      case opObj: OrbitObject =>
-        {
-          opObj.activatePathRender();
-          //logger.info(s"Activating ${opObj.name} and the following local objects:");
-          localityGroups.get(opObj) match {
-            case Some(entries) => {
-              entries.foreach { o =>
-                o.activatePathRender();
-                //logger.info(s"	${o.name}");
-              }
+      case opObj: OrbitObject => {
+        opObj.activatePathRender();
+        //logger.info(s"Activating ${opObj.name} and the following local objects:");
+        localityGroups.get(opObj) match {
+          case Some(entries) => {
+            entries.foreach { o =>
+              o.activatePathRender();
+            //logger.info(s"	${o.name}");
             }
-            case None => logger.error(s"No locality entry found for ${obj.name}!")
           }
+          case None => logger.error(s"No locality entry found for ${obj.name}!")
         }
+      }
       case _ => logger.warn(s"Tracking non-orbiting object ${obj.name}") //
     }
   }
   def unmarkLocal(obj: GraphicsObject): Unit = {
     obj match {
-      case opObj: OrbitObject =>
-        {
-          opObj.deactivatePathRender()
-          localityGroups.get(opObj) match {
-            case Some(entries) => {
-              entries.foreach { o =>
-                o.deactivatePathRender();
-              }
+      case opObj: OrbitObject => {
+        opObj.deactivatePathRender()
+        localityGroups.get(opObj) match {
+          case Some(entries) => {
+            entries.foreach { o =>
+              o.deactivatePathRender();
             }
-            case None => logger.error(s"No locality entry found for ${obj.name}!")
           }
+          case None => logger.error(s"No locality entry found for ${obj.name}!")
         }
+      }
       case _ => logger.warn(s"Untracking non-orbiting object ${obj.name}") //
     }
   }
@@ -165,16 +173,15 @@ trait SceneContainer extends Logging {
 
   def aspectRatio: Double = width / height
 
-  protected def initCamera(): PerspectiveCamera =
-    {
-      val fov = 60;
-      val near = Main.scaleDistance;
-      val far = 1e12;
-      val camera = new PerspectiveCamera(fov, this.aspectRatio, near, far);
-      camera.position.z = distance;
-      camera.up = new Vector3(0, 0, 1);
-      camera
-    }
+  protected def initCamera(): PerspectiveCamera = {
+    val fov = 60;
+    val near = Main.scaleDistance;
+    val far = 1e12;
+    val camera = new PerspectiveCamera(fov, this.aspectRatio, near, far);
+    camera.position.z = distance;
+    camera.up = new Vector3(0, 0, 1);
+    camera
+  }
 
   protected def onEnterFrameFunction(double: Double): Unit = {
     onEnterFrame()
@@ -191,10 +198,11 @@ trait SceneContainer extends Logging {
   val positionZero = "0"
 
   protected def initRenderer(): WebGLRenderer = {
-    val params = Dynamic.literal(
-      antialias = true,
-      alpha = true, // canvas = container
-      logarithmicDepthBuffer = true).asInstanceOf[WebGLRendererParameters]
+    val params = Dynamic
+      .literal(antialias = true,
+               alpha = true, // canvas = container
+               logarithmicDepthBuffer = true)
+      .asInstanceOf[WebGLRendererParameters]
     val vr = new WebGLRenderer(params)
     vr.domElement.style.position = absolute
     vr.domElement.style.top = positionZero
@@ -228,7 +236,9 @@ trait SceneContainer extends Logging {
 
   lazy val composer = {
     val ec = new facades.EffectComposer(renderer);
-    passes.foreach { p => ec.addPass(p) };
+    passes.foreach { p =>
+      ec.addPass(p)
+    };
     ec
   };
 

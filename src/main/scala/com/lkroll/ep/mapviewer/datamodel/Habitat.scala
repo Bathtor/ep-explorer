@@ -59,13 +59,19 @@ case class ModifiedTorus(val radius: Length, val thickness: Length) extends Stat
   override def name = "Modified Torus"
 }
 
-case class Asteroid(val description: String, val length: Length, val width: Length, val height: Length) extends StationType {
+case class Asteroid(val description: String, val length: Length, val width: Length, val height: Length)
+    extends StationType {
   override def name = description;
 }
 
-class Habitat(_name: String, _id: UUID, _mass: Mass,
-              val stationType: StationType, val centre: Orbiting,
-              val allegiance: Allegiance, val langs: Seq[Language],
-              val industries: Seq[Industry]) extends AstronomicalBody(_name, _id, _mass) {
+class Habitat(_name: String,
+              _id: UUID,
+              _mass: Mass,
+              val stationType: StationType,
+              val centre: Orbiting,
+              val allegiance: Allegiance,
+              val langs: Seq[Language],
+              val industries: Seq[Industry])
+    extends AstronomicalBody(_name, _id, _mass) {
   override def `type`: String = "Habitat";
 }

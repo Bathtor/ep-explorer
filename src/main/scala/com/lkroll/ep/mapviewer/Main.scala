@@ -10,13 +10,13 @@ import scribe.Logging
 
 import org.denigma.threejs._
 import org.denigma.threejs.extensions.Container3D
-import org.denigma.threejs.extensions.controls.{ CameraControls, JumpCameraControls }
+import org.denigma.threejs.extensions.controls.{CameraControls, JumpCameraControls}
 import org.denigma.threejs.extras.HtmlSprite
 import org.scalajs.dom
 import org.scalajs.dom.document
 import org.scalajs.dom.window
 
-import org.scalajs.dom.raw.{ HTMLTextAreaElement, HTMLElement }
+import org.scalajs.dom.raw.{HTMLElement, HTMLTextAreaElement}
 
 import scala.util.Random
 
@@ -98,7 +98,9 @@ object Main extends Logging {
     params.toURI(this.url)
   }
 
-  private def selectScene(ctx: HTMLElement, width: Double, height: Double): Either[SceneContainer with TimeAnimatedScene, String] = {
+  private def selectScene(ctx: HTMLElement,
+                          width: Double,
+                          height: Double): Either[SceneContainer with TimeAnimatedScene, String] = {
     opts.view() match {
       case View.Single => {
         opts.target.get match {

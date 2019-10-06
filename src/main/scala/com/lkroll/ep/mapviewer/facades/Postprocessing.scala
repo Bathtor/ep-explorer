@@ -25,7 +25,11 @@ class ClearPass extends Pass {
 @js.native
 @JSGlobal("THREE.RenderPass")
 class RenderPass extends Pass {
-  def this(scene: Scene = js.native, camera: Camera = js.native, overrideMaterial: Material = js.native, clearColor: Color = js.native, clearAlpha: Double = js.native) = this();
+  def this(scene: Scene = js.native,
+           camera: Camera = js.native,
+           overrideMaterial: Material = js.native,
+           clearColor: Color = js.native,
+           clearAlpha: Double = js.native) = this();
 }
 
 @js.native
@@ -44,9 +48,7 @@ class ShaderPass extends Pass {
 
 @js.native
 @JSGlobal("THREE.CopyShader")
-object CopyShader extends ShaderMaterial {
-
-}
+object CopyShader extends ShaderMaterial {}
 
 //@js.native
 //trait ShaderUniforms extends js.Object {
@@ -56,8 +58,7 @@ object CopyShader extends ShaderMaterial {
 
 @js.native
 @JSGlobal("THREE.FXAAShader")
-object FXAAShader extends ShaderMaterial {
-}
+object FXAAShader extends ShaderMaterial {}
 
 @js.native
 @JSGlobal("THREE.TexturePass")

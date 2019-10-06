@@ -2,7 +2,7 @@ package com.lkroll.ep.mapviewer
 
 import org.denigma.threejs._
 import org.scalajs.dom.MouseEvent
-import org.denigma.threejs.extensions.controls.{ CameraControls, JumpCameraControls }
+import org.denigma.threejs.extensions.controls.{CameraControls, JumpCameraControls}
 import org.scalajs.dom.raw.HTMLElement
 import scalatags.JsDom.all._
 
@@ -10,9 +10,15 @@ import graphics._
 
 import scribe.Logging
 
-class MapControls(_cam: Camera, _el: HTMLElement, sc: SceneContainer,
-                  _width: Double, _height: Double, _tracked: graphics.GraphicsObject, _isPriority: IntersectionPriority)
-  extends TrackingCameraControls(_cam, _el, sc.scene, _width, _height, _tracked, _isPriority) with Logging {
+class MapControls(_cam: Camera,
+                  _el: HTMLElement,
+                  sc: SceneContainer,
+                  _width: Double,
+                  _height: Double,
+                  _tracked: graphics.GraphicsObject,
+                  _isPriority: IntersectionPriority)
+    extends TrackingCameraControls(_cam, _el, sc.scene, _width, _height, _tracked, _isPriority)
+    with Logging {
 
   override def markLocal(obj: GraphicsObject): Unit = {
     sc.markLocal(obj);

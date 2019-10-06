@@ -3,7 +3,7 @@ package com.lkroll.ep.mapviewer.graphics
 import org.denigma.threejs._
 
 import com.lkroll.ep.mapviewer.datamodel.AstronomicalObject
-import com.lkroll.ep.mapviewer.{ Main, Textures, ExtObject3D, ExtVector2, SceneContainer }
+import com.lkroll.ep.mapviewer.{ExtObject3D, ExtVector2, Main, SceneContainer, Textures}
 
 import scala.scalajs.js
 import js.JSConverters._
@@ -16,7 +16,19 @@ class TacticalOverlay(obj: AstronomicalObject) extends GraphicsObject with Overl
   private val geometry = new Geometry();
   geometry.vertices.push(new Vector3(0, 0, 0));
   private val texture = Textures("overlay");
-  private val material = new PointsMaterial(js.Dynamic.literal(size = TacticalOverlay.overlaySize, map = texture, blending = THREE.AdditiveBlending, depthTest = false, transparent = true, sizeAttenuation = false, color = TacticalOverlay.defaultColor).asInstanceOf[PointsMaterialParameters]);
+  private val material = new PointsMaterial(
+    js.Dynamic
+      .literal(
+        size = TacticalOverlay.overlaySize,
+        map = texture,
+        blending = THREE.AdditiveBlending,
+        depthTest = false,
+        transparent = true,
+        sizeAttenuation = false,
+        color = TacticalOverlay.defaultColor
+      )
+      .asInstanceOf[PointsMaterialParameters]
+  );
   val mesh = new Points(geometry, material);
   mesh.name = obj.name + " Overlay";
   //mesh
@@ -70,7 +82,10 @@ object TacticalOverlay extends Logging {
   def from(obj: AstronomicalObject): TacticalOverlay = {
     new TacticalOverlay(obj)
   }
-  def intersectObjects(mouse: Vector2, camera: Camera, screenT: ScreenTransform, overlayObjects: Array[Object3D]): Array[Intersection] = {
+  def intersectObjects(mouse: Vector2,
+                       camera: Camera,
+                       screenT: ScreenTransform,
+                       overlayObjects: Array[Object3D]): Array[Intersection] = {
     val screenMouse = screenT.toScreenSpace(mouse);
     overlayObjects.flatMap(o => intersectObject(screenMouse, camera, screenT, o))
   }
@@ -99,13 +114,12 @@ object TacticalOverlay extends Logging {
         intersectPoint.project(camera);
         intersectPoint.setZ(pos.z);
         val rayDistance = camera.position.distanceTo(pos);
-        val ints = js.Dynamic.literal(
-          distance = rayDistance,
-          distanceToRay = dist,
-          point = intersectPoint,
-          index = 0,
-          face = null,
-          `object` = point);
+        val ints = js.Dynamic.literal(distance = rayDistance,
+                                      distanceToRay = dist,
+                                      point = intersectPoint,
+                                      index = 0,
+                                      face = null,
+                                      `object` = point);
         Some(ints.asInstanceOf[Intersection])
       }
     } else {

@@ -10,15 +10,15 @@ import js.JSConverters._
 import org.scalajs.dom.html
 import org.scalajs.dom.document
 
-import com.lkroll.ep.mapviewer.datamodel.{ AstronomicalObject, ExtraUnits, ConstantOriginOrbit }
-import com.lkroll.ep.mapviewer.facades.{ CSS3DObject, CSS3DSprite }
-import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer };
+import com.lkroll.ep.mapviewer.datamodel.{AstronomicalObject, ConstantOriginOrbit, ExtraUnits}
+import com.lkroll.ep.mapviewer.facades.{CSS3DObject, CSS3DSprite}
+import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer};
 
 import squants.time._
 
 class TextSprite(
-  val text:   String,
-  val colour: Color  = new Color(0x808080) //new Color(0xFFFFFF)
+    val text: String,
+    val colour: Color = new Color(0x808080) //new Color(0xFFFFFF)
 ) extends GraphicsObject {
 
   val size: Double = 64.0 / Main.pixelRatio;
@@ -75,7 +75,17 @@ class TextSprite(
   }
 
   //val material = new SpriteMaterial(js.Dynamic.literal(map = texture, blending = THREE.AdditiveBlending, depthTest = false, transparent = true).asInstanceOf[SpriteMaterialParameters]);
-  private val material = new PointsMaterial(js.Dynamic.literal(size = size, map = texture, blending = THREE.NormalBlending, depthTest = false, transparent = true, sizeAttenuation = false, color = colour).asInstanceOf[PointsMaterialParameters]);
+  private val material = new PointsMaterial(
+    js.Dynamic
+      .literal(size = size,
+               map = texture,
+               blending = THREE.NormalBlending,
+               depthTest = false,
+               transparent = true,
+               sizeAttenuation = false,
+               color = colour)
+      .asInstanceOf[PointsMaterialParameters]
+  );
   private val geometry = new Geometry();
   geometry.vertices.push(new Vector3(0, 0, 0));
   val sprite = new Points(geometry, material);
@@ -113,18 +123,23 @@ object TextSprite {
   private var fontHeightCache = mutable.Map.empty[String, Double];
 
   def measureFontHeight(fontStyle: String): Double = {
-    fontHeightCache.getOrElseUpdate(fontStyle, {
-      val body = document.getElementsByTagName("body")(0);
-      val dummy = document.createElement("div");
+    fontHeightCache.getOrElseUpdate(
+      fontStyle, {
+        val body = document.getElementsByTagName("body")(0);
+        val dummy = document.createElement("div");
 
-      val dummyText = document.createTextNode("0.9AU");
-      dummy.appendChild(dummyText);
-      dummy.setAttribute("style", s"font:${fontStyle};position:absolute;top:0;left:0;margin: 0px; padding: 0px; line-height: 1;");
-      body.appendChild(dummy);
-      val result = dummy.clientHeight;
-      body.removeChild(dummy);
-      result.toDouble
-    })
+        val dummyText = document.createTextNode("0.9AU");
+        dummy.appendChild(dummyText);
+        dummy.setAttribute(
+          "style",
+          s"font:${fontStyle};position:absolute;top:0;left:0;margin: 0px; padding: 0px; line-height: 1;"
+        );
+        body.appendChild(dummy);
+        val result = dummy.clientHeight;
+        body.removeChild(dummy);
+        result.toDouble
+      }
+    )
   }
 
   def ceilPowerOfTwo(d: Double): Int = {

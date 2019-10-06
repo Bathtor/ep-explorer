@@ -1,7 +1,7 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import com.lkroll.ep.mapviewer.datamodel.{ Settlement => SettlementData, AstronomicalObject }
-import com.lkroll.ep.mapviewer.{ Main, ExtObject3D, SceneContainer }
+import com.lkroll.ep.mapviewer.datamodel.{Settlement => SettlementData, AstronomicalObject}
+import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer}
 import org.denigma.threejs._
 
 import scala.scalajs.js
@@ -72,9 +72,12 @@ class Settlement(val settlement: SettlementData) extends GraphicsObject with Ove
 
 object Settlement {
 
-  def materialParams(name: String): MeshPhongMaterialParameters = js.Dynamic.literal(
-    color = new Color(0xFCD19C) // wireframe = true
-  ).asInstanceOf[MeshPhongMaterialParameters];
+  def materialParams(name: String): MeshPhongMaterialParameters =
+    js.Dynamic
+      .literal(
+        color = new Color(0xFCD19C) // wireframe = true
+      )
+      .asInstanceOf[MeshPhongMaterialParameters];
 
   def fromData(data: SettlementData): Settlement = {
     new Settlement(data)
