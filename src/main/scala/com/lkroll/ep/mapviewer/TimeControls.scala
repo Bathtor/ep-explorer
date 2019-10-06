@@ -35,7 +35,8 @@ object TimeControls extends Logging {
                              option(value := "m", "1min", selected),
                              option(value := "h", "1h"),
                              option(value := "d", "1d")).render;
-  private val play = button(`type` := "button", name := "play", raw("&#x25B6;")).render;
+  //private val play = button(`type` := "button", name := "play", raw("&#x25B6;")).render;
+  private val play = button(`type` := "button", name := "play", i(cls := "fas fa-play fa-xs")).render;
   play.onclick = (e: MouseEvent) => {
     if (editing) {
       editMode(false);
@@ -48,7 +49,8 @@ object TimeControls extends Logging {
       }
     }
   };
-  private val stop = button(`type` := "button", name := "stop", raw("&#x25A0;")).render;
+  //private val stop = button(`type` := "button", name := "stop", raw("&#x25A0;")).render;
+  private val stop = button(`type` := "button", name := "stop", i(cls := "fas fa-stop fa-xs")).render;
   stop.onclick = (e: MouseEvent) => {
     if (!editing) {
       editMode(true);
@@ -61,7 +63,8 @@ object TimeControls extends Logging {
       }
     }
   };
-  private val step = button(`type` := "button", name := "step", raw("&#x25B8;&#x25B8;")).render;
+  //private val step = button(`type` := "button", name := "step", raw("&#x25B8;&#x25B8;")).render;
+  private val step = button(`type` := "button", name := "step", i(cls := "fas fa-forward fa-xs")).render;
   step.onclick = (e: MouseEvent) => {
     if (editing) {
       Main.scene match {

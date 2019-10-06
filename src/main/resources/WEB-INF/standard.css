@@ -76,7 +76,14 @@ body {
     background-color: #000000;
 
     text-align: center;
-    font: 100.1%/1.5 Lucida Console, sans-serif;
+    /*font: 100.1%/1.5 Lucida Console, sans-serif;*/
+    /*
+    * Alternative fonts:
+    * Exo 2: <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
+    * Changa: <link href="https://fonts.googleapis.com/css?family=Changa&display=swap" rel="stylesheet">
+    */
+    line-height: 1.5;
+    font-family: 'Play', sans-serif;
     font-smooth: always;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -127,6 +134,7 @@ a:hover {
     background: linear-gradient(rgba( 38, 82,110,0.5), rgba(  3, 37, 58,0.5)); /* Standard syntax */
     z-index: 1;
     text-align: left;
+    user-select: none;
 }
 
 #logo {
@@ -171,6 +179,7 @@ a:hover {
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    font-weight: 600;
 }
 
 #info {
@@ -194,7 +203,7 @@ a:hover {
 }
 
 #info-block dt {
-    color: var(--color-0);
+    color: var(--color-2);
     font-weight: bold;
 }
 
@@ -216,7 +225,7 @@ a:hover {
 }
 
 #time th {
-    color: var(--color-0);
+    color: var(--color-2);
     font-weight: bold;
 }
 
@@ -275,6 +284,38 @@ a:hover {
     background-color: rgba(103,138,161,0.5);
 }
 
-#version {
+/* #version {
     padding-left: 1em;
+} */
+
+#about {
+    position: fixed;
+    width: 30vw;
+    margin: 5% auto; /* Will not center vertically and won't work in IE6/7. */
+    left: 0;
+    right: 0;
+    padding: 1em;
+    background-color: rgba(  3, 37, 58,0.5);
+    z-index: 2;
+}
+
+#about div,p {
+    text-align: justify;
+}
+
+#about-toggle {
+    margin-left: 1em;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.closer {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    color: var(--color-0);
+    cursor: pointer;
 }

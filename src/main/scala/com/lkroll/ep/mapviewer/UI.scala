@@ -16,6 +16,7 @@ object UI extends Logging {
     document.body.appendChild(top.render);
     document.body.appendChild(info.render);
     document.body.appendChild(TimeControls.block);
+    AboutModal.render();
   }
 
   def renderError(msg: String): Unit = {
@@ -47,9 +48,9 @@ object UI extends Logging {
     document.body.removeChild(loading);
   }
 
-  def label(text: String) = span(text, cls := "color-primary-0", style := "font-weight: bold;")
+  def label(text: String) = span(text, cls := "color-primary-2", style := "font-weight: bold;")
   def label(text: String, extracls: String) =
-    span(text, cls := "color-primary-0 " + extracls, style := "font-weight: bold;")
+    span(text, cls := "color-primary-2 " + extracls, style := "font-weight: bold;")
 
   val trackingContent = span("Nothing").render;
 
@@ -119,7 +120,7 @@ object UI extends Logging {
     id := "topmenu",
     img(src := "eclipse_phase.png", id := "logo"),
     span("Solar System Explorer", id := "title"),
-    span(s"v${build.BuildInfo.version}", id := "version"),
+    AboutModal.toggle,
     label("View: ", "leftSpace"),
     viewContent,
     label("Currently Tracking: ", "leftSpace"),
@@ -145,7 +146,7 @@ object UI extends Logging {
 
   val infoContent = div(id := "info-block", "Nothing").render;
 
-  val info = div(id := "info", h3("Info", cls := "color-primary-0"), infoContent);
+  val info = div(id := "info", h3("Info", cls := "color-primary-2"), infoContent);
 
   def replaceTracking(objO: Option[AstronomicalObject]): Unit = {
     trackingContent.innerHTML = "";

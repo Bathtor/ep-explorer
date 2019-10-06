@@ -31,3 +31,10 @@ target/
 *.sublime-project
 
 .DS_Store
+
+# Metals / VSC
+out/
+.bloop/
+.metals/
+*.code-workspace
+.vscode
