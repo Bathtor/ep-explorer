@@ -70,7 +70,12 @@
     --color-s2-2: #D17B5E;
     --color-s2-3: #863114;
     --color-s2-4: #5B1700;
+
+    --scrollbarBG: rgba( 38, 82,110,0.1);
+    --thumbBG: rgba(  3, 37, 58,0.8);
 }
+
+
 body {
 
     background-color: #000000;
@@ -91,7 +96,20 @@ body {
     font-size: 10pt;
     padding: 0;
     margin: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
 }
+/* body::-webkit-scrollbar {
+    width: 11px;
+}
+body::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+}
+body::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG) ;
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+} */
 
 a {
     color: var(--color-s1-1);
@@ -238,6 +256,7 @@ a:hover {
 #time input {
     background-color: rgba( 17, 59, 86, 0.5);
     border: solid 1px #000000;
+    width: 4em;
 }
 
 #time select {

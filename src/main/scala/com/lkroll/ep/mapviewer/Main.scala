@@ -28,7 +28,7 @@ object Main extends Logging {
   val scale = 1e-6;
   val scaleDistance = 1e-6;
   val pixelRatio = dom.window.devicePixelRatio;
-  val starttime = datamodel.AFTT(3652.4).to(datamodel.J2000TT); //data.JulianDateTT(2451623.81597).to(data.J2000TT);//Seconds(0.0);
+  val starttime = datamodel.AFTT(3653.0).to(datamodel.J2000TT); //data.JulianDateTT(2451623.81597).to(data.J2000TT);//Seconds(0.0);
   //val timeFactor = Minutes(1);
   var scene: Option[SceneContainer with TimeAnimatedScene] = None;
   var url: String = {
@@ -43,7 +43,7 @@ object Main extends Logging {
     //        val ctx = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D];
     val nojs = document.body.children.namedItem("nojs");
     document.body.removeChild(nojs);
-    val ctx = div(id := "context").render
+    val ctx = div(id := "context", tabindex := 0).render
     document.body.appendChild(ctx);
 
     UI.render();

@@ -60,6 +60,28 @@ trait SceneContainer extends Logging {
     addLocal(obj);
   }
 
+  def markAll(): Unit = {
+    localityGroups.foreach {
+      case (head, group) => {
+        head.activatePathRender();
+        group.foreach { entry =>
+          entry.activatePathRender();
+        }
+      }
+    }
+  }
+
+  def unmarkAll(): Unit = {
+    localityGroups.foreach {
+      case (head, group) => {
+        head.deactivatePathRender();
+        group.foreach { entry =>
+          entry.deactivatePathRender();
+        }
+      }
+    }
+  }
+
   def markLocal(obj: GraphicsObject): Unit = {
     obj match {
       case opObj: OrbitObject => {

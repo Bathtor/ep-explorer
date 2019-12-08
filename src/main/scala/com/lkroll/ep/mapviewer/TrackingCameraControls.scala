@@ -12,10 +12,12 @@ import scala.concurrent.duration
 import scala.concurrent.duration.Duration
 import scala.concurrent.duration.MILLISECONDS
 import scala.language.postfixOps
+import scala.collection.mutable
 
 import com.lkroll.ep.mapviewer.graphics.{GraphicsObject, GraphicsObjects, IntersectionPriority}
 
 import scribe.Logging
+import org.scalajs.dom.raw.KeyboardEvent
 
 abstract class TrackingCameraControls(val camera: Camera,
                                       val element: HTMLElement, //scalastyle:ignore
@@ -28,6 +30,8 @@ abstract class TrackingCameraControls(val camera: Camera,
     with IntersectionControls
     with Logging {
 
+  def markAll(): Unit;
+  def unmarkAll(): Unit;
   def markLocal(obj: GraphicsObject): Unit;
   def unmarkLocal(obj: GraphicsObject): Unit;
 
@@ -51,7 +55,53 @@ abstract class TrackingCameraControls(val camera: Camera,
 
   private var lastPosition = tracked.position.clone();
 
-  implicit val scheduler = new Scheduler().start()
+  implicit val scheduler = new Scheduler().start();
+
+  object ShowAllPaths extends UndoableAction {
+    override def perform(): Unit = {
+      if (ToggleAllPaths.on) {
+        hide();
+      } else {
+        show();
+      }
+    }
+    override def undo(): Unit = {
+      if (ToggleAllPaths.on) {
+        show();
+      } else {
+        hide();
+      }
+    }
+
+    private def show(): Unit = {
+      markAll();
+    }
+    private def hide(): Unit = {
+      unmarkAll();
+      markLocal(tracked);
+    }
+  }
+
+  object ToggleAllPaths extends Action {
+    private[TrackingCameraControls] var on: Boolean = false;
+    override def perform(): Unit = {
+      if (on) {
+        on = false;
+        unmarkAll();
+        markLocal(tracked);
+      } else {
+        on = true;
+        markAll();
+      }
+    }
+  }
+
+  private val keyboardActions = {
+    val map = mutable.TreeMap.empty[Int, Action];
+    map += (32 -> ShowAllPaths);
+    map += (80 -> ToggleAllPaths);
+    map
+  }
 
   def track(obj: GraphicsObject): Unit = {
     val start = tracked.position.clone();
@@ -92,18 +142,35 @@ abstract class TrackingCameraControls(val camera: Camera,
     lastPosition.copy(tracked.position);
   }
 
-  override def onMouseDown(event: MouseEvent) {
-    orbitControl.onMouseDown(event);
+  override def onMouseDown(event: MouseEvent): Unit = {
+    this.element.focus(); // so that the keyboard commands only work in canvas
+    //orbitControl.onMouseDown(event);
   }
-  override def onMouseMove(event: MouseEvent) = {
+  override def onMouseMove(event: MouseEvent): Unit = {
     this.onCursorMove(event.clientX, event.clientY);
     //orbitControl.onMouseMove(event);
   }
-  override def onMouseUp(event: MouseEvent) {
+  override def onMouseUp(event: MouseEvent): Unit = {
     //orbitControl.onMouseUp(event);
   }
-  override def onMouseWheel(event: MouseEvent) {
+  override def onMouseWheel(event: MouseEvent): Unit = {
     //orbitControl.onMouseWheel(event);
+  }
+
+  def onKeyDown(event: KeyboardEvent): Unit = {
+    //println(s"Got keydown event: ${event.keyCode}");
+    this.keyboardActions.get(event.keyCode) match {
+      case Some(action) => action.perform()
+      case None         => () // ignore
+    }
+  }
+
+  def onKeyUp(event: KeyboardEvent): Unit = {
+    //println(s"Got keyup event: ${event.keyCode}");
+    this.keyboardActions.get(event.keyCode) match {
+      case Some(action: UndoableAction) => action.undo()
+      case _                            => () // ignore
+    }
   }
 
   override def enabled = true;
@@ -121,8 +188,11 @@ abstract class TrackingCameraControls(val camera: Camera,
   }
 
   def attach(el: Element) {
-    el.addEventListener("dblclick", (this.onDoubleClick _).asInstanceOf[Function[Event, _]], false)
-    el.addEventListener("mousemove", (this.onMouseMove _).asInstanceOf[Function[Event, _]], false)
+    el.addEventListener("dblclick", (this.onDoubleClick _).asInstanceOf[Function[Event, _]], false);
+    el.addEventListener("mousemove", (this.onMouseMove _).asInstanceOf[Function[Event, _]], false);
+    el.addEventListener("mousedown", (this.onMouseDown _).asInstanceOf[Function[Event, _]], false);
+    el.addEventListener("keydown", (this.onKeyDown _).asInstanceOf[Function[Event, _]], false);
+    el.addEventListener("keyup", (this.onKeyUp _).asInstanceOf[Function[Event, _]], false);
   }
   this.attach(element);
 }

@@ -6,7 +6,7 @@ name := "EPMapViewer"
 
 organization := "com.lkroll.ep"
 
-version := "0.6.1"
+version := "0.6.2"
 
 scalaVersion := "2.12.10"
 
@@ -19,7 +19,7 @@ libraryDependencies += "com.lihaoyi" %%% "scalatags" % "0.6.+"
 libraryDependencies += "org.scala-js" %%% "scalajs-java-time" % "0.2.+"
 libraryDependencies += "com.outr" %%% "scribe" % "2.5.+"
 libraryDependencies += "org.denigma" %%% "threejs-facade" % "0.0.88-0.1.8"
-libraryDependencies += "org.typelevel"  %%% "squants"  % "1.3.+"
+libraryDependencies += "org.typelevel" %%% "squants" % "1.3.+"
 libraryDependencies += "com.lkroll.common" %%% "common-data-tools" % "1.2.+"
 
 jsDependencies += "org.webjars" % "three.js" % "r88" / "three.js" minified "three.min.js"

@@ -1067,7 +1067,7 @@ object HabitatsRimward {
                       Seq(Research, Pharmaceuticals))
       with Orbiting {
     val orbit = ConstantOriginOrbit(0.158, 37.98.AU, 1.14.º, 308.3.º, 53.8.º, 41.3.º, mass, this.centre.mass);
-    override def extraInfo = Seq(("Population" -> "300"));
+    override def extraInfo = Seq(("Population" -> "300"), ("Destroyed" -> "Day 88 10AF"));
   }
 
   object Haumea
@@ -1111,6 +1111,20 @@ object HabitatsRimward {
       with Orbiting {
     val orbit = ConstantOriginOrbit(0.2, 42.5.AU, 3.0.º, 50.0.º, 90.0.º, 0.0.º, mass, this.centre.mass); // no idea
     override def extraInfo = Seq(("Population" -> "2500"));
+  }
+
+  object Jubilex
+      extends Habitat("Jubilex",
+                      UUID.randomUUID(),
+                      Kilograms(6.35e16),
+                      Asteroid("Beehive", 32.0.km, 30.5.km, 27.0.km),
+                      Stars.Sol,
+                      Independent(Exhumans),
+                      Seq(English, Spanish),
+                      Seq.empty)
+      with Orbiting {
+    val orbit = ConstantOriginOrbit(0.134, 41.15.AU, 1.21.º, 64.0.º, 61.0.º, 285.7.º, mass, this.centre.mass); // no idea
+    override def extraInfo = Seq(("Population" -> "1 000"));
   }
 
   object Whiskey
@@ -1306,6 +1320,7 @@ object HabitatsRimward {
     Langford,
     Markov,
     HabitatOnTheRock,
+    Jubilex,
     Whiskey,
     Tulihaend,
     Sedna,

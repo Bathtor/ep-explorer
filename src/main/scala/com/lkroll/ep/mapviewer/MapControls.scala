@@ -20,6 +20,12 @@ class MapControls(_cam: Camera,
     extends TrackingCameraControls(_cam, _el, sc.scene, _width, _height, _tracked, _isPriority)
     with Logging {
 
+  override def markAll(): Unit = {
+    sc.markAll();
+  }
+  override def unmarkAll(): Unit = {
+    sc.unmarkAll();
+  }
   override def markLocal(obj: GraphicsObject): Unit = {
     sc.markLocal(obj);
   }
