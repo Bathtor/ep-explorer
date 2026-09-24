@@ -2,7 +2,7 @@ package com.lkroll.ep.mapviewer.graphics
 
 import com.lkroll.ep.mapviewer.datamodel.{UndergroundSettlement => USData, AstronomicalObject}
 import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer}
-import org.denigma.threejs._
+import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
 import js.JSConverters._

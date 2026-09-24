@@ -1,20 +1,18 @@
 package com.lkroll.ep.mapviewer.datamodel
 
-//import squants._;
-import squants.space._
-import squants.time._
-import squants.motion._
-import squants.mass._
-
-import org.denigma.threejs._
+import com.lkroll.ep.mapviewer.Main
+import com.lkroll.ep.mapviewer.three._
+import com.lkroll.ep.mapviewer.utils.PosCache
+import ExtraUnits._
 
 import java.util.UUID
 import scala.collection.immutable.TreeMap
 
-import com.lkroll.ep.mapviewer.Main
-import com.lkroll.ep.mapviewer.utils.PosCache
-
-import ExtraUnits._
+//import squants._;
+import squants.mass._
+import squants.motion._
+import squants.space._
+import squants.time._
 
 sealed trait OrbitDistance {
   def ::(s: OrbitDistance.Step): OrbitDistance;

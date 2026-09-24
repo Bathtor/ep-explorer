@@ -63,7 +63,7 @@ object PosCache {
 
   def comp[T]: Comparator[(Double, T)] = new Comparator[(Double, T)] {
     override def compare(o1: (Double, T), o2: (Double, T)): Int = {
-      Ordering.Double.compare(o1._1, o2._1)
+      Ordering.Double.TotalOrdering.compare(o1._1, o2._1)
     }
   };
 

@@ -1,0 +1,10 @@
+id = "01a0d328-b43c-7311-9845-e9e2eaf433bc"
+ref = "epexplorer-lqn"
+title = "Archive the obsolete threejs-facade fork"
+body = "Reminder for Lars: archive Bathtor/threejs-facade once the app-local facade and locally installed Three.js runtime have replaced it in ep-explorer. Confirm no remaining build or release workflow depends on the fork, then archive the repository. This is a top-level housekeeping task; do not delete the fork."
+status = "open"
+type = "task"
+priority = 4
+assignee = "lkroll"
+created_at = "2026-09-24T11:24:15.292401Z"
+updated_at = "2026-09-24T11:25:58.823077Z"

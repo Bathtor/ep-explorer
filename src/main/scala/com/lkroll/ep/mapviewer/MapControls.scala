@@ -1,13 +1,11 @@
 package com.lkroll.ep.mapviewer
 
-import org.denigma.threejs._
-import org.scalajs.dom.MouseEvent
-import org.denigma.threejs.extensions.controls.{CameraControls, JumpCameraControls}
-import org.scalajs.dom.raw.HTMLElement
-import scalatags.JsDom.all._
-
+import com.lkroll.ep.mapviewer.three._
 import graphics._
 
+import org.scalajs.dom.MouseEvent
+import org.scalajs.dom.HTMLElement
+import scalatags.JsDom.all._
 import scribe.Logging
 
 class MapControls(_cam: Camera,

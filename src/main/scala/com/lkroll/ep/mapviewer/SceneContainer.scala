@@ -1,9 +1,8 @@
 package com.lkroll.ep.mapviewer
 
 import com.lkroll.ep.mapviewer.datamodel.OrbitDistance
-import org.denigma.threejs.extensions.controls.{CameraControls, HoverControls}
-import org.denigma.threejs.extras.HtmlRenderer
-import org.denigma.threejs.{
+import com.lkroll.ep.mapviewer.graphics.GraphicsObject
+import com.lkroll.ep.mapviewer.three.{
   Color,
   Object3D,
   PerspectiveCamera,
@@ -14,15 +13,12 @@ import org.denigma.threejs.{
   WebGLRenderer,
   WebGLRendererParameters
 }
-import org.scalajs.dom.{Event, MouseEvent}
-import org.scalajs.dom
-import org.scalajs.dom.raw.HTMLElement
-
 import scala.scalajs.js.{Array, Dynamic}
 import collection.mutable;
 
-import com.lkroll.ep.mapviewer.graphics.GraphicsObject
-
+import org.scalajs.dom.{Event, MouseEvent}
+import org.scalajs.dom
+import org.scalajs.dom.HTMLElement
 import scribe.Logging
 
 trait SceneContainer extends Logging {
@@ -235,45 +231,28 @@ trait SceneContainer extends Logging {
     vr.setSize(width, height)
     vr
   }
-  val cssScene = new Scene();
-
-  val cssRenderer: HtmlRenderer = this.initCSSRenderer;
-
-  protected def initCSSRenderer: HtmlRenderer = {
-    val rendererCSS = new HtmlRenderer()
-    rendererCSS.setSize(width, height)
-    rendererCSS.domElement.style.position = absolute
-    rendererCSS.domElement.style.top = positionZero
-    rendererCSS.domElement.style.left = positionZero
-    rendererCSS.domElement.style.margin = positionZero
-    rendererCSS.domElement.style.padding = positionZero
-    rendererCSS
-  }
-
-  val controls: CameraControls = new HoverControls(camera, this.container);
+  def controls: CameraControls
 
   container.appendChild(renderer.domElement)
-  //container.appendChild(cssRenderer.domElement)
-  // cssRenderer.domElement.appendChild( renderer.domElement )
 
   lazy val composer = {
-    val ec = new facades.EffectComposer(renderer);
+    val ec = new three.EffectComposer(renderer);
     passes.foreach { p =>
       ec.addPass(p)
     };
     ec
   };
 
-  val clearPass = new facades.ClearPass(new Color(0xffffff), 1.0);
+  val clearPass = new three.ClearPass(new Color(0xffffff), 1.0);
 
-  val renderPass = new facades.RenderPass(scene, camera);
+  val renderPass = new three.RenderPass(scene, camera);
   renderPass.clear = false;
 
-  //    val aaShader = facades.FXAAShader;
+  //    val aaShader = three.FXAAShader;
   //    aaShader.uniforms = Dynamic.literal("tDiffuse" -> Dynamic.literal(value = null), "resolution" -> Dynamic.literal(value = new Vector2(1/width, 1/height)));
-  //    val aaPass = new facades.ShaderPass(aaShader);
+  //    val aaPass = new three.ShaderPass(aaShader);
   //    aaPass.renderToScreen = true;
-  val copyPass = new facades.ShaderPass(facades.CopyShader);
+  val copyPass = new three.ShaderPass(three.CopyShader);
   copyPass.renderToScreen = true;
 
   def passes = Seq(clearPass, renderPass, copyPass);
@@ -291,7 +270,6 @@ trait SceneContainer extends Logging {
     controls.update()
     //renderer.render(scene, camera)
     composer.render();
-    //cssRenderer.render(cssScene, camera)
     stats.end();
   }
 

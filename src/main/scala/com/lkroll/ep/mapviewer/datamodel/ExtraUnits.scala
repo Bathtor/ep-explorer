@@ -1,13 +1,13 @@
 package com.lkroll.ep.mapviewer.datamodel
 
+import com.lkroll.ep.mapviewer.three.Color
+
 import squants.{MetricSystem, SiBaseUnit}
 import squants.mass._
-import squants.space._
 import squants.motion._
-import squants.time._
+import squants.space._
 import squants.thermal._
-
-import org.denigma.threejs.Color
+import squants.time._
 
 object Yottagrams extends MassUnit with SiBaseUnit {
   val conversionFactor = MetricSystem.Yotta; // 24

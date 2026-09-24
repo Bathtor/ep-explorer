@@ -1,11 +1,9 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import org.denigma.threejs._
-import org.denigma.threejs.extensions.Container3D
-
 import com.lkroll.ep.mapviewer.datamodel.{Moon => MoonData, Orbiting, Rotating, AstronomicalObject};
 import com.lkroll.ep.mapviewer.data.Settlements
 import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer, Textures}
+import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
 import js.JSConverters._

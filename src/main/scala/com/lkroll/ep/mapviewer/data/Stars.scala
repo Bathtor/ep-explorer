@@ -1,12 +1,12 @@
 package com.lkroll.ep.mapviewer.data
 
 import com.lkroll.ep.mapviewer.datamodel._
+import com.lkroll.ep.mapviewer.three.Vector3
+
+import java.util.UUID
 
 import squants._
 import squants.space._
-import java.util.UUID
-
-import org.denigma.threejs.Vector3
 
 object Stars {
   object Sol

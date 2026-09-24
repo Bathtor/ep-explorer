@@ -1,8 +1,5 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import org.denigma.threejs._
-import org.denigma.threejs.extensions.Container3D
-
 import com.lkroll.ep.mapviewer.datamodel.{
   Star => StarData,
   AstronomicalObject,
@@ -12,14 +9,15 @@ import com.lkroll.ep.mapviewer.datamodel.{
   ConstantOriginOrbit
 };
 import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer};
+import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
 import js.JSConverters._
 
 import squants._
+import squants.motion._
 import squants.space._
 import squants.time._
-import squants.motion._
 
 class Star(val star: StarData) extends GraphicsObject with Overlayed with OrbitalPath {
 

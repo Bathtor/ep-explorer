@@ -6,7 +6,7 @@ import com.lkroll.ep.mapviewer.datamodel.{
   AstronomicalObject
 }
 import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer}
-import org.denigma.threejs._
+import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
 import js.JSConverters._

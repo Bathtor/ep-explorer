@@ -1,14 +1,29 @@
 id = "01a0d2a3-32d1-7600-854a-fcd87de69a09"
 ref = "epexplorer-1xa"
 title = "Inline the used Three.js r88 facade and package its runtime locally"
-body = "Scope: Copy only the Scala.js facade declarations and Scala helper behaviour used by ep-explorer from the unpublished r88 fork into this repository. Keep the r88 global THREE API in this phase, remove the external org.denigma facade dependency, and retain the existing local addon scripts as needed. Pin three@0.88.0 with Bun and a committed lockfile. Stage the core browser script and required addon scripts as local assets in deterministic load order, with no CDN or Vite. Coordinate generic Scala.js compilation and serving work with epexplorer-y3b. Acceptance: A clean checkout resolves without a locally published facade; used facade APIs and helpers are local; the pinned local Three runtime is delivered before the Scala.js application; record any unrelated compilation failures for epexplorer-y3b. Estimate: roughly 400-800 LOC of facade declarations, 50-180 LOC of helpers and call-site fixes, and 40-120 LOC of packaging, potentially around 1100 LOC at the high end. If extraction exceeds that, split a further coherent piece before implementing."
-status = "open"
+body = "Agreed approach: First inline only the Scala.js facade declarations and Scala helper behaviour used by ep-explorer from the unpublished r88 fork. Keep the r88 global THREE API and remove the org.denigma facade artefact dependency. Pin three@0.88.0 with Bun and commit bun.lock. Generate the existing epmapviewer-jsdeps.js locally from the installed r88 browser build and required existing addon scripts in deterministic load order, before the Scala.js application script. A small Bun build script is sufficient; no CDN and no Vite. Scala remains connected to the browser global through @JSGlobal in this phase. General compilation, serving and development instructions remain in epexplorer-y3b. Acceptance: clean checkout resolves without a locally published facade; used facade APIs and helpers are local; the generated local JS dependency bundle loads before the Scala.js output; record unrelated compilation failures for epexplorer-y3b. Estimate: roughly 400-800 LOC of facade declarations, 50-180 LOC of helpers and call-site fixes, and 40-120 LOC of packaging, potentially around 1100 LOC at the high end. Re-split a coherent piece if verified scope exceeds 1000 LOC."
+status = "closed"
+status_reason = "App-local r88 facade and Bun runtime bundle implemented; compile and linking verified"
 type = "task"
 priority = 3
+assignee = "codex"
 blocks = [
     "01a0d257-7e82-7ff0-ab8e-ccd90f2045c2",
     "01a0d2a3-4f97-7a40-b0fa-8e1b4d8adef3",
 ]
 parent = "01a0d286-dde9-7693-9e2a-2733c3ae8179"
 created_at = "2026-09-24T08:58:25.873142Z"
-updated_at = "2026-09-24T08:58:38.254034Z"
+updated_at = "2026-09-24T11:45:18.246088Z"
+closed_at = "2026-09-24T11:45:18.246088Z"
+
+[[comments]]
+id = "01a0d2cc-f219-7173-84bc-7ff793f06441"
+author = "codex"
+body = "Implementation in worktree: inlined the used r88 Scala.js facade and small control/animation helpers; removed the unpublished facade artefact dependency and unused fork imports; pinned Three.js 0.88.0 with Bun and generated the ordered local epmapviewer-jsdeps.js. Followed Scalatags to scalajs-dom 2.3.0 and added scalajs-java-securerandom 1.0.0 from eptools. sbt compile, fastLinkJS and fullLinkJS pass on JDK 25 OpenJ9; Bun builds and parses the dependency bundle. Site assembly and browser interaction checks remain in epexplorer-y3b. No issue closed."
+created_at = "2026-09-24T09:44:01.81749Z"
+
+[[comments]]
+id = "01a0d33b-f9a6-74a0-a10f-e31f9b5122c6"
+author = "lkroll"
+body = "App-local r88 facade and Bun runtime bundle implemented; compile and linking verified"
+created_at = "2026-09-24T11:45:18.246088Z"

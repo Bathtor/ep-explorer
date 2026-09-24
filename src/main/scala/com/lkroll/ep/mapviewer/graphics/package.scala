@@ -1,6 +1,6 @@
 package com.lkroll.ep.mapviewer
 
-import org.denigma.threejs.Vector3
+import com.lkroll.ep.mapviewer.three.Vector3
 
 package object graphics {
 

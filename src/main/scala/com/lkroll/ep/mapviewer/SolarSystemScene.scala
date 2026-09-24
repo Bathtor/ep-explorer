@@ -1,22 +1,18 @@
 package com.lkroll.ep.mapviewer
 
-import org.denigma.threejs._
-import org.denigma.threejs.extensions.controls.CameraControls
-import org.denigma.threejs.extras.HtmlSprite
-import org.scalajs.dom
-import org.scalajs.dom.document
+import com.lkroll.ep.mapviewer.data.{Habitats, Planets, Stars}
+import datamodel.AstronomicalObject
+import graphics._
+import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
-import org.scalajs.dom.raw.HTMLElement
-import scalatags.JsDom.all._
-
 import scala.util.Random
 
-import graphics._
-import data.{Habitats, Planets, Stars}
-import datamodel.AstronomicalObject
+import org.scalajs.dom
+import org.scalajs.dom.document
+import org.scalajs.dom.HTMLElement
+import scalatags.JsDom.all._
 import scribe.Logging
-
 import squants._
 
 class SolarSystemScene(val container: HTMLElement, val width: Double, val height: Double)
@@ -33,7 +29,6 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
   val planets = Planets.list.map(Planet.fromData);
   val habitats = Habitats.list.map(Habitat.fromData);
 
-  var sprites = List.empty[HtmlSprite]
 
   override def distance: Double = space.AstronomicalUnits(1).toKilometers * Main.scaleDistance
 
@@ -78,7 +73,7 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
     scene.add(axisHelper);
   }
 
-  val texturePass = new facades.TexturePass(Textures("background"));
+  val texturePass = new three.TexturePass(Textures("background"));
 
   override def passes = Seq(clearPass, texturePass, renderPass, copyPass);
 

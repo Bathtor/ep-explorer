@@ -1,25 +1,17 @@
 package com.lkroll.ep.mapviewer
 
-import scala.scalajs.js.annotation.JSExport
+import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
-//import org.scalajs.dom.html
-import scalatags.JsDom.all._
-//import scalatags.JsDom
-import scribe.Logging
+import scala.scalajs.js.annotation.JSExport
+import scala.util.Random
 
-import org.denigma.threejs._
-import org.denigma.threejs.extensions.Container3D
-import org.denigma.threejs.extensions.controls.{CameraControls, JumpCameraControls}
-import org.denigma.threejs.extras.HtmlSprite
 import org.scalajs.dom
 import org.scalajs.dom.document
 import org.scalajs.dom.window
-
-import org.scalajs.dom.raw.{HTMLElement, HTMLTextAreaElement}
-
-import scala.util.Random
-
+import org.scalajs.dom.{HTMLElement, HTMLTextAreaElement}
+import scalatags.JsDom.all._
+import scribe.Logging
 import squants.time._
 
 object Main extends Logging {

@@ -16,7 +16,7 @@ Currently in alpha stage with an experimental deployment at <http://epexplorer.l
 
 ## Dependencies
 
-This project depends on a custom build of the [threejs-facade](https://github.com/antonkulaga/threejs-facade) for Scala which can be found at [Bathtor/threejs-facade](https://github.com/Bathtor/threejs-facade).
+JavaScript dependencies are installed with Bun.
 
 ## TODO
 

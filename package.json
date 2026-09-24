@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "build:jsdeps": "bun scripts/build-jsdeps.ts"
+  },
+  "dependencies": {
+    "three": "0.88.0"
+  }
+}

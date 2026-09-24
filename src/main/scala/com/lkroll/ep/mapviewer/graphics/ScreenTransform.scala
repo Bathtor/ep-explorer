@@ -1,6 +1,6 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import org.denigma.threejs._
+import com.lkroll.ep.mapviewer.three._
 
 case class ScreenTransform(val width: Double, val height: Double, val left: Double = 0.0, val top: Double = 0.0) {
 

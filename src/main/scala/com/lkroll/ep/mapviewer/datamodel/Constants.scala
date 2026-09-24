@@ -1,10 +1,10 @@
 package com.lkroll.ep.mapviewer.datamodel
 
-import squants.Mass;
-import squants.space.Degrees;
+import com.lkroll.ep.mapviewer.three.Matrix3
 
-import org.denigma.threejs.Matrix3
+import squants.Mass;
 import squants.motion._
+import squants.space.Degrees;
 
 object Constants {
   // Physical

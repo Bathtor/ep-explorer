@@ -1,8 +1,5 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import org.denigma.threejs._
-import org.denigma.threejs.extensions.Container3D
-
 import com.lkroll.ep.mapviewer.datamodel.{
   Habitat => HabitatData,
   Orbiting,
@@ -24,14 +21,14 @@ import com.lkroll.ep.mapviewer.datamodel.{
 };
 import com.lkroll.ep.mapviewer.data.Habitats
 import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer}
+import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
 import js.JSConverters._
 
+import scribe.Logging
 import squants._
 import squants.space._
-
-import scribe.Logging
 
 abstract class Habitat(val habitat: HabitatData, val orbiter: Orbiting)
     extends GraphicsObject

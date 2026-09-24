@@ -1,9 +1,8 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import org.denigma.threejs.Vector3
-
 import com.lkroll.ep.mapviewer.SceneContainer
 import com.lkroll.ep.mapviewer.datamodel.AstronomicalObject
+import com.lkroll.ep.mapviewer.three.Vector3
 
 import squants.Time
 

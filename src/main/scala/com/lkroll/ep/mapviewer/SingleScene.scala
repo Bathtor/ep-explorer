@@ -1,24 +1,18 @@
 package com.lkroll.ep.mapviewer
 
-import org.denigma.threejs._
-import org.denigma.threejs.extensions.Container3D
-import org.denigma.threejs.extensions.controls.CameraControls
-import org.denigma.threejs.extras.HtmlSprite
-import org.scalajs.dom
-import org.scalajs.dom.document
+import datamodel.AstronomicalObject
+import graphics.{GraphicsObject, IntersectionPriorities}
+import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
-import org.scalajs.dom.raw.HTMLElement
-import scalatags.JsDom.all._
-
 import scala.util.Random
 
-import graphics.{GraphicsObject, IntersectionPriorities}
-import datamodel.{AstronomicalObject}
-
-import squants.time._
-
+import org.scalajs.dom
+import org.scalajs.dom.document
+import org.scalajs.dom.HTMLElement
+import scalatags.JsDom.all._
 import scribe.Logging
+import squants.time._
 
 class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement, val width: Double, val height: Double)
     extends SceneContainer
@@ -88,7 +82,7 @@ class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement
     scene.add(plane);
   }
 
-  val texturePass = new facades.TexturePass(Textures("background"));
+  val texturePass = new three.TexturePass(Textures("background"));
 
   override def passes = Seq(clearPass, texturePass, renderPass, copyPass);
 

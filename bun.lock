@@ -1,0 +1,14 @@
+{
+  "lockfileVersion": 2,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "dependencies": {
+        "three": "0.88.0",
+      },
+    },
+  },
+  "packages": {
+    "three": ["three@0.88.0", "", {}, "sha512-UY02Rrz49GjcnyNR+tXdmKvsJ4txC5WZMGaO+yiJTVy50wmmn6Z3fVc3waYU0czxDK36pNzkZ+38sAA8UmTR6A=="],
+  }
+}

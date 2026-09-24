@@ -1,11 +1,8 @@
 package com.lkroll.ep.mapviewer.facades
 
-import org.denigma.threejs._
-//import org.scalajs.dom._
+import scala.scalajs.js
+import scala.scalajs.js.annotation.JSGlobal
 
-import scalajs.js
-import scalajs.js.annotation._
-import scalajs.js.typedarray._
 import org.scalajs.dom.Node
 
 @js.native

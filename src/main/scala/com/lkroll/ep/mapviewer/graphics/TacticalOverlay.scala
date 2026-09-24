@@ -1,16 +1,14 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import org.denigma.threejs._
-
 import com.lkroll.ep.mapviewer.datamodel.AstronomicalObject
 import com.lkroll.ep.mapviewer.{ExtObject3D, ExtVector2, Main, SceneContainer, Textures}
+import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
 import js.JSConverters._
 
-import squants.Time
-
 import scribe.Logging
+import squants.Time
 
 class TacticalOverlay(obj: AstronomicalObject) extends GraphicsObject with Overlayed {
   private val geometry = new Geometry();
@@ -107,7 +105,7 @@ object TacticalOverlay extends Logging {
         None
       } else {
         val intersectPointScreen = new Vector2();
-        intersectPointScreen.subVectors(mouse, pos);
+        intersectPointScreen.subVectors(mouse, screenPos);
         val intersectPointNCS = screenT.toNormalizedCameraSpace(intersectPointScreen);
         val intersectPoint = new Vector3();
         intersectPoint.set(intersectPointNCS.x, intersectPointNCS.y, 0.5);

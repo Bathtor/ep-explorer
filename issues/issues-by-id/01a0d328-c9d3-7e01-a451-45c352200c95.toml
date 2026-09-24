@@ -1,0 +1,9 @@
+id = "01a0d328-c9d3-7e01-a451-45c352200c95"
+ref = "epexplorer-nob"
+title = "Remove obsolete commented code from map controls and scene setup"
+body = "Clean up dead commented-out code in IntersectionControls.scala and SceneContainer.scala after the r88 facade migration. Remove unused raycaster/ray experiments, debug printouts, CSS renderer remnants, and disabled shader/pass snippets that no longer describe active behaviour. Keep useful explanatory comments and working code. Acceptance: both files have no obsolete commented code; compilation and linking still pass. Estimate: about 30-80 lines removed."
+status = "open"
+type = "task"
+priority = 4
+created_at = "2026-09-24T11:24:20.819568Z"
+updated_at = "2026-09-24T11:24:20.819568Z"

@@ -1,6 +1,6 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import org.denigma.threejs.{Intersection, Object3D}
+import com.lkroll.ep.mapviewer.three.{Intersection, Object3D}
 
 trait IntersectionPriority {
   def prioritiseIntersection(intersections: List[Intersection]): Option[GraphicsObject] = {

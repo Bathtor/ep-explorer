@@ -1,11 +1,12 @@
 package com.lkroll.ep.mapviewer
 
-import org.denigma.threejs._
-import org.scalajs.dom
-import org.scalajs.dom.raw.HTMLElement
-import scala.scalajs.js
+import com.lkroll.ep.mapviewer.three._
 
+import scala.scalajs.js
 import js.JSConverters._
+
+import org.scalajs.dom
+import org.scalajs.dom.HTMLElement
 
 trait IntersectionControls {
   def camera: Camera
@@ -75,8 +76,8 @@ trait IntersectionControls {
     //println(s"Intersections: ${intersections.map { x => x.`object`.name }.mkString(",")}")
     underMouse = intersections.groupBy(_.`object`)
     val l = last // if I do not do this assigment and use last instead of l I get into trouble
-    this.exit = l.filterKeys(!underMouse.contains(_))
-    this.enter = underMouse.filterKeys(!l.contains(_))
+    this.exit = l.filter { case (key, _) => !underMouse.contains(key) }
+    this.enter = underMouse.filter { case (key, _) => !l.contains(key) }
     // if(exit.exists{case (key,value)=>enter.contains(key)}) dom.console.error("same enterexit")
     //val s = enter.size
     last = underMouse

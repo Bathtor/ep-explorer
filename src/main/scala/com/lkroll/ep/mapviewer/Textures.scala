@@ -1,6 +1,6 @@
 package com.lkroll.ep.mapviewer
 
-import org.denigma.threejs.Texture
+import com.lkroll.ep.mapviewer.three.Texture
 
 object Textures {
   private val textures = scala.collection.mutable.Map.empty[String, Texture];

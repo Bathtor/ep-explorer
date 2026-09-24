@@ -1,8 +1,5 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import org.denigma.threejs._
-import org.denigma.threejs.extensions.Container3D
-
 import com.lkroll.ep.mapviewer.datamodel.{
   Planet => PlanetData,
   Orbiting,
@@ -14,14 +11,14 @@ import com.lkroll.ep.mapviewer.data.Planets
 import com.lkroll.ep.mapviewer.data.Settlements
 import com.lkroll.ep.mapviewer.data.Moons
 import com.lkroll.ep.mapviewer.{ExtObject3D, ExtVector3, Main, SceneContainer, Textures};
+import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
 import js.JSConverters._
 
+import scribe.Logging
 import squants._
 import squants.space._
-
-import scribe.Logging
 
 trait PlanetObject extends GraphicsObject
 

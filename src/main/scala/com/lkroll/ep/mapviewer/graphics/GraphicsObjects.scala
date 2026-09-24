@@ -1,6 +1,6 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import org.denigma.threejs.{Intersection, Object3D}
+import com.lkroll.ep.mapviewer.three.{Intersection, Object3D}
 
 object GraphicsObjects {
   private val id2obj = scala.collection.mutable.Map.empty[Double, GraphicsObject];

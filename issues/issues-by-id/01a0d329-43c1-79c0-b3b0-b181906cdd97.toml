@@ -1,0 +1,9 @@
+id = "01a0d329-43c1-79c0-b3b0-b181906cdd97"
+ref = "epexplorer-9zr"
+title = "Enforce consistent Scala import ordering"
+body = "Evaluate and configure a lightweight import-order check for Scala sources after the manual import cleanup in epexplorer-1xa. Prefer existing scalafmt support if it can enforce the agreed grouping without broad formatting churn; otherwise assess a focused lint rule. Acceptance: contributors can run the check locally, CI fails on newly disordered imports once CI exists, and the rule is documented in contributor instructions. Estimate: 10-50 LOC of configuration and documentation, plus any separately reviewed import reordering."
+status = "open"
+type = "task"
+priority = 4
+created_at = "2026-09-24T11:24:52.033081Z"
+updated_at = "2026-09-24T11:24:52.033081Z"

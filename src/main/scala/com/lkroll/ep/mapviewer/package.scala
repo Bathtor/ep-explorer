@@ -1,6 +1,6 @@
 package com.lkroll.ep
 
-import org.denigma.threejs._
+import com.lkroll.ep.mapviewer.three._
 
 package object mapviewer {
   implicit class ExtObject3D(obj: Object3D) {

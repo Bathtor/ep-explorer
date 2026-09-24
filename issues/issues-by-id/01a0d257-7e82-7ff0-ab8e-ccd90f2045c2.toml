@@ -1,7 +1,7 @@
 id = "01a0d257-7e82-7ff0-ab8e-ccd90f2045c2"
 ref = "epexplorer-y3b"
 title = "Restore compilation and runnable Scala.js output"
-body = "Scope: After epexplorer-mda and the r88 facade/local-runtime task epexplorer-1xa, make the remaining compatibility fixes needed for the selected Scala.js toolchain and dependencies. Restore a working linked browser build and page, preserve or deliberately update the static release asset contract, and write useful development launch instructions once the app runs. The modern Three.js upgrade in epexplorer-oup is separate and does not block this task. Acceptance: From a clean checkout, compile, fastOptJS and fullOptJS succeed; the production page loads the generated application and local assets; a browser smoke check exercises map rendering and a representative interaction; README.md documents the actual build and run commands. Estimate: about 50-250 LOC of source, build and page compatibility fixes beyond the dedicated facade task. If an observed incompatibility requires a larger migration, re-estimate and split it before implementation."
+body = "Scope: After epexplorer-mda and the r88 facade/local-runtime task epexplorer-1xa, finish the runnable Scala.js browser build. Compilation and Scala.js fastLinkJS/fullLinkJS already pass with the inlined facade, scalajs-dom 2.3.0 and scalajs-java-securerandom 1.0.0; this task owns assembling the linked main.js, generated epmapviewer-jsdeps.js, page and other local assets into a site that can be served from a clean checkout. Preserve or deliberately update the static release asset contract and write useful development launch instructions once the app runs. The modern Three.js upgrade in epexplorer-oup is separate. Acceptance: the site build uses the supported Scala.js linker tasks; the production page loads generated application and local assets; a browser smoke check exercises map rendering and a representative interaction; README.md documents actual build and run commands. Estimate: about 50-250 LOC of build and page integration, plus any observed source fixes. Re-estimate and split a larger verified incompatibility before implementation."
 status = "open"
 type = "task"
 priority = 3
@@ -15,4 +15,4 @@ blocks = [
     "01a0d2a3-4f97-7a40-b0fa-8e1b4d8adef3",
 ]
 created_at = "2026-09-24T07:35:44.514066Z"
-updated_at = "2026-09-24T08:58:57.172002Z"
+updated_at = "2026-09-24T09:43:52.612836Z"

@@ -1,15 +1,14 @@
 package com.lkroll.ep.mapviewer.datamodel
 
-import squants.space._
-import squants.time._
-import squants.motion._
-import squants.mass._
-
-import org.denigma.threejs._
+import com.lkroll.ep.mapviewer.{ExtVector3, Main};
+import com.lkroll.ep.mapviewer.three._
 
 import java.util.UUID;
 
-import com.lkroll.ep.mapviewer.{ExtVector3, Main};
+import squants.mass._
+import squants.motion._
+import squants.space._
+import squants.time._
 
 trait Lagrangian extends Orbit {}
 

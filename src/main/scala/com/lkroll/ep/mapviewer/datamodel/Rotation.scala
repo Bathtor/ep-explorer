@@ -1,14 +1,13 @@
 package com.lkroll.ep.mapviewer.datamodel
 
-import org.denigma.threejs._
-
-import squants.time._
-import squants.space._
-import squants.motion._
+import com.lkroll.ep.mapviewer.three._
+import ExtraUnits._
 
 import java.util.UUID
 
-import ExtraUnits._
+import squants.motion._
+import squants.space._
+import squants.time._
 
 trait Rotation {
   def at(t: Time): RotationSnapshot;

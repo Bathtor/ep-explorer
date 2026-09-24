@@ -1,23 +1,16 @@
 package com.lkroll.ep.mapviewer
 
-import org.denigma.threejs.extensions.animations.{Animation, Scheduler}
-import org.denigma.threejs.extensions.controls.{CameraControls}
-import org.denigma.threejs.{Camera, Object3D, Scene, Vector3}
-import org.denigma.threejs.extras.OrbitControls
-import org.scalajs.dom
-import org.scalajs.dom.raw.{Element, Event, HTMLElement}
-import org.scalajs.dom.MouseEvent
-
-import scala.concurrent.duration
-import scala.concurrent.duration.Duration
-import scala.concurrent.duration.MILLISECONDS
-import scala.language.postfixOps
-import scala.collection.mutable
-
 import com.lkroll.ep.mapviewer.graphics.{GraphicsObject, GraphicsObjects, IntersectionPriority}
+import com.lkroll.ep.mapviewer.three.{Camera, Object3D, OrbitControls, Scene, Vector3}
 
+import scala.collection.mutable
+import scala.language.postfixOps
+
+import org.scalajs.dom
+import org.scalajs.dom.{Element, Event, HTMLElement}
+import org.scalajs.dom.MouseEvent
+import org.scalajs.dom.KeyboardEvent
 import scribe.Logging
-import org.scalajs.dom.raw.KeyboardEvent
 
 abstract class TrackingCameraControls(val camera: Camera,
                                       val element: HTMLElement, //scalastyle:ignore
@@ -53,9 +46,10 @@ abstract class TrackingCameraControls(val camera: Camera,
     oc
   }
 
-  private var lastPosition = tracked.position.clone();
+  private val lastTargetPosition = tracked.position.clone();
 
-  implicit val scheduler = new Scheduler().start();
+  private val trackingTransitionMillis = 1000.0
+  private var trackingTransition: Option[(Vector3, Double)] = None
 
   object ShowAllPaths extends UndoableAction {
     override def perform(): Unit = {
@@ -104,19 +98,9 @@ abstract class TrackingCameraControls(val camera: Camera,
   }
 
   def track(obj: GraphicsObject): Unit = {
-    val start = tracked.position.clone();
-    val dp = new Vector3().subVectors(obj.position, tracked.position);
     val oldObj = tracked;
+    trackingTransition = Some((lastTargetPosition.clone(), dom.window.performance.now()))
     tracked = obj;
-
-    new Animation(Duration(1, duration.SECONDS))(p => {
-
-      val m = dp.clone().multiplyScalar(p)
-      val cur = start.clone().add(m)
-      // dom.console.info(cur)
-      orbitControl.target.copy(cur)
-    }).go(scheduler)
-    // center.copy(position)
     oldObj match {
       case o: graphics.Overlayed => {
         o.overlay.clear();
@@ -134,12 +118,31 @@ abstract class TrackingCameraControls(val camera: Camera,
     UI.replaceTracking(tracked.data)
   }
 
+  /** Interpolates from the displayed target towards the tracked object's live position.
+    * A new tracking request starts from that displayed target, so retargeting has no jump.
+    * @param nowMillis time from `window.performance.now()`
+    */
+  private def nextTrackingTarget(nowMillis: Double): Vector3 = trackingTransition match {
+    case Some((startTarget, startedAt)) =>
+      val elapsedMillis = nowMillis - startedAt
+      val fractionComplete = math.min(1.0, math.max(0.0, elapsedMillis / trackingTransitionMillis))
+      if (fractionComplete >= 1.0) trackingTransition = None
+      val movement = tracked.position.clone()
+      movement.sub(startTarget)
+      movement.multiplyScalar(fractionComplete)
+      val interpolatedTarget = startTarget.clone()
+      interpolatedTarget.add(movement)
+      interpolatedTarget
+    case None => tracked.position
+  }
+
   override def update() = {
-    orbitControl.target.copy(tracked.position);
-    val diff = tracked.position.clone().sub(lastPosition);
-    camera.position.add(diff);
+    val nextTarget = nextTrackingTarget(dom.window.performance.now())
+    val targetMovement = nextTarget.clone().sub(lastTargetPosition);
+    camera.position.add(targetMovement);
+    orbitControl.target.copy(nextTarget);
     orbitControl.update();
-    lastPosition.copy(tracked.position);
+    lastTargetPosition.copy(nextTarget);
   }
 
   override def onMouseDown(event: MouseEvent): Unit = {
