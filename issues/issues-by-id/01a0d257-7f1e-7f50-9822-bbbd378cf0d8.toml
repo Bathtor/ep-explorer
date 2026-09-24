@@ -2,14 +2,14 @@ id = "01a0d257-7f1e-7f50-9822-bbbd378cf0d8"
 ref = "epexplorer-d3f"
 title = "Add GitHub Actions CI for build and tests"
 body = """
-Scope: Add a simple GitHub Actions workflow for pushes and pull requests. Install the documented JDK and sbt toolchain, cache downloaded dependencies safely, and run compilation, the non-empty automated test suite, and the production Scala.js output task from a clean checkout.
+Scope: Add a GitHub Actions workflow for pushes and pull requests that runs compilation, the non-empty test suite, and the production Scala.js build from a clean checkout. Use /Users/lkroll/Programming/EclipsePhase/eptools/.github/workflows/release.yml as the concrete reference for checkout, Nix setup, pinned source dependency bootstrap, build and smoke-test steps, checksums, and artefact upload. Also consult eptools/scripts/bootstrap-release-dependencies.nu and eptools/scripts/build-release.nu. Adapt the release artefact handling to the static site tar archive rather than the eptools server JAR; coordinate that packaging with the existing static release task.
 
-Acceptance: CI succeeds on a clean runner without Maven Local, Bintray, or private credentials; a compile, test, or production linking failure fails the workflow; README identifies the local equivalent and the workflow runs on pull requests. Avoid deployment or publishing in this task.
+Acceptance: CI runs on pull requests and succeeds on a clean runner without pre-existing locally published dependencies or private credentials; it can build any unpublished facade dependency from pinned source as part of setup; a compile, test, or production linking failure fails the workflow. The workflow validates the static tar archive once the release packaging task supplies it. README identifies the local equivalent. Publishing a GitHub release remains in the static release task.
 
-Estimate: roughly 40-100 LOC of workflow and documentation changes."""
+Estimate: about 20-60 LOC of workflow and documentation changes, excluding dependency bootstrap and tar packaging tracked with the build and release work."""
 status = "open"
 type = "task"
 priority = 3
 blocked_by = ["01a0d257-7ed0-7e71-9f30-77cc5bff590b"]
 created_at = "2026-09-24T07:35:44.670418Z"
-updated_at = "2026-09-24T07:35:58.177334Z"
+updated_at = "2026-09-24T07:52:07.815055Z"
