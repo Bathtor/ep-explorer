@@ -1,0 +1,14 @@
+id = "01a0d2a3-4f97-7a40-b0fa-8e1b4d8adef3"
+ref = "epexplorer-oup"
+title = "Upgrade the inlined facade and runtime to modern Three.js"
+body = "Scope: After the r88 facade and local runtime work, select and pin a modern Three.js release. Migrate the local Scala.js facades and application call sites to that API, use Scala.js ES module imports where suitable, and bundle the linked Scala.js output with Three and official addons using Bun. Replace removed Geometry APIs, legacy global addon scripts and obsolete post-processing and colour handling. Keep the JavaScript dependency reproducible from a clean checkout. Acceptance: compile and linking succeed; a browser smoke check covers scene rendering, controls, intersections, labels and post-processing with the selected release; obsolete r88 assets are removed. Estimate: roughly 350-900 LOC of facade and application migration plus 80-200 LOC of bundling and page wiring. Re-estimate and split again if verified scope exceeds 1000 LOC."
+status = "open"
+type = "task"
+priority = 3
+blocked_by = [
+    "01a0d257-7e82-7ff0-ab8e-ccd90f2045c2",
+    "01a0d2a3-32d1-7600-854a-fcd87de69a09",
+]
+parent = "01a0d286-dde9-7693-9e2a-2733c3ae8179"
+created_at = "2026-09-24T08:58:33.239482Z"
+updated_at = "2026-09-24T08:58:57.172002Z"

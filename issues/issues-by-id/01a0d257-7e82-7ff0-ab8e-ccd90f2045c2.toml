@@ -1,24 +1,18 @@
 id = "01a0d257-7e82-7ff0-ab8e-ccd90f2045c2"
 ref = "epexplorer-y3b"
 title = "Restore compilation and runnable Scala.js output"
-body = """
-Scope: Make the compatibility fixes needed for the selected toolchain and dependencies while retaining the existing Three.js facade by default. Update Scala.js APIs or legacy jsDependencies wiring only where the build demonstrates a need. Preserve the production page entry point and assets, and add useful development launch instructions once the app runs.
-
-Legacy JavaScript loading to preserve or replace: The removed jsDependencies configuration loaded Three.js WebJar r88 before the local CopyShader.js, FXAAShader.js, Stats.js, OrbitControls.js, EffectComposer.js, CSS3DRenderer.js, ClearPass.js, RenderPass.js, TexturePass.js, and ShaderPass.js scripts. These local files remain in src/main/resources. The page currently expects epmapviewer-jsdeps.js before epmapviewer-opt.js.
-
-Acceptance: From a clean checkout, compile, fastOptJS, and fullOptJS succeed; the production page loads the generated application and local assets; a browser smoke check exercises map rendering and a representative interaction; document the actual build and run commands in README.md. Preserve or deliberately update the epmapviewer-opt.js and epmapviewer-jsdeps.js contract required by the static release task.
-
-Estimate: about 50-250 LOC for observed source, build, and page compatibility fixes. If a verified incompatibility requires a larger facade migration, create and estimate that separately before implementation."""
+body = "Scope: After epexplorer-mda and the r88 facade/local-runtime task epexplorer-1xa, make the remaining compatibility fixes needed for the selected Scala.js toolchain and dependencies. Restore a working linked browser build and page, preserve or deliberately update the static release asset contract, and write useful development launch instructions once the app runs. The modern Three.js upgrade in epexplorer-oup is separate and does not block this task. Acceptance: From a clean checkout, compile, fastOptJS and fullOptJS succeed; the production page loads the generated application and local assets; a browser smoke check exercises map rendering and a representative interaction; README.md documents the actual build and run commands. Estimate: about 50-250 LOC of source, build and page compatibility fixes beyond the dedicated facade task. If an observed incompatibility requires a larger migration, re-estimate and split it before implementation."
 status = "open"
 type = "task"
 priority = 3
 blocked_by = [
     "01a0d257-7e2e-7fe3-8ed4-a368b8e6a44e",
-    "01a0d286-dde9-7693-9e2a-2733c3ae8179",
+    "01a0d2a3-32d1-7600-854a-fcd87de69a09",
 ]
 blocks = [
     "01a0d255-6f26-7240-b83d-2070b05704ea",
     "01a0d257-7ed0-7e71-9f30-77cc5bff590b",
+    "01a0d2a3-4f97-7a40-b0fa-8e1b4d8adef3",
 ]
 created_at = "2026-09-24T07:35:44.514066Z"
-updated_at = "2026-09-24T08:27:54.4932Z"
+updated_at = "2026-09-24T08:58:57.172002Z"

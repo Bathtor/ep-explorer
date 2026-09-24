@@ -1,16 +1,15 @@
 id = "01a0d286-dde9-7693-9e2a-2733c3ae8179"
 ref = "epexplorer-jwq"
-title = "Build and modernise the custom Three.js facade for Scala 2.13"
-body = """
-Scope: Treat the unpublished Bathtor/threejs-facade fork as its own dependency project. Inspect its build and pin an exact source revision; update it as needed to produce a Scala 2.13.18 / Scala.js 1.x artefact with a build toolchain runnable on JDK 25 OpenJ9. Preserve the existing Three.js r88 API/runtime pairing unless a concrete incompatibility requires a separate decision. Provide a reproducible way for ep-explorer and CI to build and consume the facade from a clean checkout. Application source fixes belong to epexplorer-y3b.
-
-Acceptance: The facade builds for Scala.js 1 and Scala 2.13; a clean ep-explorer checkout can resolve the facade without a pre-existing unpublished local artefact; the source revision, bootstrap commands, and any local publication step are pinned and documented; the facade version and Three.js runtime remain compatible. Report any verified API break or required migration before expanding scope.
-
-Estimate: roughly 20-60 LOC for source pin/bootstrap integration, 30-150 LOC for facade build changes, and 0-500 LOC for compatibility fixes once inspected. If inspection suggests over 1000 LOC total, split the migration into smaller tasks before implementation."""
-status = "open"
+title = "Choose and implement a sustainable Three.js integration"
+body = "Decision: Use an app-local Scala.js facade for the subset of Three.js used by ep-explorer, with a pinned JavaScript runtime installed by Bun. This umbrella is split into two child tasks. epexplorer-1xa first inlines the used r88 facade and helpers and packages the r88 browser runtime locally, eliminating the unpublished fork artefact. epexplorer-oup then upgrades the runtime, facades, addon imports and app code to a pinned modern Three.js release. The modernisation can follow the first working r88 build rather than blocking it. epexplorer-y3b owns remaining generic Scala.js compilation, page, serving and README work after the first child. Keep both phases reproducible from a clean checkout. Estimate: first child about 490-1100 LOC, second about 430-1100 LOC; each must be re-split if verified work exceeds 1000 LOC."
+status = "in-progress"
 type = "task"
 priority = 3
-blocks = ["01a0d257-7e82-7ff0-ab8e-ccd90f2045c2"]
+assignee = "codex"
 parent = "01a0d257-7e2e-7fe3-8ed4-a368b8e6a44e"
+children = [
+    "01a0d2a3-32d1-7600-854a-fcd87de69a09",
+    "01a0d2a3-4f97-7a40-b0fa-8e1b4d8adef3",
+]
 created_at = "2026-09-24T08:27:29.129981Z"
-updated_at = "2026-09-24T08:28:14.705401Z"
+updated_at = "2026-09-24T08:58:45.886572Z"
