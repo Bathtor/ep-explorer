@@ -11,8 +11,7 @@ import scribe.Logging
 import squants.Time
 
 class TacticalOverlay(obj: AstronomicalObject) extends GraphicsObject with Overlayed {
-  private val geometry = new Geometry();
-  geometry.vertices.push(new Vector3(0, 0, 0));
+  private val geometry = new BufferGeometry().setFromPoints(js.Array(new Vector3(0, 0, 0)));
   private val texture = Textures("overlay");
   private val material = new PointsMaterial(
     js.Dynamic

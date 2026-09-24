@@ -75,7 +75,7 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
 
   val texturePass = new three.TexturePass(Textures("background"));
 
-  override def passes = Seq(clearPass, texturePass, renderPass, copyPass);
+  override def passes = Seq(clearPass, texturePass, renderPass, outputPass);
 
   val initialTrackingObject: Option[GraphicsObject] = Main.opts.tracking.get.flatMap { ao =>
     val r = this.searchIndex.get(ao.name);

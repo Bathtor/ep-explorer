@@ -7,7 +7,8 @@ Scope: Replace obsolete repositories and dynamic version selectors in mapviewer.
 Acceptance: All listed published dependencies resolve at fixed versions from declared public repositories without relying on local Ivy or Maven artefacts. Record the remaining facade resolution failure and leave its source, build, and bootstrap changes to epexplorer-jwq.
 
 Estimate: about 10-40 LOC for dependency declarations and repository configuration. The facade child task carries its own estimate."""
-status = "in-progress"
+status = "closed"
+status_reason = "Published application dependencies resolve at fixed versions and the Three.js facade migration is complete"
 type = "task"
 priority = 3
 assignee = "codex"
@@ -15,7 +16,8 @@ blocked_by = ["01a0d257-2ac9-7233-ba4d-51eefcd1bd52"]
 blocks = ["01a0d257-7e82-7ff0-ab8e-ccd90f2045c2"]
 children = ["01a0d286-dde9-7693-9e2a-2733c3ae8179"]
 created_at = "2026-09-24T07:35:44.430712Z"
-updated_at = "2026-09-24T08:27:48.927427Z"
+updated_at = "2026-09-24T15:17:21.174704Z"
+closed_at = "2026-09-24T15:17:21.174704Z"
 
 [[comments]]
 id = "01a0d280-a5f9-7631-861e-c1d962d563af"
@@ -28,3 +30,9 @@ id = "01a0d285-b71d-76a1-9b13-ad58efd1244c"
 author = "codex"
 body = "Scala 2.13.18 resolution check on JDK 25 OpenJ9: all currently declared application dependencies except org.denigma:threejs-facade_sjs1_2.13:0.0.88-0.1.8 resolve. Pinned scalaVersion to 2.13.18. Full sbt update still fails at the unpublished facade; compilation has not been attempted."
 created_at = "2026-09-24T08:26:13.661711Z"
+
+[[comments]]
+id = "01a0d3fe-1c96-7643-b652-3d092e0b5fee"
+author = "lkroll"
+body = "Published application dependencies resolve at fixed versions and the Three.js facade migration is complete"
+created_at = "2026-09-24T15:17:21.174704Z"

@@ -1,0 +1,9 @@
+id = "01a0d3f1-d15a-7580-8988-bb511a491cef"
+ref = "epexplorer-r9y"
+title = "Investigate AU marker alignment in the inner system"
+body = "The AU distance rings and their labels appear oddly aligned in the inner Solar System view; this predates the Three.js upgrade. Reproduce the layout at several zoom levels and viewpoints, compare marker placement with the corresponding ring geometry and the outer system, and inspect DistanceMarker's orbit path and label anchor. Identify the cause and propose a small correction before implementation. Acceptance: document the cause with a concrete before/after placement proposal; if agreed, implement and visually verify representative inner-system markers without changing their distances."
+status = "open"
+type = "task"
+priority = 4
+created_at = "2026-09-24T15:03:55.482841Z"
+updated_at = "2026-09-24T15:03:55.482841Z"

@@ -84,7 +84,7 @@ class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement
 
   val texturePass = new three.TexturePass(Textures("background"));
 
-  override def passes = Seq(clearPass, texturePass, renderPass, copyPass);
+  override def passes = Seq(clearPass, texturePass, renderPass, outputPass);
 
   private def updatePositions() {
     target.update(time)

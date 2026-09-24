@@ -43,6 +43,8 @@ abstract class TrackingCameraControls(val camera: Camera,
     oc.dampingFactor = 0.25;
     oc.maxAzimuthAngle = Double.PositiveInfinity;
     oc.minAzimuthAngle = Double.NegativeInfinity;
+    // Modern OrbitControls requires an explicit keyboard listener; this element receives focus on mousedown.
+    oc.listenToKeyEvents(element);
     oc
   }
 

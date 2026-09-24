@@ -9,7 +9,7 @@
   "dependencies": {
     "@fontsource/play": "5.3.0",
     "@fortawesome/fontawesome-free": "6.7.2",
-    "three": "0.88.0"
+    "three": "0.186.0"
   },
   "devDependencies": {
     "vite": "^8.3.0"

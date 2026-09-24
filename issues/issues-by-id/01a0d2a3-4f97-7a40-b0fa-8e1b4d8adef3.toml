@@ -1,10 +1,12 @@
 id = "01a0d2a3-4f97-7a40-b0fa-8e1b4d8adef3"
 ref = "epexplorer-oup"
 title = "Upgrade the inlined facade and runtime to modern Three.js"
-body = "Agreed follow-on approach: Start from the locally inlined r88 facade and runnable browser build. Select and pin a modern Three.js release. Migrate the local Scala.js facades and application call sites to modern APIs, emit a Scala.js ES module with @JSImport references to three and official addons, and use Bun to bundle the linked output and installed dependency for the browser. Replace removed Geometry APIs, legacy global addon scripts, and obsolete post-processing and colour handling. No Vite is planned unless a concrete need emerges. Acceptance: reproducible clean-checkout compilation and linking; browser smoke check covers scene rendering, controls, intersections, labels and post-processing; obsolete r88 assets removed. Estimate: roughly 350-900 LOC of facade and application migration plus 80-200 LOC of bundling and page wiring. Re-estimate and split again if verified scope exceeds 1000 LOC."
-status = "open"
+body = "Upgrade the app-local Scala.js facades and browser runtime from Three.js r88 to pinned r186 through Bun and Vite. Agreed approach: direct Scala.js ES module imports for core and official addons; BufferGeometry for custom and generated geometry; retain Points labels and manual hover behaviour; use CanvasTexture where appropriate; use modern colour management with sRGB textures and OutputPass, then iterate visually if needed; target modern browsers. Remove obsolete r88 scripts and bootstrap. Verify build and both scene views, orbital paths, labels, overlays and hover, selection, controls, textures and post-processing in Safari. Keep this task open for user review. Estimated 350-650 added or modified LOC plus removal of legacy JavaScript, so total diff may exceed 1000 LOC; split larger optional visual redesigns into later tasks."
+status = "closed"
+status_reason = "Three.js r186 migration, controls, and browser verification completed and approved"
 type = "task"
 priority = 3
+assignee = "codex"
 blocked_by = [
     "01a0d257-7e82-7ff0-ab8e-ccd90f2045c2",
     "01a0d2a3-32d1-7600-854a-fcd87de69a09",
@@ -12,4 +14,47 @@ blocked_by = [
 blocks = ["01a0d330-4dc0-7231-8de5-81c02385bdea"]
 parent = "01a0d286-dde9-7693-9e2a-2733c3ae8179"
 created_at = "2026-09-24T08:58:33.239482Z"
-updated_at = "2026-09-24T11:32:33.34466Z"
+updated_at = "2026-09-24T15:17:14.132091Z"
+closed_at = "2026-09-24T15:17:14.132091Z"
+
+[[comments]]
+id = "01a0d3ae-180d-7481-8066-6d1f5f9e8538"
+author = "codex"
+body = "Baseline commit 5f9ed96. Experiment: pinning Three.js 0.186.0 alone let Vite build, increasing the minified JavaScript from about 346 to 402 kB gzip, but Safari stopped at Loading 3/3 with TypeError: undefined is not a constructor at new THREE.Geometry. A Scala.js ESModule spike with direct imports from three and three/addons/controls/OrbitControls.js compiled and bundled. Restored all experimental package and source edits, reinstalled the locked r88 dependency, and confirmed bun run build passes. Only this issue claim and investigation text remain dirty."
+created_at = "2026-09-24T13:49:57.133058Z"
+
+[[comments]]
+id = "01a0d3be-37a7-75c1-88cd-519be9852641"
+author = "codex"
+body = "Direct Three.js r186 imports and BufferGeometry migration link and bundle. Safari smoke checks render Mars and Solar System; Mars overlay hover shows Olympus City details. Existing sbt test runner now stalls because its file URL loads Scala.js ES module output containing bare three imports without Vite resolution. Interrupted the run after roughly two minutes and paused implementation for user check-in. Safari and Vite preview closed. Task remains open and unstaged."
+created_at = "2026-09-24T14:07:33.799289Z"
+
+[[comments]]
+id = "01a0d3c1-63ad-7a70-bca7-aa30fafbcafd"
+author = "codex"
+body = "Correction to previous comment: this repository has no src/test directory or test suites. sbt test launching its configured Safari runner is not a current gate for this migration. Production build succeeds, and Safari checks covered Mars, overlay hover details, and Solar System rendering. Bare-import handling for a future browser test runner can be addressed when tests are introduced."
+created_at = "2026-09-24T14:11:01.677319Z"
+
+[[comments]]
+id = "01a0d3c4-44b0-7873-b923-5fb34e799d0f"
+author = "codex"
+body = "Further correction: inspected the generated epmapviewer-test-fastopt/main.js. It contains no Three.js imports or app Main references, so the earlier claim that bare three imports caused the empty sbt test stall was incorrect. The stall is in the Safari test runner for an empty test suite; this migration does not currently require resolving it."
+created_at = "2026-09-24T14:14:10.352695Z"
+
+[[comments]]
+id = "01a0d3ca-0793-79d1-a9af-75e5cf50f236"
+author = "codex"
+body = "Confirmed empty sbt test stall in Safari Web Inspector: test harness HTML is loaded from file:///var/folders/.../scalajsRun.html and points a type=module script at target/.../epmapviewer-test-fastopt/main.js. Safari reports Origin null is not allowed by Access-Control-Allow-Origin, status 0, for that local module URL. The test bundle itself has no Three.js imports. This is a file-origin ES-module loading issue in the Safari runner. No source changes made for test infrastructure."
+created_at = "2026-09-24T14:20:27.923431Z"
+
+[[comments]]
+id = "01a0d3d8-1d3e-7cb2-90df-c5ff71476e43"
+author = "codex"
+body = "User manually ran sbt test after the Test-only NoModule linker setting and confirmed it succeeds. Production build was also verified after cleaning stale linker output. Keep issue open for user review."
+created_at = "2026-09-24T14:35:50.974489Z"
+
+[[comments]]
+id = "01a0d3fe-0114-7681-ab33-e42fc21eb994"
+author = "lkroll"
+body = "Three.js r186 migration, controls, and browser verification completed and approved"
+created_at = "2026-09-24T15:17:14.132091Z"

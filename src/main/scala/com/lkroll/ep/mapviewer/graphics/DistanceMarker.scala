@@ -20,10 +20,8 @@ class DistanceMarker(val distance: Length) extends GraphicsObject {
   val path = co.at(Main.starttime).path(360);
   val curve = new CatmullRomCurve3(path.toJSArray);
   val curveGeometry = {
-    val geom = new Geometry();
-    geom.vertices = curve.getPoints(360.0).map { p =>
-      p.asInstanceOf[Vector3]
-    };
+    val geom = new BufferGeometry();
+    geom.setFromPoints(curve.getPoints(360.0));
     geom
   };
   val lineParams = js.Dynamic.literal(color = DistanceMarkers.colour).asInstanceOf[LineBasicMaterialParameters]

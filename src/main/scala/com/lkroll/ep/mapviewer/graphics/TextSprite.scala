@@ -65,9 +65,10 @@ class TextSprite(
   drawText();
 
   val texture = {
-    val t = new Texture(canvas);
+    val t = new CanvasTexture(canvas);
     t.magFilter = THREE.NearestFilter;
-    t.minFilter = THREE.LinearMipMapLinearFilter;
+    t.minFilter = THREE.LinearMipmapLinearFilter;
+    t.colorSpace = THREE.SRGBColorSpace;
     t
   }
 
@@ -83,11 +84,8 @@ class TextSprite(
                color = colour)
       .asInstanceOf[PointsMaterialParameters]
   );
-  private val geometry = new Geometry();
-  geometry.vertices.push(new Vector3(0, 0, 0));
+  private val geometry = new BufferGeometry().setFromPoints(js.Array(new Vector3(0, 0, 0)));
   val sprite = new Points(geometry, material);
-
-  texture.needsUpdate = true;
 
   //val sprite = new Sprite(material);
   //sprite.scale.set(canvas.width, this.canvas.height, 1);

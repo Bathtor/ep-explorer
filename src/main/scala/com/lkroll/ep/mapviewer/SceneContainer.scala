@@ -208,8 +208,8 @@ trait SceneContainer extends Logging {
 
   def render(): Int = dom.window.requestAnimationFrame(onEnterFrameFunction _);
 
-  container.style.width = width.toString
-  container.style.height = height.toString
+  container.style.width = s"${width}px"
+  container.style.height = s"${height}px"
   container.style.position = "relative"
 
   val absolute = "absolute"
@@ -248,14 +248,9 @@ trait SceneContainer extends Logging {
   val renderPass = new three.RenderPass(scene, camera);
   renderPass.clear = false;
 
-  //    val aaShader = three.FXAAShader;
-  //    aaShader.uniforms = Dynamic.literal("tDiffuse" -> Dynamic.literal(value = null), "resolution" -> Dynamic.literal(value = new Vector2(1/width, 1/height)));
-  //    val aaPass = new three.ShaderPass(aaShader);
-  //    aaPass.renderToScreen = true;
-  val copyPass = new three.ShaderPass(three.CopyShader);
-  copyPass.renderToScreen = true;
+  val outputPass = new three.OutputPass();
 
-  def passes = Seq(clearPass, renderPass, copyPass);
+  def passes = Seq(clearPass, renderPass, outputPass);
 
   val stats = {
     val s = new facades.Stats();

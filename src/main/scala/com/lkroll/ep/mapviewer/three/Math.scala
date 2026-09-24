@@ -1,10 +1,10 @@
 package com.lkroll.ep.mapviewer.three
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSGlobal
+import scala.scalajs.js.annotation.JSImport
 
 @js.native
-@JSGlobal("THREE.Vector2")
+@JSImport("three", "Vector2")
 class Vector2 extends js.Object {
   def this(x: Double = js.native, y: Double = js.native) = this()
   var x: Double = js.native
@@ -20,7 +20,7 @@ class Vector2 extends js.Object {
 }
 
 @js.native
-@JSGlobal("THREE.Vector3")
+@JSImport("three", "Vector3")
 class Vector3 extends js.Object {
   def this(x: Double = js.native, y: Double = js.native, z: Double = js.native) = this()
   var x: Double = js.native
@@ -48,7 +48,7 @@ class Vector3 extends js.Object {
 }
 
 @js.native
-@JSGlobal("THREE.Euler")
+@JSImport("three", "Euler")
 class Euler extends js.Object {
   def this(x: Double = js.native, y: Double = js.native, z: Double = js.native, order: String = js.native) = this()
   var x: Double = js.native
@@ -57,13 +57,13 @@ class Euler extends js.Object {
 }
 
 @js.native
-@JSGlobal("THREE.Matrix3")
+@JSImport("three", "Matrix3")
 class Matrix3 extends js.Object {
   def set(n11: Double, n12: Double, n13: Double, n21: Double, n22: Double, n23: Double, n31: Double, n32: Double, n33: Double): Matrix3 = js.native
 }
 
 @js.native
-@JSGlobal("THREE.Matrix4")
+@JSImport("three", "Matrix4")
 class Matrix4 extends js.Object {
   def identity(): Matrix4 = js.native
   def makeRotationFromEuler(euler: Euler): Matrix4 = js.native
@@ -74,7 +74,7 @@ class Matrix4 extends js.Object {
 }
 
 @js.native
-@JSGlobal("THREE.Quaternion")
+@JSImport("three", "Quaternion")
 class Quaternion extends js.Object {
   def copy(other: Quaternion): Quaternion = js.native
   def setFromUnitVectors(from: Vector3, to: Vector3): Quaternion = js.native
@@ -82,10 +82,13 @@ class Quaternion extends js.Object {
 }
 
 @js.native
-@JSGlobal("THREE.Color")
+@JSImport("three", "Color")
 class Color extends js.Object {
   def this(hex: Double) = this()
   def this(r: Double, g: Double, b: Double) = this()
+  val r: Double = js.native
+  val g: Double = js.native
+  val b: Double = js.native
   def set(other: Color): Color = js.native
   def getHex(): Double = js.native
   def multiplyScalar(factor: Double): Color = js.native

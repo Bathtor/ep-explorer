@@ -38,7 +38,7 @@ abstract class Habitat(val habitat: HabitatData, val orbiter: Orbiting)
 
   override def orbitColour: Int = 0x7679AF;
 
-  protected def geometry: Geometry;
+  protected def geometry: BufferGeometry;
   protected def mesh: Mesh;
 
   protected val material = new MeshLambertMaterial(Habitat.materialParams(habitat.name));

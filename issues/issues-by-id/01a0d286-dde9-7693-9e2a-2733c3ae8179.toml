@@ -2,7 +2,8 @@ id = "01a0d286-dde9-7693-9e2a-2733c3ae8179"
 ref = "epexplorer-jwq"
 title = "Choose and implement a sustainable Three.js integration"
 body = "Decision: Use an app-local Scala.js facade for the subset of Three.js used by ep-explorer, with a pinned JavaScript runtime installed by Bun. This umbrella is split into two child tasks. epexplorer-1xa first inlines the used r88 facade and helpers and packages the r88 browser runtime locally, eliminating the unpublished fork artefact. epexplorer-oup then upgrades the runtime, facades, addon imports and app code to a pinned modern Three.js release. The modernisation can follow the first working r88 build rather than blocking it. epexplorer-y3b owns remaining generic Scala.js compilation, page, serving and README work after the first child. Keep both phases reproducible from a clean checkout. Estimate: first child about 490-1100 LOC, second about 430-1100 LOC; each must be re-split if verified work exceeds 1000 LOC."
-status = "in-progress"
+status = "closed"
+status_reason = "Sustainable app-local Three.js integration completed and approved"
 type = "task"
 priority = 3
 assignee = "codex"
@@ -12,4 +13,11 @@ children = [
     "01a0d2a3-4f97-7a40-b0fa-8e1b4d8adef3",
 ]
 created_at = "2026-09-24T08:27:29.129981Z"
-updated_at = "2026-09-24T08:58:45.886572Z"
+updated_at = "2026-09-24T15:17:17.181081Z"
+closed_at = "2026-09-24T15:17:17.181081Z"
+
+[[comments]]
+id = "01a0d3fe-0cfd-7b92-96c7-c7d937508ea5"
+author = "lkroll"
+body = "Sustainable app-local Three.js integration completed and approved"
+created_at = "2026-09-24T15:17:17.181081Z"

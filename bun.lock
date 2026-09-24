@@ -6,7 +6,7 @@
       "dependencies": {
         "@fontsource/play": "5.3.0",
         "@fortawesome/fontawesome-free": "6.7.2",
-        "three": "0.88.0",
+        "three": "0.186.0",
       },
       "devDependencies": {
         "vite": "^8.3.0",
@@ -94,7 +94,7 @@
 
     "source-map-js": ["source-map-js@1.2.1", "", {}, "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA=="],
 
-    "three": ["three@0.88.0", "", {}, "sha512-UY02Rrz49GjcnyNR+tXdmKvsJ4txC5WZMGaO+yiJTVy50wmmn6Z3fVc3waYU0czxDK36pNzkZ+38sAA8UmTR6A=="],
+    "three": ["three@0.186.0", "", {}, "sha512-cr/fIM2ddMSVbYVgkfD4jLJv7Fh/8ZTjvo+7gQeSVGUZHxpx9FDwoL5iC7hUz/LiRA8wMbqfnb90xKfm1/HHkQ=="],
 
     "tinyglobby": ["tinyglobby@0.2.17", "", { "dependencies": { "fdir": "^6.5.0", "picomatch": "^4.0.4" } }, "sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g=="],
 

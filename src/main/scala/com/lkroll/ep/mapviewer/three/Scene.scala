@@ -1,10 +1,10 @@
 package com.lkroll.ep.mapviewer.three
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSGlobal
+import scala.scalajs.js.annotation.JSImport
 
 @js.native
-@JSGlobal("THREE.Object3D")
+@JSImport("three", "Object3D")
 class Object3D extends js.Object {
   val id: Double = js.native
   var name: String = js.native
@@ -26,17 +26,17 @@ class Object3D extends js.Object {
 }
 
 @js.native
-@JSGlobal("THREE.Scene")
+@JSImport("three", "Scene")
 class Scene extends Object3D
 
 @js.native
-@JSGlobal("THREE.Camera")
+@JSImport("three", "Camera")
 class Camera extends Object3D {
   var projectionMatrix: Matrix4 = js.native
 }
 
 @js.native
-@JSGlobal("THREE.PerspectiveCamera")
+@JSImport("three", "PerspectiveCamera")
 class PerspectiveCamera extends Camera {
   def this(fov: Double, aspect: Double, near: Double, far: Double) = this()
 }
@@ -49,7 +49,7 @@ trait Intersection extends js.Object {
 }
 
 @js.native
-@JSGlobal("THREE.Raycaster")
+@JSImport("three", "Raycaster")
 class Raycaster extends js.Object {
   def setFromCamera(coords: Vector2, camera: Camera): Unit = js.native
   def intersectObjects(objects: js.Array[Object3D]): js.Array[Intersection] = js.native

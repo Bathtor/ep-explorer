@@ -79,13 +79,7 @@ trait OrbitalPath { self: GraphicsObject =>
         case Some(orbit) => {
           val os = orbiter.orbit.at(t);
           val path = this.path(os);
-          //val positions = path.map(_.toArray()).flatten.map(_.toFloat).toJSArray;
-          //orbit.geometry.asInstanceOf[BufferGeometry].addAttribute("position", new Float32Attribute(positions, 3));
-          val vertices = orbit.geometry.vertices;
-          for (i <- 0 until SEGMENTS) {
-            vertices(i) = path(i);
-          }
-          orbit.geometry.verticesNeedUpdate = true;
+          orbit.geometry.setFromPoints(path.toJSArray);
           orbit.geometry.computeBoundingSphere();
         }
         case None => {
@@ -104,8 +98,6 @@ trait OrbitalPath { self: GraphicsObject =>
   private def calculateOrbit(t: Time): Line = {
     val os = orbiter.orbit.at(t);
     val path = this.path(os);
-    //val curve = this.curve(path);
-    //val geom = curveGeometry(curve);
     val geom = curveGeometry(path);
     val ellipse = this.ellipse(geom);
     //ellipse.frustumCulled = false;
@@ -118,13 +110,6 @@ trait OrbitalPath { self: GraphicsObject =>
     assert(path.size == SEGMENTS);
     path
   }
-  //private def curve(path: Array[Vector3]): CatmullRomCurve3 = new CatmullRomCurve3(path.toJSArray);
-  //  private def curveGeometry(curve: CatmullRomCurve3): Geometry = {
-  //    val geom = new Geometry();
-  //    geom.vertices = curve.getPoints(360.0).map { p => p.asInstanceOf[Vector3] };
-  //    geom
-  //  };
-  //val indices = (0 until SEGMENTS).toArray.toJSArray;
   def colours =
     (0 until SEGMENTS)
       .map(i => {
@@ -135,23 +120,23 @@ trait OrbitalPath { self: GraphicsObject =>
         colour
       })
       .toJSArray;
-  private def curveGeometry(path: Array[Vector3]): Geometry = {
-    val geom = new Geometry();
-    geom.vertices = path.toJSArray;
-    geom.colors = colours;
-    //val positions = path.map(_.toArray()).flatten.map(_.toFloat).toJSArray;
-    //    geom.addAttribute("position", new Float32Attribute(positions, 3));
-    //    geom.addAttribute("color", new Float32Attribute(colours, 3));
-    //geom.computeBoundingSphere();
+  private def curveGeometry(path: Array[Vector3]): BufferGeometry = {
+    val geom = new BufferGeometry();
+    geom.setFromPoints(path.toJSArray);
+    val colourComponents = js.Array[Double]();
+    for (colour <- colours) {
+      colourComponents.push(colour.r, colour.g, colour.b);
+    }
+    geom.setAttribute("color", new Float32BufferAttribute(colourComponents, 3));
     geom
   };
   //  private val lineParams = js.Dynamic.literal(
   //    color = orbitColour).asInstanceOf[LineBasicMaterialParameters]
   private val lineParams = js.Dynamic
-    .literal(vertexColors = THREE.VertexColors, depthTest = false, depthWrite = false)
+    .literal(vertexColors = true, depthTest = false, depthWrite = false)
     .asInstanceOf[LineBasicMaterialParameters];
   private val curveMaterial = new LineBasicMaterial(lineParams);
 
   // Create the final Object3d to add to the scene
-  def ellipse(curveGeometry: Geometry): Line = new Line(curveGeometry, curveMaterial);
+  def ellipse(curveGeometry: BufferGeometry): Line = new Line(curveGeometry, curveMaterial);
 }

@@ -63,6 +63,7 @@ object Main extends Logging {
     UI.updateLoaded(countLoaded, textures.size);
 
     def addTexture(key: String)(texture: Texture): Unit = {
+      texture.colorSpace = THREE.SRGBColorSpace;
       Textures.put(key, texture);
       countLoaded += 1;
       UI.updateLoaded(countLoaded, textures.size);

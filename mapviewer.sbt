@@ -20,6 +20,11 @@ libraryDependencies += "org.typelevel" %% "squants" % "1.8.3"
 libraryDependencies += "com.lkroll" %% "common-data-tools" % "1.3.3"
 
 scalaJSUseMainModuleInitializer := true
+// Vite resolves the app's @JSImport facades from ES module output.
+scalaJSLinkerConfig ~= (_.withModuleKind(org.scalajs.linker.interface.ModuleKind.ESModule))
+// Selenium opens its test harness from file://, where Safari rejects ES modules from another file (origin null).
+// Pure Scala.js tests use a classic script; tests needing JS imports will need a served, bundled harness.
+Test / scalaJSLinkerConfig ~= (_.withModuleKind(org.scalajs.linker.interface.ModuleKind.NoModule))
 Test / jsEnv := {
   if (sys.props("os.name").startsWith("Mac OS")) {
     new org.scalajs.jsenv.selenium.SeleniumJSEnv(new org.openqa.selenium.safari.SafariOptions())

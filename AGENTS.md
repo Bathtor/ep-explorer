@@ -77,3 +77,7 @@ Update issue state before committing so issue changes travel with the code or do
 Only close the issue after the user agrees it is complete.
 
 When closing, use `gitrack close <ref> --reason <reason> --json` with a concise reason such as `completed`, `won't do`, or `duplicate`.
+
+## Scala Style
+
+- Use a `for` loop instead of `foreach` for side-effecting iteration, unless the `foreach` body pattern-matches more than one variant.
