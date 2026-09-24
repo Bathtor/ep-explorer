@@ -2,9 +2,11 @@ id = "01a0d257-7e82-7ff0-ab8e-ccd90f2045c2"
 ref = "epexplorer-y3b"
 title = "Restore compilation and runnable Scala.js output"
 body = """
-Scope: Make the compatibility fixes needed for the selected toolchain and dependencies while retaining the existing Three.js facade by default. Update Scala.js APIs or legacy jsDependencies wiring only where the build demonstrates a need. Preserve the production page entry point and assets, and update the development launch instructions.
+Scope: Make the compatibility fixes needed for the selected toolchain and dependencies while retaining the existing Three.js facade by default. Update Scala.js APIs or legacy jsDependencies wiring only where the build demonstrates a need. Preserve the production page entry point and assets, and add useful development launch instructions once the app runs.
 
-Acceptance: From a clean checkout, compile, fastOptJS, and fullOptJS succeed; the production page loads the generated application and local assets; a browser smoke check exercises map rendering and a representative interaction; document the build and run commands. Preserve or deliberately update the epmapviewer-opt.js and epmapviewer-jsdeps.js contract required by the static release task.
+Legacy JavaScript loading to preserve or replace: The removed jsDependencies configuration loaded Three.js WebJar r88 before the local CopyShader.js, FXAAShader.js, Stats.js, OrbitControls.js, EffectComposer.js, CSS3DRenderer.js, ClearPass.js, RenderPass.js, TexturePass.js, and ShaderPass.js scripts. These local files remain in src/main/resources. The page currently expects epmapviewer-jsdeps.js before epmapviewer-opt.js.
+
+Acceptance: From a clean checkout, compile, fastOptJS, and fullOptJS succeed; the production page loads the generated application and local assets; a browser smoke check exercises map rendering and a representative interaction; document the actual build and run commands in README.md. Preserve or deliberately update the epmapviewer-opt.js and epmapviewer-jsdeps.js contract required by the static release task.
 
 Estimate: about 50-250 LOC for observed source, build, and page compatibility fixes. If a verified incompatibility requires a larger facade migration, create and estimate that separately before implementation."""
 status = "open"
@@ -16,4 +18,4 @@ blocks = [
     "01a0d257-7ed0-7e71-9f30-77cc5bff590b",
 ]
 created_at = "2026-09-24T07:35:44.514066Z"
-updated_at = "2026-09-24T07:48:10.697004Z"
+updated_at = "2026-09-24T08:12:36.045587Z"

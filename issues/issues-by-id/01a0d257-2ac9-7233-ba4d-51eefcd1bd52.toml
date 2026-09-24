@@ -2,14 +2,31 @@ id = "01a0d257-2ac9-7233-ba4d-51eefcd1bd52"
 ref = "epexplorer-nxs"
 title = "Update sbt and Scala.js build tooling"
 body = """
-Scope: Move project/build.properties and build plugins from sbt 1.3.2 and Scala.js 0.6.31 to a supported, mutually compatible toolchain. Replace obsolete Workbench and sbt syntax as needed so the build definition loads on a documented supported JDK. Keep the production JavaScript entry point requirements visible for the later application port.
+Scope: Move sbt and Scala.js build tooling to versions that load on the current JDK 25 OpenJ9. Keep application dependency updates and runnable browser output in their linked tasks.
 
-Acceptance: A clean checkout can start sbt and evaluate the build definition without unpublished local artifacts; document the required JDK and startup command; record the selected plugin versions and any replacement for Workbench. Compilation and browser behaviour are covered by later tasks.
+Implementation for review: Pinned sbt 2.0.9, Scala.js plugin 1.22.0, sbt-buildinfo 0.13.2, and sbt-scalafmt 2.6.2. Removed Workbench and its localUrl setting, the retired Bintray resolver, and obsolete jsDependencies build keys. Switched platform dependencies to sbt 2 notation. Kept the JavaScript resource files; their former load order is recorded in epexplorer-y3b. Removed obsolete development instructions from the public README until a working build makes accurate instructions possible.
 
-Estimate: about 20-60 LOC in build files and development documentation for the direct toolchain change. Any broad source migration belongs in a separately scoped task."""
-status = "open"
+Validation: The build definition loaded with sbt -batch show scalaVersion on JDK 25 OpenJ9 in the workspace and in an isolated directory containing only the build files, returning Scala 2.12.10. git diff --check passed. Application compilation and browser behaviour remain acceptance criteria for epexplorer-mda and epexplorer-y3b.
+
+Original failure: The sbt 1.3.2 launcher failed before project loading on JDK 25 OpenJ9 with a Scala 2.12.10 bad constant pool index error and an unsupported Security Manager error."""
+status = "closed"
+status_reason = "Toolchain upgrade reviewed and approved"
 type = "task"
 priority = 3
+assignee = "codex"
 blocks = ["01a0d257-7e2e-7fe3-8ed4-a368b8e6a44e"]
 created_at = "2026-09-24T07:35:23.081035Z"
-updated_at = "2026-09-24T07:46:35.593041Z"
+updated_at = "2026-09-24T08:15:27.64851Z"
+closed_at = "2026-09-24T08:15:27.64851Z"
+
+[[comments]]
+id = "01a0d273-e211-7863-b475-399bdecac8dd"
+author = "lkroll"
+body = "sbt 2 toolchain loads on JDK 25 OpenJ9; application dependencies and browser output are tracked separately"
+created_at = "2026-09-24T08:06:45.009654Z"
+
+[[comments]]
+id = "01a0d27b-dba0-7451-9685-1167313a5cb3"
+author = "lkroll"
+body = "Toolchain upgrade reviewed and approved"
+created_at = "2026-09-24T08:15:27.64851Z"

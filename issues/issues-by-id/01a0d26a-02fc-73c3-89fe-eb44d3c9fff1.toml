@@ -1,0 +1,10 @@
+id = "01a0d26a-02fc-73c3-89fe-eb44d3c9fff1"
+ref = "epexplorer-mni"
+title = "Integrate hitkeep for static-release asset retention"
+body = "Integrate hitkeep into the static-site build, using either its standalone script or npm package as appropriate. Configure it to identify and retain assets needed by the published static web root, and document the chosen integration and invocation. This task must be completed before the static release archive work begins."
+status = "open"
+type = "task"
+priority = 3
+blocks = ["01a0d255-6f26-7240-b83d-2070b05704ea"]
+created_at = "2026-09-24T07:55:58.076624Z"
+updated_at = "2026-09-24T07:56:00.624929Z"
