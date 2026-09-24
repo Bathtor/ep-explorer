@@ -12,10 +12,13 @@ Estimate: about 50-250 LOC for observed source, build, and page compatibility fi
 status = "open"
 type = "task"
 priority = 3
-blocked_by = ["01a0d257-7e2e-7fe3-8ed4-a368b8e6a44e"]
+blocked_by = [
+    "01a0d257-7e2e-7fe3-8ed4-a368b8e6a44e",
+    "01a0d286-dde9-7693-9e2a-2733c3ae8179",
+]
 blocks = [
     "01a0d255-6f26-7240-b83d-2070b05704ea",
     "01a0d257-7ed0-7e71-9f30-77cc5bff590b",
 ]
 created_at = "2026-09-24T07:35:44.514066Z"
-updated_at = "2026-09-24T08:12:36.045587Z"
+updated_at = "2026-09-24T08:27:54.4932Z"
