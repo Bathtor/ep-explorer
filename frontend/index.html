@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eclipse Phase Map Viewer</title>
+  <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+  <style>
+    #nojs { position: fixed; inset: 0; display: grid; place-content: center; justify-items: center; gap: 1rem; background: #06121e; color: #d6e8f3; font: 1rem system-ui, sans-serif; text-align: center; z-index: 10; }
+    #nojs p { margin: 0; }
+    .loading-ring { width: 2.5rem; height: 2.5rem; border: 3px solid #34566b; border-top-color: #8bc8e6; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    .loading-help { display: none; max-width: 28rem; line-height: 1.5; }
+    #nojs.taking-long .loading-ring { display: none; }
+    #nojs.taking-long .loading-help { display: block; }
+    #loading.taking-long { width: min(30rem, 80vw); height: auto; }
+    #loading.taking-long .loading-help { display: block; font-size: 0.9rem; font-weight: normal; }
+    #nojs a { color: #8bc8e6; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .loading-ring { animation: none; } }
+  </style>
+</head>
+<body>
+  <main id="nojs" role="status" aria-live="polite">
+    <span class="loading-ring" aria-hidden="true"></span>
+    <p>Loading the solar system map…</p>
+    <p class="loading-help">Taking longer than expected. <a href="">Reload the page</a>. If it still does not load, try another browser.</p>
+  </main>
+  <noscript>
+    <style>#nojs { display: none; }</style>
+    <p>This map requires JavaScript. Enable it and reload the page.</p>
+  </noscript>
+  <script>
+    const loadingHelp = document.querySelector("#nojs .loading-help");
+    setTimeout(() => {
+      const loading = document.getElementById("nojs") ?? document.getElementById("loading");
+      if (loading) {
+        loading.append(loadingHelp);
+        loading.classList.add("taking-long");
+      }
+    }, 20000);
+  </script>
+  <script type="module" src="/main.ts"></script>
+</body>
+</html>

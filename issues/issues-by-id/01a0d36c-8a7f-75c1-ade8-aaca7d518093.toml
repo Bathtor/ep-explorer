@@ -1,0 +1,13 @@
+id = "01a0d36c-8a7f-75c1-ade8-aaca7d518093"
+ref = "epexplorer-c2l"
+title = "Investigate automatic Scala.js rebuilds during Vite development"
+body = "Find a simple local development workflow that relinks Scala.js when Scala sources change and refreshes the Vite page, without requiring Nix or Node on macOS. Compare sbt continuous commands, a Bun watcher, and Vite integration for reliability, shutdown behaviour, and clear errors. Keep the current manual sbt fastLinkJS workflow until a small approach is agreed. Acceptance: document and verify an auto-rebuild workflow on macOS with Bun and sbt, or record why manual relinking is preferable."
+status = "open"
+type = "task"
+priority = 4
+created_at = "2026-09-24T12:38:21.055742Z"
+updated_at = "2026-09-24T12:38:27.754466Z"
+
+[[links]]
+target = "01a0d257-7e82-7ff0-ab8e-ccd90f2045c2"
+label = "discovered from"

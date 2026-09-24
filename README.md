@@ -16,7 +16,26 @@ Currently in alpha stage with an experimental deployment at <http://epexplorer.l
 
 ## Dependencies
 
-JavaScript dependencies are installed with Bun.
+JavaScript dependencies, fonts, and icons are installed with Bun.
+
+## Development
+
+Install the JavaScript dependencies and start the Vite development server:
+
+```sh
+bun install
+bun run dev
+```
+
+Open the local URL printed by Vite. The `dev` command builds the Scala.js application before starting the server. After changing Scala source, run `sbt -batch fastLinkJS` again and refresh the page.
+
+To rebuild and inspect the production site locally:
+
+```sh
+bun run preview
+```
+
+The `preview` command builds the production site in `dist/` before serving it. Run `bun run build` to build without starting the preview server.
 
 ## TODO
 

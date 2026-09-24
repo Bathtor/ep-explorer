@@ -82,7 +82,7 @@ object Main extends Logging {
       }
     }
     val backgroundLoader = new TextureLoader();
-    textures.foreach { case (key, url) => backgroundLoader.load(url, addTexture(key) _, onPrint _, onError _) }
+    textures.foreach { case (key, url) => backgroundLoader.load(url, addTexture(key) _, onPrint _, onError(url) _) }
 
   }
 
@@ -106,7 +106,7 @@ object Main extends Logging {
     }
   }
 
-  private def onPrint(xhr: dom.XMLHttpRequest): Unit = println("still loading...");
-  private def onError(xhr: dom.XMLHttpRequest): Unit = println(s"Error: ${xhr}");
+  private def onPrint(event: dom.Event): Unit = println("still loading...");
+  private def onError(url: String)(event: dom.Event): Unit = logger.error(s"Failed to load texture: $url");
 
 }

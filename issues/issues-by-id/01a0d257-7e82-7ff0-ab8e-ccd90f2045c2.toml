@@ -1,10 +1,12 @@
 id = "01a0d257-7e82-7ff0-ab8e-ccd90f2045c2"
 ref = "epexplorer-y3b"
 title = "Restore compilation and runnable Scala.js output"
-body = "Scope: After epexplorer-mda and the r88 facade/local-runtime task epexplorer-1xa, finish the runnable Scala.js browser build. Compilation and Scala.js fastLinkJS/fullLinkJS already pass with the inlined facade, scalajs-dom 2.3.0 and scalajs-java-securerandom 1.0.0; this task owns assembling the linked main.js, generated epmapviewer-jsdeps.js, page and other local assets into a site that can be served from a clean checkout. Preserve or deliberately update the static release asset contract and write useful development launch instructions once the app runs. The modern Three.js upgrade in epexplorer-oup is separate. Acceptance: the site build uses the supported Scala.js linker tasks; the production page loads generated application and local assets; a browser smoke check exercises map rendering and a representative interaction; README.md documents actual build and run commands. Estimate: about 50-250 LOC of build and page integration, plus any observed source fixes. Re-estimate and split a larger verified incompatibility before implementation."
-status = "open"
+body = "Scope: Finish a self-contained Vite site with Bun and Scala.js linker output. Keep a minimal HTML shell with an immediate CSS loading spinner, a no-script message, and a timed recovery hint. Move local styles into the Vite graph; install Play and Font Awesome Free via Bun and import their CSS. Load the r88 Three.js ESM core and ordered legacy add-ons through Vite while preserving the mutable THREE global required by the current Scala.js facades. Load Scala.js after those dependencies. Remove the generated jsdeps bundle and its script/ignore rule once the module path works. Remove the legacy analytics snippet; hitkeep integration belongs to epexplorer-mni. The modern Three.js upgrade stays in epexplorer-oup. Have preview build before serving to avoid stale output. Keep useful README commands. Acceptance: development and production builds work from a clean checkout, Firefox or Safari browser smoke covers map rendering, Mars overlay hover, icons and fonts, and local assets resolve. Update the static release task contract for Vite output. Automatic relinking during development is separately tracked in epexplorer-c2l. Estimate: roughly 120-250 LOC plus lockfile and stylesheet moves."
+status = "closed"
+status_reason = "Vite development and production sites verified in Safari, loading fallback tested, asset bundling complete, and user approved the result"
 type = "task"
 priority = 3
+assignee = "codex"
 blocked_by = [
     "01a0d257-7e2e-7fe3-8ed4-a368b8e6a44e",
     "01a0d2a3-32d1-7600-854a-fcd87de69a09",
@@ -15,4 +17,41 @@ blocks = [
     "01a0d2a3-4f97-7a40-b0fa-8e1b4d8adef3",
 ]
 created_at = "2026-09-24T07:35:44.514066Z"
-updated_at = "2026-09-24T09:43:52.612836Z"
+updated_at = "2026-09-24T13:33:38.755689Z"
+closed_at = "2026-09-24T13:27:07.166789Z"
+
+[[comments]]
+id = "01a0d356-7e89-7902-a442-0b5dde5d1ba4"
+author = "codex"
+body = "Vite integration implemented with Bun commands, Scala.js linker output alias, and static asset serving. bun run build passes. Safari smoke: development and production preview render the map; searching for Earth and clicking Track updates the tracked body and URL in both. Legacy r88 bundle remains a public asset for the separate minification follow-up."
+created_at = "2026-09-24T12:14:16.201378Z"
+
+[[comments]]
+id = "01a0d35c-a9ad-7db3-a9c4-e27de0a5bf2b"
+author = "codex"
+body = "Mars overlay regression reported during manual test: hovering Ashoka reached UI.replaceInfo but Geography.Position.pretty threw MissingFormatWidthException for %0.3f. Changed both minute fields to %.3f. Rebuilt fastLinkJS and full production site; Safari now shows Ashoka name, position, and other details on the local Mars overlay, matching live."
+created_at = "2026-09-24T12:21:00.461183Z"
+
+[[comments]]
+id = "01a0d381-62a4-7b63-a6b9-0153740c800f"
+author = "codex"
+body = "Replaced the concatenated jsdeps output with Vite imports of Three.js r88, its existing add-ons, Stats, local CSS, Play, Font Awesome, and Scala.js. Removed the legacy analytics snippet. Production and development builds pass; Safari rendered Mars and showed Ashoka details on overlay hover in both modes. The HTML shell has an immediate spinner and a 20-second reload hint for both pre-start and texture-loading stalls. Preview now rebuilds first. Updated the release and minification follow-up descriptions for the Vite output. Work is ready for review; task remains open."
+created_at = "2026-09-24T13:01:07.108851Z"
+
+[[comments]]
+id = "01a0d38f-f8dd-7593-9d70-373cdd235b90"
+author = "codex"
+body = "Follow-up: raised the Vite chunk-size warning limit to 2000 kB without changing bundling. Corrected the TextureLoader callback type to DOM Event and now log the requested texture URL on failure. Production build passes without the size warning. A deliberate missing planet.jpg load in Safari logged Failed to load texture: planet.jpg. The asset was restored and Safari was closed."
+created_at = "2026-09-24T13:17:03.069702Z"
+
+[[comments]]
+id = "01a0d399-309e-70a0-a950-04bc89701974"
+author = "lkroll"
+body = "Vite development and production sites verified in Safari, loading fallback tested, asset bundling complete, and user approved the result"
+created_at = "2026-09-24T13:27:07.166789Z"
+
+[[comments]]
+id = "01a0d39f-2a43-7f50-a3f9-035c085a0d30"
+author = "codex"
+body = "After closure, restored the current Eclipse Phase site favicon as a local 32x32 PNG in the Vite public assets and linked it from the HTML shell. Vite production build passes and preview serves /favicon.png with HTTP 200."
+created_at = "2026-09-24T13:33:38.755689Z"

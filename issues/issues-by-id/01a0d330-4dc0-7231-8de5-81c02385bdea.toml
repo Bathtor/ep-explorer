@@ -1,10 +1,10 @@
 id = "01a0d330-4dc0-7231-8de5-81c02385bdea"
 ref = "epexplorer-095"
 title = "Revisit JavaScript bundle minification"
-body = "After the runnable site and modern Three.js integration settle the asset pipeline, decide whether and how to minify the browser JavaScript assets. Measure bundle size and load cost, preserve any globals required by Scala.js, retain required third-party licence notices, and verify the result in a browser. The current r88 build concatenates ordered classic scripts; Three.js itself ships as three.min.js, while local add-ons remain unminified. Estimate: 20-80 LOC if the chosen pipeline needs an extra build step."
+body = "After the runnable site and modern Three.js integration settle the asset pipeline, measure the Vite production bundle size and load cost and decide whether further minification or code splitting is useful. Check that any globals required by Scala.js still work, required third-party licence notices are retained, and the result runs in a browser. The current r88 scripts are imported into Vite with Scala.js and minified in the production build, so a separate concatenation step is no longer present. Estimate: 20-80 LOC if the chosen pipeline needs adjustment."
 status = "open"
 type = "task"
 priority = 4
 blocked_by = ["01a0d2a3-4f97-7a40-b0fa-8e1b4d8adef3"]
 created_at = "2026-09-24T11:32:33.34466Z"
-updated_at = "2026-09-24T11:32:33.34466Z"
+updated_at = "2026-09-24T12:59:37.075115Z"

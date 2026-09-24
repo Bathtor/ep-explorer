@@ -60,7 +60,7 @@ object Geography {
       val lonD = lon.value.toDegrees;
       val lonFullD = Math.floor(lonD);
       val lonM = (lonD - lonFullD) * 60.0; // degrees to minutes
-      f"${latFullD.toInt}%02dº$latM%0.3f'${lat.direction.symbol} ${lonFullD.toInt}%03dº$lonM%0.3f'${lon.direction.symbol}"
+      f"${latFullD.toInt}%02dº$latM%.3f'${lat.direction.symbol} ${lonFullD.toInt}%03dº$lonM%.3f'${lon.direction.symbol}"
     }
   }
 

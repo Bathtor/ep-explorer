@@ -45,7 +45,7 @@ class Texture extends js.Object {
 @js.native
 @JSGlobal("THREE.TextureLoader")
 class TextureLoader extends js.Object {
-  def load(url: String, onLoad: js.Function1[Texture, Unit], onProgress: js.Function1[dom.XMLHttpRequest, Unit], onError: js.Function1[dom.XMLHttpRequest, Unit]): Texture = js.native
+  def load(url: String, onLoad: js.Function1[Texture, Unit], onProgress: js.Function1[dom.Event, Unit], onError: js.Function1[dom.Event, Unit]): Texture = js.native
 }
 
 @js.native
