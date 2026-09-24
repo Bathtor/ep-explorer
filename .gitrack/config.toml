@@ -1,0 +1,6 @@
+version = 1
+ref_prefix = "epexplorer"
+issue_dir = "issues"
+default_type = "task"
+default_priority = 3
+default_list_limit = 20
