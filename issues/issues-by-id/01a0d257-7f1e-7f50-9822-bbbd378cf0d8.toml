@@ -1,0 +1,15 @@
+id = "01a0d257-7f1e-7f50-9822-bbbd378cf0d8"
+ref = "epexplorer-d3f"
+title = "Add GitHub Actions CI for build and tests"
+body = """
+Scope: Add a simple GitHub Actions workflow for pushes and pull requests. Install the documented JDK and sbt toolchain, cache downloaded dependencies safely, and run compilation, the non-empty automated test suite, and the production Scala.js output task from a clean checkout.
+
+Acceptance: CI succeeds on a clean runner without Maven Local, Bintray, or private credentials; a compile, test, or production linking failure fails the workflow; README identifies the local equivalent and the workflow runs on pull requests. Avoid deployment or publishing in this task.
+
+Estimate: roughly 40-100 LOC of workflow and documentation changes."""
+status = "open"
+type = "task"
+priority = 3
+blocked_by = ["01a0d257-7ed0-7e71-9f30-77cc5bff590b"]
+created_at = "2026-09-24T07:35:44.670418Z"
+updated_at = "2026-09-24T07:35:58.177334Z"

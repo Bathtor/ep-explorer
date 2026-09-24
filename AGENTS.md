@@ -28,3 +28,52 @@ This project uses [`gitrack`](https://github.com/Bathtor/gitrack) for Git-native
 - Before committing completed work, update the issue state first so the issue change is included in the same commit.
 
 <!-- END GITRACK MANAGED INSTRUCTIONS -->
+
+## Suggested gitrack Workflow
+
+### Priorities
+
+- `0` - Immediate: drop everything and do this now.
+- `1` - ASAP: finish the current task, then pick this up next before lower-priority work.
+- `2` - High: important work.
+- `3` - Normal: default priority for ordinary work.
+- `4` - Low/Backlog: nice-to-have, polish, cleanup, or future ideas.
+
+### Agent Workflow
+
+#### Core Loop
+
+1. Check ready work with `gitrack ready --json`, then inspect `stats` to see whether the result was limited.
+2. Claim the selected issue with `gitrack claim <ref> --assignee <name> --json`.
+3. Read the issue with `gitrack show <ref> --json`.
+4. Set `status_reason = "planning"` while preparing the implementation plan.
+5. Align on a concrete plan with the user before implementation.
+6. Store the agreed plan in the issue body.
+7. Once the user agrees, set `status_reason = "plan agreed"`.
+8. Implement against the agreed plan.
+9. Before handing work over for review, compare the result against the issue body and agreed plan.
+10. Set `status_reason = "in review"` when ready for user review.
+
+#### When a Branch Is Needed
+
+Create the branch before claiming the issue so the claim is committed on that branch.
+
+#### When Work Splits Into Children
+
+Create child issues and link them with `gitrack link <parent> <child> --child --json`.
+
+If the split issues have ordering constraints, link them with `gitrack link <issue> <blocker> --blocked-by --json`.
+
+#### When New Work Is Discovered
+
+Create the new issue, then link it back to the source issue with `gitrack link <new-ref> <source-ref> --label "discovered from" --json`.
+
+#### Before Committing
+
+Update issue state before committing so issue changes travel with the code or documentation changes they describe.
+
+#### Closing Work
+
+Only close the issue after the user agrees it is complete.
+
+When closing, use `gitrack close <ref> --reason <reason> --json` with a concise reason such as `completed`, `won't do`, or `duplicate`.
