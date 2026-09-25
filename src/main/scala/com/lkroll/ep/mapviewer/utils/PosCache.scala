@@ -2,50 +2,44 @@ package com.lkroll.ep.mapviewer.utils
 
 import java.util.Comparator
 
-class PosCache[T](private val data: Array[(Double, T)], val circular: Boolean) {
+/** Finds the two sorted samples around a key so callers can interpolate their values.
+  * Circular caches return the last and first samples across the boundary; the caller
+  * knows the full period needed to measure that wrapping interval.
+  */
+class PosCache[T](private val samples: Array[(Double, T)], val circular: Boolean) {
 
-  val comp = PosCache.comp[T];
+  val firstSample = samples.head;
+  val firstKey = firstSample._1;
+  val lastSample = samples.last;
+  val lastKey = lastSample._1;
+  val keySpan = lastKey - firstKey;
 
-  val head = data.head;
-  val headKey = head._1;
-  val last = data.last;
-  val lastKey = last._1;
-  val range = lastKey - headKey;
-
-  def neighbours(needle: Double): ((Double, T), (Double, T)) = {
-    if ((needle < headKey) || (lastKey < needle)) {
+  def neighbours(queryKey: Double): ((Double, T), (Double, T)) = {
+    if (samples.length == 1) {
+      (firstSample, firstSample)
+    } else if ((queryKey < firstKey) || (lastKey < queryKey)) {
       if (circular) {
-        (last, head)
+        (lastSample, firstSample)
       } else {
-        throw new IndexOutOfBoundsException(s"Needle $needle was not in range [$headKey, $lastKey]!");
+        throw new IndexOutOfBoundsException(s"Needle $queryKey was not in range [$firstKey, $lastKey]!");
       }
     } else {
-      // assume things are evenly spaced
-      val inRange = needle - headKey;
-      val relRange = inRange / range;
-      var pos = Math.floor(data.length * relRange).toInt;
-      if (data(pos)._1 > needle) {
-        while ((pos > 0) && (data(pos)._1 > needle)) { // scan down...should be close by
-          pos -= 1;
-        }
-        //assert(data(pos)._1 <= needle);
-        if (pos + 1 > data.length) {
-          (data(pos), data(pos))
+      // The orbit samples are evenly spaced. Estimate the index from the fraction
+      // of the key span, then scan to the actual sample below the query.
+      var lowerIndex = Math.min(samples.length - 1, Math.floor(samples.length * (queryKey - firstKey) / keySpan).toInt)
+      while (lowerIndex > 0 && samples(lowerIndex)._1 > queryKey) lowerIndex -= 1
+      while (lowerIndex + 1 < samples.length && samples(lowerIndex + 1)._1 <= queryKey) lowerIndex += 1
+
+      if (lowerIndex == samples.length - 1) {
+        // At the final key, circular caches wrap to the first sample. Linear
+        // caches have no following sample, so use the preceding pair instead.
+        if (circular) {
+          (lastSample, firstSample)
         } else {
-          //assert(data(pos + 1)._1 >= needle);
-          (data(pos), data(pos + 1))
+          (samples(lowerIndex - 1), lastSample)
         }
-      } else { // scan up...should be close by
-        while ((pos < data.length) && (data(pos)._1 < needle)) { // scan up...should be close by
-          pos += 1;
-        }
-        //assert(data(pos)._1 >= needle);
-        if (pos - 1 < 0) {
-          (data(pos), data(pos))
-        } else {
-          //assert(data(pos - 1)._1 <= needle);
-          (data(pos - 1), data(pos))
-        }
+      } else {
+        (samples(lowerIndex), samples(lowerIndex + 1))
       }
     }
   }
@@ -61,27 +55,27 @@ object PosCache {
     b.result()
   }
 
-  def comp[T]: Comparator[(Double, T)] = new Comparator[(Double, T)] {
+  def keyComparator[T]: Comparator[(Double, T)] = new Comparator[(Double, T)] {
     override def compare(o1: (Double, T), o2: (Double, T)): Int = {
       Ordering.Double.TotalOrdering.compare(o1._1, o2._1)
     }
   };
 
   class Builder[T](size: Int, circular: Boolean) {
-    private val data: Array[(Double, T)] = new Array[(Double, T)](size);
+    private val samples: Array[(Double, T)] = new Array[(Double, T)](size);
 
-    private var i: Int = 0;
+    private var nextIndex: Int = 0;
     def +=(t: (Double, T)): Unit = {
-      if (i >= size) {
-        throw new IndexOutOfBoundsException(s"Index was $i >= $size (size)!");
+      if (nextIndex >= size) {
+        throw new IndexOutOfBoundsException(s"Index was $nextIndex >= $size (size)!");
       }
-      data(i) = t;
-      i += 1;
+      samples(nextIndex) = t;
+      nextIndex += 1;
     }
     def result(): PosCache[T] = {
-      assert(i == size, "Called result before builder was filled!");
-      java.util.Arrays.sort(data, comp[T]);
-      new PosCache(data, circular)
+      assert(nextIndex == size, "Called result before builder was filled!");
+      java.util.Arrays.sort(samples, keyComparator[T]);
+      new PosCache(samples, circular)
     }
   }
 }

@@ -17,16 +17,18 @@ object Constants {
   // Model calculations
   val maxIter = 30;
   val accuracy = 6.0; // 6 decimal places
-  val accPow = Math.pow(10.0, accuracy);
+  val anomalyRoundingScale = Math.pow(10.0, accuracy);
   val delta = Math.pow(10.0, -accuracy);
   val k = Degrees.conversionFactor;
-  val rotate60DZ = {
+  // Only Lagrange-point calculations need these Three.js matrices. Keep them lazy so
+  // numerical calculations can use the constants above without constructing JS objects.
+  lazy val rotate60DZ = {
     val m = new Matrix3();
     val angle = Degrees(60);
     m.set(angle.cos, -angle.sin, 0.0, angle.sin, angle.cos, 0.0, 0.0, 0.0, 1.0);
     m
   }
-  val rotateMinus60DZ = {
+  lazy val rotateMinus60DZ = {
     val m = new Matrix3();
     val angle = Degrees(-60);
     m.set(angle.cos, -angle.sin, 0.0, angle.sin, angle.cos, 0.0, 0.0, 0.0, 1.0);

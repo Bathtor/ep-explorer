@@ -178,7 +178,7 @@ case class ConstantOriginOrbit(val e: Double,
   private lazy val anomalyCache: PosCache[Vector3] = {
     PosCache.fill(720, (i: Int) => {
       val M = (Degrees(i.doubleValue() * 0.5)).normalise();
-      val E = eccentricAnomaly(M);
+      val E = KeplerOrbitHelper.eccentricAnomaly(M, e);
       val pos = positionFromE(E);
       (M.toDegrees -> pos)
     }, circular = true)
@@ -193,14 +193,12 @@ case class ConstantOriginOrbit(val e: Double,
     }
 
     private def positionFromM(M: Angle): Vector3 = {
-      //val E = eccentricAnomaly(M);
       val mdeg = M.toDegrees;
       val ((floorAngle, floorPos), (ceilAngle, ceilPos)) = anomalyCache.neighbours(mdeg);
-      val diffAngle = Math.min(ceilAngle - floorAngle, floorAngle - ceilAngle);
-      val floorDiff = Math.min(mdeg - floorAngle, floorAngle - mdeg) / diffAngle;
+      val interpolationWeight = OrbitInterpolation.weight(mdeg, floorAngle, ceilAngle);
       val path = ceilPos.clone();
       path.sub(floorPos);
-      path.multiplyScalar(floorDiff);
+      path.multiplyScalar(interpolationWeight);
       val output = floorPos.clone();
       output.add(path) // linear interpolate
     }
@@ -243,7 +241,7 @@ case class ConstantOriginOrbit(val e: Double,
   override def at(t: Time): OrbitalPosition = {
     if (!parameterCache.at.equals(t)) {
       val M = meanAnomaly(t);
-      val E = eccentricAnomaly(M);
+      val E = KeplerOrbitHelper.eccentricAnomaly(M, e);
       val nu = trueAnomalyFromE(E);
       val rawPos = rawPositionFromE(E);
       val pos = scaledPosition(rawPos);
@@ -275,31 +273,12 @@ case class ConstantOriginOrbit(val e: Double,
     MetersPerSecond(v)
   }
 
-  private def eccentricAnomaly(M: Angle): Angle = {
-    var i = 0;
-    val m = M.toRadians;
-    var E = if (e < 0.8) {
-      m
-    } else {
-      Math.PI
-    };
-    var F = E - e * Math.sin(E) - m;
-
-    while ((Math.abs(F) > Constants.delta) && (i < Constants.maxIter)) {
-      E = E - F / (1.0 - e * Math.cos(E));
-      F = E - e * Math.sin(E) - m;
-      i += 1;
-    }
-    val Erounded = Math.round(E * Constants.accPow) / Constants.accPow;
-    return Radians(Erounded).normalise();
-  }
-
   private def trueAnomalyFromE(E: Angle): Angle = {
     val s = E.sin;
     val c = E.cos;
     val phi = Math.atan2(fak * s, c - e) / Constants.k;
 
-    val nu = Math.round(phi * Constants.accPow) / Constants.accPow;
+    val nu = Math.round(phi * Constants.anomalyRoundingScale) / Constants.anomalyRoundingScale;
 
     return Degrees(nu).normalise();
   }
@@ -323,7 +302,7 @@ case class ConstantOriginOrbit(val e: Double,
   }
 
   private def positionFromM(M: Angle): Vector3 = {
-    val E = eccentricAnomaly(M);
+    val E = KeplerOrbitHelper.eccentricAnomaly(M, e);
     positionFromE(E)
   }
 
@@ -374,7 +353,7 @@ case class ConstantOrbit(val e: Double,
   private lazy val anomalyCache: PosCache[Vector3] = {
     PosCache.fill(720, (i: Int) => {
       val M = (Degrees(i.doubleValue() * 0.5)).normalise();
-      val E = eccentricAnomaly(M);
+      val E = KeplerOrbitHelper.eccentricAnomaly(M, e);
       val pos = rawPositionFromE(E);
       (M.toDegrees -> pos)
     }, circular = true)
@@ -401,15 +380,12 @@ case class ConstantOrbit(val e: Double,
     }
 
     private def positionFromM(M: Angle): Vector3 = {
-      //val E = eccentricAnomaly(M);
-      //positionFromE(E)
       val mdeg = M.toDegrees;
       val ((floorAngle, floorPos), (ceilAngle, ceilPos)) = anomalyCache.neighbours(mdeg);
-      val diffAngle = Math.min(ceilAngle - floorAngle, floorAngle - ceilAngle);
-      val floorDiff = Math.min(mdeg - floorAngle, floorAngle - mdeg) / diffAngle;
+      val interpolationWeight = OrbitInterpolation.weight(mdeg, floorAngle, ceilAngle);
       val path = ceilPos.clone();
       path.sub(floorPos);
-      path.multiplyScalar(floorDiff);
+      path.multiplyScalar(interpolationWeight);
       val rawPos = floorPos.clone();
       rawPos.add(path) // linear interpolate
       scaledPosition(rawPos, parentOrbit);
@@ -455,7 +431,7 @@ case class ConstantOrbit(val e: Double,
     if (!parameterCache.at.equals(t)) {
       val osP = centre.orbit.at(t);
       val M = meanAnomaly(t);
-      val E = eccentricAnomaly(M);
+      val E = KeplerOrbitHelper.eccentricAnomaly(M, e);
       val nu = trueAnomalyFromE(E);
       val rawPos = rawPositionFromE(E);
       val pos = scaledPosition(rawPos, osP);
@@ -487,31 +463,12 @@ case class ConstantOrbit(val e: Double,
     MetersPerSecond(v)
   }
 
-  private def eccentricAnomaly(M: Angle): Angle = {
-    var i = 0;
-    val m = M.toRadians;
-    var E = if (e < 0.8) {
-      m
-    } else {
-      Math.PI
-    };
-    var F = E - e * Math.sin(E) - m;
-
-    while ((Math.abs(F) > Constants.delta) && (i < Constants.maxIter)) {
-      E = E - F / (1.0 - e * Math.cos(E));
-      F = E - e * Math.sin(E) - m;
-      i += 1;
-    }
-    val Erounded = Math.round(E * Constants.accPow) / Constants.accPow;
-    return Radians(Erounded).normalise();
-  }
-
   private def trueAnomalyFromE(E: Angle): Angle = {
     val s = E.sin;
     val c = E.cos;
     val phi = Math.atan2(fak * s, c - e) / Constants.k;
 
-    val nu = Math.round(phi * Constants.accPow) / Constants.accPow;
+    val nu = Math.round(phi * Constants.anomalyRoundingScale) / Constants.anomalyRoundingScale;
 
     return Degrees(nu).normalise();
   }
@@ -625,7 +582,7 @@ case class VariableOrbit(val e: Double,
     }
 
     private def positionFromM(M: Angle): Vector3 = {
-      val E = eccentricAnomaly(M);
+      val E = KeplerOrbitHelper.eccentricAnomaly(M, e);
       positionFromE(E)
     }
 
@@ -665,7 +622,7 @@ case class VariableOrbit(val e: Double,
       val centrePos = centre.orbit.at(t).pos;
       val eulerMatrix = this.eulerMatrix(Omega, omega);
       val M = meanAnomaly(t);
-      val E = eccentricAnomaly(M);
+      val E = KeplerOrbitHelper.eccentricAnomaly(M, e);
       val nu = trueAnomalyFromE(E);
       val rawPos = rawPositionFromE(E);
       val pos = scaledPosition(rawPos, eulerMatrix, centrePos);
@@ -695,31 +652,12 @@ case class VariableOrbit(val e: Double,
     MetersPerSecond(v)
   }
 
-  private def eccentricAnomaly(M: Angle): Angle = {
-    var i = 0;
-    val m = M.toRadians;
-    var E = if (e < 0.8) {
-      m
-    } else {
-      Math.PI
-    };
-    var F = E - e * Math.sin(E) - m;
-
-    while ((Math.abs(F) > Constants.delta) && (i < Constants.maxIter)) {
-      E = E - F / (1.0 - e * Math.cos(E));
-      F = E - e * Math.sin(E) - m;
-      i += 1;
-    }
-    val Erounded = Math.round(E * Constants.accPow) / Constants.accPow;
-    return Radians(Erounded).normalise();
-  }
-
   private def trueAnomalyFromE(E: Angle): Angle = {
     val s = E.sin;
     val c = E.cos;
     val phi = Math.atan2(fak * s, c - e) / Constants.k;
 
-    val v = Math.round(phi * Constants.accPow) / Constants.accPow;
+    val v = Math.round(phi * Constants.anomalyRoundingScale) / Constants.anomalyRoundingScale;
 
     return Degrees(v).normalise();
   }

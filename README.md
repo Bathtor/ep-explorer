@@ -29,6 +29,9 @@ bun run dev
 
 Open the local URL printed by Vite. The `dev` command builds the Scala.js application before starting the server. After changing Scala source, run `sbt -batch fastLinkJS` again and refresh the page.
 
+Run the Scala.js unit tests with `sbt -batch test` (incremental in sbt 2) or
+`sbt -batch testFull` (all suites).
+
 To rebuild and inspect the production site locally:
 
 ```sh

@@ -2,15 +2,86 @@ id = "01a0d257-7ed0-7e71-9f30-77cc5bff590b"
 ref = "epexplorer-vd4"
 title = "Add initial automated tests for core map logic"
 body = """
-Scope: Add a Scala.js compatible test framework and a small set of meaningful tests for pure behaviour, starting with Roman numeral conversion and one orbit or distance calculation that can be exercised without a browser. Keep test fixtures deterministic and independent of external services.
+Agreed instructions (2026-09-25)
 
-Acceptance: sbt test discovers and runs non-empty tests locally from a clean checkout; tests cover normal and edge cases for at least two independent behaviours; document how to run them and record any browser-only behaviour left for smoke testing.
+User's original constraints:
+"Claim epexplorer-vd4 and make a conservative proposal for a small but effective Scala test suite. I want no bloat, no tautological tests, no need for dependencies to be handed to safari. Let's just test our own logic in the most sensible way (no numbers from out of nowhere!) and that's it."
 
-Estimate: about 40-100 LOC of focused tests and test dependency configuration."""
-status = "open"
+User's final scope instruction:
+"Ok, fine then. Add the numeral tests and orbital distance back in. If it's used it's not useless. And do A and B as well. They sound sensible.
+Update the task with these exact instructions, please and mark it as agreed."
+
+Use ScalaTest, specifically the Scala.js-compatible scalatest-funsuite module in Test scope, AnyFunSuite and ordinary assertions. Do not introduce MUnit.
+
+A. Eccentric-anomaly solver
+Planet and moon updates consume orbit.at(t). ConstantOriginOrbit, ConstantOrbit and VariableOrbit each contain the same iterative eccentric-anomaly solver.
+Extract that existing calculation into one package-private, pure helper used by all three implementations.
+Test:
+- Circular orbits: eccentric anomaly equals mean anomaly.
+- Periapsis and apoapsis: known solutions are zero and half a revolution.
+- Non-circular orbits: the result satisfies Kepler's equation, E - e sin(E) = M, for cases exercising both initial-guess branches and both halves of the orbit. Check the mathematical specification without reproducing the iteration.
+Use a small, explicitly justified set of eccentricities. Derive the residual tolerance from the existing stopping tolerance and final rounding: delta + (1 + e) / (2 * accPow), allowing for floating-point evaluation. No unexplained expected positions or arbitrary epsilon.
+Reference: https://pwg.gsfc.nasa.gov/stargaze/Smotion.htm
+
+B. Cached orbit-path lookup and interpolation
+Visible orbit-line updates call snapshot.path(...). The constant-orbit implementations use PosCache.neighbours and duplicated interpolation arithmetic.
+Use one small circular fixture: samples at quarter-turn intervals, queried at exact samples, between samples, and across the final-to-first seam. Expected neighbours and midpoint weights follow directly from that geometry.
+Extract only the scalar interpolation-weight calculation so production uses the tested arithmetic; leave vector operations in place.
+Reproduce these inspection findings with tests and include narrowly scoped fixes:
+- At the final key, PosCache calculates an index equal to the array length.
+- At the first key, it returns the same neighbour twice, making current interpolation divide by zero.
+- Across the circular seam, interpolation uses the long angular difference instead of the short wrapping interval.
+These are inspection findings, not yet verified by executed tests.
+
+C. Roman numeral conversion
+This is used for moon designations.
+Add a compact table covering repetition (III), subtraction (IV, IX, XL, XC, CD, CM), and composition (XLIV). Expectations come directly from Roman numeral notation.
+Do not specify negative-input behaviour merely because the implementation happens to accept it.
+
+D. Orbital-distance selection
+OrbitDistance feeds local orbit-line grouping, determining which paths appear while tracking an object; this is not a travel-planning or orbital-navigation feature.
+Test OrbitDistance.min:
+- The shortest finite path wins regardless of candidate order.
+- Zero takes precedence over Similar.
+- Similar beats a non-empty path.
+- Empty or entirely unreachable candidates yield Infinite.
+Use explicit Up/Down paths, with no astronomical constants or floating-point tolerances.
+
+Supporting changes and boundaries
+Keep the current Safari/Node test environment selection and classic-script test output.
+Pure helpers must avoid initialising Main or Three.js. Constants currently eagerly constructs matrices; defer those matrix initialisers.
+ScalaTest is linked into test output, with no extra JavaScript dependencies to serve to Safari.
+No mocks, dependency-serving harness, generic test infrastructure, or broad production refactoring.
+Transformations and rendering remain outside this initial suite and are left to browser smoke testing.
+
+Acceptance
+sbt test discovers and executes all four focused suites. Fixtures are deterministic and independent of external services.
+Verify the numerical solver against the stated mathematical expectations, and reproduce/fix the scoped sampling defects with regression coverage.
+Document how to run the suite and the remaining browser smoke-test boundary.
+Compare the final result with this agreed plan before handing it over for user review. Mark status_reason as "in review" then; do not close until the user agrees it is complete.
+Do not stage changes before review.
+
+LOC estimate
+- A/B tests: 90-140 LOC.
+- A/B helper extraction, call-site changes and scoped fixes: 60-100 LOC, plus removal of duplicated solver code.
+- Roman numeral tests: 20-30 LOC.
+- Orbital-distance selection tests: 30-45 LOC.
+- Configuration/documentation: 5-15 LOC.
+Total: approximately 205-330 added or changed LOC, plus deletions; well below 1000 LOC.
+"""
+status = "closed"
+status_reason = "completed"
 type = "task"
 priority = 3
+assignee = "codex"
 blocked_by = ["01a0d257-7e82-7ff0-ab8e-ccd90f2045c2"]
 blocks = ["01a0d257-7f1e-7f50-9822-bbbd378cf0d8"]
 created_at = "2026-09-24T07:35:44.592898Z"
-updated_at = "2026-09-24T07:46:35.827575Z"
+updated_at = "2026-09-25T08:16:33.853968Z"
+closed_at = "2026-09-25T08:16:33.853968Z"
+
+[[comments]]
+id = "01a0d7a3-3a3d-77a0-a870-1b1a94ac0353"
+author = "lkroll"
+body = "completed"
+created_at = "2026-09-25T08:16:33.853968Z"
