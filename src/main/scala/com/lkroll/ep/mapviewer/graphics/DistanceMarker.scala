@@ -1,17 +1,14 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import com.lkroll.ep.mapviewer.datamodel.{AstronomicalObject, ConstantOriginOrbit, ExtraUnits}
 import com.lkroll.ep.mapviewer.data.Stars
-import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer};
+import com.lkroll.ep.mapviewer.datamodel.{AstronomicalObject, ConstantOriginOrbit, ExtraUnits}
+import com.lkroll.ep.mapviewer.{Main, SceneContainer};
 import com.lkroll.ep.mapviewer.three._
 
-import squants._
-import squants.motion._
 import squants.space._
 import squants.time._
-
 import scala.scalajs.js
-import js.JSConverters._
+import scala.scalajs.js.JSConverters._
 
 class DistanceMarker(val distance: Length) extends GraphicsObject {
   import ExtraUnits._;

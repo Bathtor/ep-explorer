@@ -6,19 +6,17 @@ import com.lkroll.ep.mapviewer.three.{
   Color,
   Object3D,
   PerspectiveCamera,
-  Renderer,
   Scene,
-  Vector2,
   Vector3,
   WebGLRenderer,
   WebGLRendererParameters
 }
-import scala.scalajs.js.{Array, Dynamic}
-import collection.mutable;
 
-import org.scalajs.dom.{Event, MouseEvent}
+import scala.collection.mutable;
+
 import org.scalajs.dom
 import org.scalajs.dom.HTMLElement
+import scala.scalajs.js.Dynamic
 import scribe.Logging
 
 trait SceneContainer extends Logging {

@@ -19,16 +19,12 @@ import com.lkroll.ep.mapviewer.datamodel.{
   UniqueStation,
   ProcessorLocus
 };
-import com.lkroll.ep.mapviewer.data.Habitats
 import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer}
 import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
-import js.JSConverters._
-
 import scribe.Logging
 import squants._
-import squants.space._
 
 abstract class Habitat(val habitat: HabitatData, val orbiter: Orbiting)
     extends GraphicsObject

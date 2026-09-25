@@ -1,6 +1,7 @@
 package com.lkroll.ep.mapviewer.datamodel
 
 import java.util.UUID;
+
 import squants._
 
 class Star(_name: String, _id: UUID, _mass: Mass, val radius: Length, val temperature: Temperature)

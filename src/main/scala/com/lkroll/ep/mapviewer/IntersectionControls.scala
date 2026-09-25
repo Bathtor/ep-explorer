@@ -2,9 +2,7 @@ package com.lkroll.ep.mapviewer
 
 import com.lkroll.ep.mapviewer.three._
 
-import scala.scalajs.js
-import js.JSConverters._
-
+import scala.scalajs.js.JSConverters._
 import org.scalajs.dom
 import org.scalajs.dom.HTMLElement
 

@@ -1,15 +1,10 @@
 package com.lkroll.ep.mapviewer
 
 import com.lkroll.ep.mapviewer.data.{Habitats, Planets, Stars}
-import datamodel.AstronomicalObject
-import graphics._
+import com.lkroll.ep.mapviewer.datamodel.AstronomicalObject
+import com.lkroll.ep.mapviewer.graphics._
 import com.lkroll.ep.mapviewer.three._
 
-import scala.scalajs.js
-import scala.util.Random
-
-import org.scalajs.dom
-import org.scalajs.dom.document
 import org.scalajs.dom.HTMLElement
 import scalatags.JsDom.all._
 import scribe.Logging

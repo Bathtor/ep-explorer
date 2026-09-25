@@ -1,6 +1,7 @@
 package com.lkroll.ep.mapviewer.datamodel
 
 import java.util.UUID;
+
 import squants._
 
 trait StationType {

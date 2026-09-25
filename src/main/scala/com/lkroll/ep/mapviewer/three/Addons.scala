@@ -1,9 +1,8 @@
 package com.lkroll.ep.mapviewer.three
 
+import org.scalajs.dom.HTMLElement
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
-
-import org.scalajs.dom.HTMLElement
 
 @js.native
 @JSImport("three/addons/controls/OrbitControls.js", "OrbitControls")

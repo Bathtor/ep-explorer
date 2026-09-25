@@ -4,21 +4,16 @@ import com.lkroll.ep.mapviewer.datamodel.{
   Planet => PlanetData,
   Orbiting,
   Rotating,
-  ConstantOriginOrbit,
   AstronomicalObject
 };
-import com.lkroll.ep.mapviewer.data.Planets
-import com.lkroll.ep.mapviewer.data.Settlements
 import com.lkroll.ep.mapviewer.data.Moons
-import com.lkroll.ep.mapviewer.{ExtObject3D, ExtVector3, Main, SceneContainer, Textures};
+import com.lkroll.ep.mapviewer.data.Settlements
+import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer, Textures};
 import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
-import js.JSConverters._
-
 import scribe.Logging
 import squants._
-import squants.space._
 
 trait PlanetObject extends GraphicsObject
 

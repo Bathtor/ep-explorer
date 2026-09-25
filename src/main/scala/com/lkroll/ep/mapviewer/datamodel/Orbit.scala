@@ -3,10 +3,9 @@ package com.lkroll.ep.mapviewer.datamodel
 import com.lkroll.ep.mapviewer.Main
 import com.lkroll.ep.mapviewer.three._
 import com.lkroll.ep.mapviewer.utils.PosCache
-import ExtraUnits._
+import com.lkroll.ep.mapviewer.datamodel.ExtraUnits._
 
 import java.util.UUID
-import scala.collection.immutable.TreeMap
 
 //import squants._;
 import squants.mass._
@@ -77,7 +76,7 @@ object OrbitDistance {
     return shortest;
   }
 }
-import OrbitDistance.step2dist
+import com.lkroll.ep.mapviewer.datamodel.OrbitDistance.step2dist
 
 trait Orbit {
   def at(t: Time): OrbitalSnapshot;

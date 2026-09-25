@@ -1,9 +1,8 @@
 package com.lkroll.ep.mapviewer.facades
 
+import org.scalajs.dom.Node
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSGlobal
-
-import org.scalajs.dom.Node
 
 @js.native
 @JSGlobal("Stats")

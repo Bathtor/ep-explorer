@@ -1,8 +1,9 @@
 package com.lkroll.ep.mapviewer
 
-import collection.mutable
-import util.{Failure, Success, Try}
-import datamodel.AstronomicalObject;
+import com.lkroll.ep.mapviewer.datamodel.AstronomicalObject;
+
+import scala.collection.mutable
+import scala.util.{Failure, Success, Try}
 
 case class VerificationError(msg: String, parent: Throwable) extends Exception(msg, parent);
 

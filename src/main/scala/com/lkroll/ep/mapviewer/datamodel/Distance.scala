@@ -1,9 +1,7 @@
 package com.lkroll.ep.mapviewer.datamodel
 
 import com.lkroll.ep.mapviewer.Main
-import com.lkroll.ep.mapviewer.three._
 
-import squants.motion._
 import squants.space._
 import squants.time._
 //import squants.mass._

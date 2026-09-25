@@ -1,7 +1,7 @@
 package com.lkroll.ep.mapviewer.datamodel
 
 import com.lkroll.ep.mapviewer.three.{Matrix4, Vector3}
-import ExtraUnits._
+import com.lkroll.ep.mapviewer.datamodel.ExtraUnits._
 
 import java.util.UUID;
 import scala.language.implicitConversions

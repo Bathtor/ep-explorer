@@ -1,15 +1,12 @@
 package com.lkroll.ep.mapviewer
 
-import com.lkroll.ep.mapviewer.graphics.{GraphicsObject, GraphicsObjects, IntersectionPriority}
-import com.lkroll.ep.mapviewer.three.{Camera, Object3D, OrbitControls, Scene, Vector3}
+import com.lkroll.ep.mapviewer.graphics.{GraphicsObject, IntersectionPriority}
+import com.lkroll.ep.mapviewer.three.{Camera, OrbitControls, Scene, Vector3}
 
 import scala.collection.mutable
-import scala.language.postfixOps
 
 import org.scalajs.dom
-import org.scalajs.dom.{Element, Event, HTMLElement}
-import org.scalajs.dom.MouseEvent
-import org.scalajs.dom.KeyboardEvent
+import org.scalajs.dom.{Element, Event, HTMLElement, KeyboardEvent, MouseEvent}
 import scribe.Logging
 
 abstract class TrackingCameraControls(val camera: Camera,

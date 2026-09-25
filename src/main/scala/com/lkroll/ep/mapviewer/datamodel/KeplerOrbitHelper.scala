@@ -1,7 +1,8 @@
 package com.lkroll.ep.mapviewer.datamodel
 
 import squants.space.{Angle, Radians}
-import ExtraUnits._
+
+import com.lkroll.ep.mapviewer.datamodel.ExtraUnits._
 
 private[datamodel] object KeplerOrbitHelper {
   def eccentricAnomaly(meanAnomaly: Angle, eccentricity: Double): Angle = {

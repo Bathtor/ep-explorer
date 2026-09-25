@@ -1,15 +1,14 @@
 package com.lkroll.ep.mapviewer.graphics
 
-import com.lkroll.ep.mapviewer.datamodel.{AstronomicalObject, ConstantOriginOrbit, ExtraUnits}
+import com.lkroll.ep.mapviewer.datamodel.AstronomicalObject
 import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer};
 import com.lkroll.ep.mapviewer.three._
 
 import scala.collection.mutable
-import scala.scalajs.js
-import js.JSConverters._
+
 import org.scalajs.dom.document
 import org.scalajs.dom.html
-
+import scala.scalajs.js
 import scalatags.JsDom.all._
 import squants.time._
 

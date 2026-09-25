@@ -6,10 +6,7 @@ import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer, Textures}
 import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
-import js.JSConverters._
-
 import squants._
-import squants.space._
 
 class MoonSingle(val moon: MoonData) extends GraphicsObject {
 

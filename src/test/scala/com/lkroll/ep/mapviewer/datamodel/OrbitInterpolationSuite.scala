@@ -1,6 +1,7 @@
 package com.lkroll.ep.mapviewer.datamodel
 
 import com.lkroll.ep.mapviewer.utils.PosCache
+
 import org.scalatest.funsuite.AnyFunSuite
 
 class OrbitInterpolationSuite extends AnyFunSuite {

@@ -2,7 +2,6 @@ package com.lkroll.ep.mapviewer.datamodel
 
 import com.lkroll.ep.mapviewer.three.Matrix3
 
-import squants.Mass;
 import squants.motion._
 import squants.space.Degrees;
 

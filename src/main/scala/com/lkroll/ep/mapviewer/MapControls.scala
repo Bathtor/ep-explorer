@@ -1,11 +1,10 @@
 package com.lkroll.ep.mapviewer
 
 import com.lkroll.ep.mapviewer.three._
-import graphics._
+import com.lkroll.ep.mapviewer.graphics._
 
-import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.HTMLElement
-import scalatags.JsDom.all._
+import org.scalajs.dom.MouseEvent
 import scribe.Logging
 
 class MapControls(_cam: Camera,

@@ -1,16 +1,11 @@
 package com.lkroll.ep.mapviewer
 
-import datamodel.AstronomicalObject
-import graphics.{GraphicsObject, IntersectionPriorities}
+import com.lkroll.ep.mapviewer.datamodel.AstronomicalObject
+import com.lkroll.ep.mapviewer.graphics.{GraphicsObject, IntersectionPriorities}
 import com.lkroll.ep.mapviewer.three._
 
-import scala.scalajs.js
-import scala.util.Random
-
-import org.scalajs.dom
-import org.scalajs.dom.document
 import org.scalajs.dom.HTMLElement
-import scalatags.JsDom.all._
+import scala.scalajs.js
 import scribe.Logging
 import squants.time._
 

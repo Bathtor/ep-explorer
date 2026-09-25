@@ -1,0 +1,22 @@
+id = "01a0d7d8-549c-7823-a360-59685e77b1f0"
+ref = "epexplorer-nok"
+title = "Resolve existing Scalafix diagnostics"
+body = "Resolved all 188 initial Scalafix diagnostics across main and test Scala sources: qualified relative top-level imports, corrected import grouping and order, and removed compiler-reported unused top-level imports. The relative order of retained wildcard/exclusion imports is preserved; nested imports and lint configuration are unchanged. The source diff covers 52 files, with 78 insertions and 175 deletions. The full sbt -batch scalafixAll --check passes, including compilation of main and test sources. sbt -batch test fast-optimised the tests but SafariDriver could not start because Safari was already paired with another session; tests did not run. Reviewed and approved by the user for completion."
+status = "closed"
+status_reason = "completed"
+type = "task"
+priority = 3
+assignee = "codex"
+created_at = "2026-09-25T09:14:34.012671Z"
+updated_at = "2026-09-25T10:04:19.999572Z"
+closed_at = "2026-09-25T10:04:19.999572Z"
+
+[[links]]
+target = "01a0d329-43c1-79c0-b3b0-b181906cdd97"
+label = "discovered from"
+
+[[comments]]
+id = "01a0d805-e49f-7b51-a08c-89b47abf9743"
+author = "lkroll"
+body = "completed"
+created_at = "2026-09-25T10:04:19.999572Z"

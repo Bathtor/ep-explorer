@@ -1,14 +1,11 @@
 package com.lkroll.ep.mapviewer.graphics
 
 import com.lkroll.ep.mapviewer.datamodel.{PandoraGate => PandoraGateData, AstronomicalObject}
-import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer}
+import com.lkroll.ep.mapviewer.{ExtObject3D, SceneContainer}
 import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
-import js.JSConverters._
-
 import squants._
-import squants.space._
 
 class PandoraGate(val settlement: PandoraGateData) extends GraphicsObject with Overlayed {
 

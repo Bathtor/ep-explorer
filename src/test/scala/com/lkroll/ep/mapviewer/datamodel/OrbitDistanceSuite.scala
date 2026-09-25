@@ -1,8 +1,9 @@
 package com.lkroll.ep.mapviewer.datamodel
 
+import com.lkroll.ep.mapviewer.datamodel.OrbitDistance.Step.{Down, Up}
+import com.lkroll.ep.mapviewer.datamodel.OrbitDistance.{Infinite, Path, Similar, Zero}
+
 import org.scalatest.funsuite.AnyFunSuite
-import OrbitDistance.{Infinite, Path, Similar, Zero}
-import OrbitDistance.Step.{Down, Up}
 
 class OrbitDistanceSuite extends AnyFunSuite {
   test("the shortest finite path wins in either candidate order") {

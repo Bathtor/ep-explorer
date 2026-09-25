@@ -5,7 +5,6 @@ import com.lkroll.ep.mapviewer.datamodel.{
   Aerostat => AerostatData,
   SyncOrbitStation => SyncOrbitStationData,
   PandoraGate => PandoraGateData,
-  AstronomicalObject,
   AtmosphericObject => AtmosphericObjectData,
   Bathyscaphe => BathyscapheData,
   UndergroundSettlement => USData

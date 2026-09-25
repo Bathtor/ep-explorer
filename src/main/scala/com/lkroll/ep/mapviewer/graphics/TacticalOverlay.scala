@@ -1,12 +1,10 @@
 package com.lkroll.ep.mapviewer.graphics
 
 import com.lkroll.ep.mapviewer.datamodel.AstronomicalObject
-import com.lkroll.ep.mapviewer.{ExtObject3D, ExtVector2, Main, SceneContainer, Textures}
+import com.lkroll.ep.mapviewer.{ExtObject3D, Main, SceneContainer, Textures}
 import com.lkroll.ep.mapviewer.three._
 
 import scala.scalajs.js
-import js.JSConverters._
-
 import scribe.Logging
 import squants.Time
 

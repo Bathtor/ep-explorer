@@ -1,9 +1,8 @@
 package com.lkroll.ep.mapviewer.three
 
+import org.scalajs.dom
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
-
-import org.scalajs.dom
 
 @js.native
 @JSImport("three",JSImport.Namespace)

@@ -1,12 +1,9 @@
 package com.lkroll.ep.mapviewer.datamodel
 
-import com.lkroll.ep.mapviewer.{ExtVector3, Main};
+import com.lkroll.ep.mapviewer.Main;
 import com.lkroll.ep.mapviewer.three._
-import ExtraUnits._
+import com.lkroll.ep.mapviewer.datamodel.ExtraUnits._
 
-import java.util.UUID;
-
-import squants.mass._
 import squants.motion._
 import squants.space._
 import squants.time._

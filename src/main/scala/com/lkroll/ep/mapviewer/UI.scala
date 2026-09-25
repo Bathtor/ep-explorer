@@ -2,12 +2,11 @@ package com.lkroll.ep.mapviewer
 
 import org.scalajs.dom
 import org.scalajs.dom.MouseEvent
-import dom.document
+import org.scalajs.dom.document
 import scalatags.JsDom.all._
 import scribe.Logging
-import scala.scalajs.js.Date
 
-import datamodel._
+import com.lkroll.ep.mapviewer.datamodel._
 
 import squants.time._
 

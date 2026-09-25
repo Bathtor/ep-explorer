@@ -1,11 +1,10 @@
 package com.lkroll.ep.mapviewer
 
-import org.scalajs.dom
 import org.scalajs.dom.MouseEvent
-import dom.document
+import org.scalajs.dom.document
 import scalatags.JsDom.all._
-import scribe.Logging
 import scala.scalajs.js.Date
+import scribe.Logging
 
 object AboutModal extends Logging {
   def render(): Unit = {

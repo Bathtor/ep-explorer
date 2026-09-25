@@ -3,6 +3,7 @@ package com.lkroll.ep.mapviewer.data
 import com.lkroll.ep.mapviewer.datamodel._
 
 import squants.space._
+
 import java.util.UUID
 
 object Settlements {

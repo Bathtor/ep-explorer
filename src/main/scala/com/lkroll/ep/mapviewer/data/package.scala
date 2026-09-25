@@ -1,9 +1,6 @@
 package com.lkroll.ep.mapviewer
 
 import com.lkroll.ep.mapviewer.datamodel._
-import squants.motion._
-import squants.time._
-import squants.space._
 
 package object data {
   def findObjectForName(name: String): Option[AstronomicalObject] = {

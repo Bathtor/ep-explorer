@@ -1,7 +1,7 @@
 package com.lkroll.ep.mapviewer.datamodel
 
 import com.lkroll.ep.mapviewer.three._
-import ExtraUnits._
+import com.lkroll.ep.mapviewer.datamodel.ExtraUnits._
 
 import java.util.UUID
 

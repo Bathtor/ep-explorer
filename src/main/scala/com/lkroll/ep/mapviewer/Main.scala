@@ -2,17 +2,12 @@ package com.lkroll.ep.mapviewer
 
 import com.lkroll.ep.mapviewer.three._
 
-import scala.scalajs.js
-import scala.scalajs.js.annotation.JSExport
-import scala.util.Random
-
 import org.scalajs.dom
+import org.scalajs.dom.HTMLElement
 import org.scalajs.dom.document
 import org.scalajs.dom.window
-import org.scalajs.dom.{HTMLElement, HTMLTextAreaElement}
 import scalatags.JsDom.all._
 import scribe.Logging
-import squants.time._
 
 object Main extends Logging {
 
