@@ -65,6 +65,7 @@ class TorusGeometry extends BufferGeometry {
 @JSImport("three", "CatmullRomCurve3")
 class CatmullRomCurve3 extends js.Object {
   def this(points: js.Array[Vector3]) = this()
+  def this(points: js.Array[Vector3], closed: Boolean) = this()
   def getPoints(divisions: Double): js.Array[Vector3] = js.native
 }
 

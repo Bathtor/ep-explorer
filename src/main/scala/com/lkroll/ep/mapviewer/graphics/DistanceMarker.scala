@@ -2,7 +2,7 @@ package com.lkroll.ep.mapviewer.graphics
 
 import com.lkroll.ep.mapviewer.data.Stars
 import com.lkroll.ep.mapviewer.datamodel.{AstronomicalObject, ConstantOriginOrbit, ExtraUnits}
-import com.lkroll.ep.mapviewer.{Main, SceneContainer};
+import com.lkroll.ep.mapviewer.SceneContainer;
 import com.lkroll.ep.mapviewer.three._
 
 import squants.space._
@@ -14,8 +14,8 @@ class DistanceMarker(val distance: Length) extends GraphicsObject {
   import ExtraUnits._;
 
   val co = ConstantOriginOrbit(0.0, distance, 0.0.º, 0.0.º, 0.0.º, 0.0.º, Stars.Sol.mass, 1.0.kg);
-  val path = co.at(Main.starttime).path(360);
-  val curve = new CatmullRomCurve3(path.toJSArray);
+  val path = co.at(Seconds(0.0)).path(360);
+  val curve = new CatmullRomCurve3(path.toJSArray, closed = true);
   val curveGeometry = {
     val geom = new BufferGeometry();
     geom.setFromPoints(curve.getPoints(360.0));
@@ -27,14 +27,19 @@ class DistanceMarker(val distance: Length) extends GraphicsObject {
 
   // Create the final Object3d to add to the scene
   val ellipse = new Line(curveGeometry, curveMaterial);
-  val label = new TextSprite(s"${distance.toAstronomicalUnits}AU");
+  val labels = List(0, 90, 180, 270).map { angle =>
+    val label = new TextSprite(s"${distance.toAstronomicalUnits}AU");
+    label.moveTo(path(angle)); // one path sample per degree
+    label
+  };
 
   override def moveTo(pos: Vector3): Unit = {} // do nothing
 
   override def addToScene(scene: SceneContainer): Unit = {
     scene.addObject(this, ellipse);
-    label.moveTo(path(0));
-    scene.addObject(this, label.sprite);
+    for (label <- labels) {
+      scene.addObject(this, label.sprite);
+    }
   }
 
   override def update(time: Time): Unit = {} // do nothing

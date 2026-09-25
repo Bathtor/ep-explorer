@@ -1,9 +1,41 @@
 id = "01a0d3f1-d15a-7580-8988-bb511a491cef"
 ref = "epexplorer-r9y"
 title = "Investigate AU marker alignment in the inner system"
-body = "The AU distance rings and their labels appear oddly aligned in the inner Solar System view; this predates the Three.js upgrade. Reproduce the layout at several zoom levels and viewpoints, compare marker placement with the corresponding ring geometry and the outer system, and inspect DistanceMarker's orbit path and label anchor. Identify the cause and propose a small correction before implementation. Acceptance: document the cause with a concrete before/after placement proposal; if agreed, implement and visually verify representative inner-system markers without changing their distances."
-status = "open"
+body = """
+The AU distance rings and their labels appear oddly aligned in the inner Solar System view; this predates the Three.js upgrade. Reproduce the layout at several zoom levels and viewpoints, compare marker placement with the corresponding ring geometry and the outer system, and inspect DistanceMarker orbit path and label anchor. Identify the cause and propose a small correction before implementation. Acceptance: document the cause with a concrete before/after placement proposal; if agreed, implement and visually verify representative inner-system markers without changing their distances.
+
+Agreed plan (2026-09-25): Build the static distance-marker path at zero time so its starting point and label anchor lie at the same +X azimuth for every radius. Close the CatmullRomCurve3 path so the ring has no seam. Leave the AU values and distance scale unchanged. Build and visually inspect representative 0.1, 0.5, 1 and 10 AU markers at close and wide zoom levels and from another viewpoint. Estimated implementation: 2 lines in DistanceMarker, 1 facade overload in Geometry, under 10 LOC total.
+
+Follow-up prototype requested (2026-09-25): Name the closed constructor argument and place four labels per guide ring at 90-degree intervals so their usefulness and clutter can be reviewed in the live preview. Keep the same radii and ring geometry. Estimated additional implementation: 10-20 LOC in DistanceMarker."""
+status = "closed"
+status_reason = "completed"
 type = "task"
 priority = 4
+assignee = "codex"
 created_at = "2026-09-24T15:03:55.482841Z"
-updated_at = "2026-09-24T15:03:55.482841Z"
+updated_at = "2026-09-25T11:40:32.897273Z"
+closed_at = "2026-09-25T11:40:32.897273Z"
+
+[[comments]]
+id = "01a0d84c-ec42-7200-b179-a57250943b9d"
+author = "codex"
+body = "Investigation and proposal (awaiting agreement): Reproduced in the local preview at close inner-system zoom, the default zoom, a wider outer-system zoom, and after rotating the viewpoint. The guide rings stay centred on Sol and retain their expected relative radii, but their labels sit at differing azimuths. DistanceMarker samples each circular ConstantOriginOrbit at Main.starttime. OrbitalSnapshot.path begins at the current mean anomaly, which varies by radius because orbital period varies; label.moveTo(path(0)) therefore puts each static label at a different phase. The 360-point path also omits its endpoint, and CatmullRomCurve3 is open by default, leaving a roughly one-degree seam near that anchor. Proposed correction: sample static guide rings at zero time (mean anomaly zero), close the curve, and keep the label at path(0), placing all labels at the same +X azimuth on their own rings. Keep the existing distance values and scale. After agreement, visually check 0.1, 0.5, 1 and 10 AU at close/default/wide zoom and from a tilted viewpoint."
+created_at = "2026-09-25T11:21:55.010189Z"
+
+[[comments]]
+id = "01a0d853-21b0-7213-8ca1-975c3d5bc296"
+author = "codex"
+body = "Implemented the agreed correction: static marker paths now sample zero time and CatmullRomCurve3 is closed. Scala.js fastLinkJS succeeded. In the local Vite preview, inner labels sit on a common radial line at close/default zoom and stay on their rings after camera rotation; 1-10 AU markers show the same placement at wider zoom. The AU values and scaling code were not changed. Ready for visual review."
+created_at = "2026-09-25T11:28:41.904322Z"
+
+[[comments]]
+id = "01a0d859-61fc-7401-8c40-f51f5d8f5992"
+author = "codex"
+body = "Follow-up prototype: named the CatmullRomCurve3 closed argument and added labels at 0, 90, 180 and 270 degrees on every AU ring. Scala.js fastLinkJS passed and the local preview was checked at close, default and wider zoom levels plus a rotated viewpoint. Individual inner rings are easier to read at close zoom; at wider zoom the inner labels form a dense cross near Sol. Distances and ring geometry are unchanged. Ready for user visual review."
+created_at = "2026-09-25T11:35:31.580887Z"
+
+[[comments]]
+id = "01a0d85d-fb01-7501-b4d7-1fad7025fe64"
+author = "lkroll"
+body = "completed"
+created_at = "2026-09-25T11:40:32.897273Z"
