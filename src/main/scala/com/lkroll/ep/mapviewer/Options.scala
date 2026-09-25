@@ -69,7 +69,9 @@ abstract class Options(val params: QueryParams) {
         r =>
           if (o.required) {
             o.get; ()
-          } else ()
+          } else {
+            ()
+          }
       );
       checked.transform(
         _ => Success(()),

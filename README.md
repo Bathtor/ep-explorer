@@ -32,6 +32,12 @@ Open the local URL printed by Vite. The `dev` command builds the Scala.js applic
 Run the Scala.js unit tests with `sbt -batch test` (incremental in sbt 2) or
 `sbt -batch testFull` (all suites).
 
+Check Scala style without changing sources:
+
+```sh
+sbt -batch 'scalafixAll --check'
+```
+
 To rebuild and inspect the production site locally:
 
 ```sh

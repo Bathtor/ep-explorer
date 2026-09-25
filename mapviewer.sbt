@@ -9,6 +9,15 @@ version := "0.6.2"
 
 scalaVersion := "2.13.18"
 
+semanticdbEnabled := true
+semanticdbVersion := scalafixSemanticdb.revision
+scalacOptions += "-Wunused:imports"
+
+// Local Scalafix rules live in src/scalafix/scala and do not enter the Scala.js application.
+libraryDependencies += ("ch.epfl.scala" % "scalafix-core_2.13" % _root_.scalafix.sbt.BuildInfo.scalafixVersion) % ScalafixConfig
+// The Scala.js compiler plugin is inherited by this configuration, but local rules run on the JVM.
+ScalafixConfig / scalacOptions := Nil
+
 resolvers += Resolver.mavenLocal
 
 libraryDependencies += "org.scala-js" %% "scalajs-dom" % "2.3.0"

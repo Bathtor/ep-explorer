@@ -1,9 +1,37 @@
 id = "01a0d329-43c1-79c0-b3b0-b181906cdd97"
 ref = "epexplorer-9zr"
-title = "Enforce consistent Scala import ordering"
-body = "Evaluate and configure a lightweight import-order check for Scala sources after the manual import cleanup in epexplorer-1xa. Prefer existing scalafmt support if it can enforce the agreed grouping without broad formatting churn; otherwise assess a focused lint rule. Acceptance: contributors can run the check locally, CI fails on newly disordered imports once CI exists, and the rule is documented in contributor instructions. Estimate: 10-50 LOC of configuration and documentation, plus any separately reviewed import reordering."
-status = "open"
+title = "Enforce Scala conditional braces and top-level import style"
+body = """
+Agreed scope and implementation: Scala linting through Scalafix for multiline conditional braces and file/package-level imports. Mandatory semicolon linting is out of scope.
+
+Conditional policy: Entirely single-line if expressions are allowed, with or without else. If the conditional spans lines, present branch bodies require braces. Conventional else-if chains do not need an extra block around the nested if. This applies in statement and expression contexts; absent else is allowed. A local syntactic rule reports positions and never rewrites source.
+
+Import policy: Only imports directly in a source file or package body are checked. Class/object/method/block imports are untouched, including relative and unused local imports. Top-level imports use project (com.lkroll.ep.mapviewer), then Java/Scala standard library, then third-party groups separated by blank lines; Scala.js is third-party. Ordinary named imports and grouped selectors use ASCII order, preserving existing grouped syntax. The rule avoids reordering wildcards, aliases, exclusions and explicitly imported implicits because their order may affect resolution. Relative top-level imports are diagnosed using resolved symbols rather than prefix guesses. Unused top-level imports are diagnosed from compiler warnings. Wildcards are neither created nor collapsed. All checks are diagnostic-only.
+
+Integration: sbt-scalafix 0.14.9 is pinned. SemanticDB and -Wunused:imports support the import rule. Local rule compilation is JVM-only despite the Scala.js application build. Existing Scalafmt 2.0.0-RC4 settings remain, except AsciiSortImports is removed to avoid competing ownership of imports. No lint rewrite runs on compile. The documented check is sbt -batch scalafixAll --check, covering main and test source trees and excluding generated sources by default. No import-fix command or branch is added; no changes are staged.
+
+Implementation note: Built-in OrganizeImports was trialled in check-only mode and proposed edits to imports inside object bodies, including their removal. That contradicted the agreed scope, so a focused local Scalafix rule was used instead. The custom checker is deliberately conservative around semantically order-sensitive imports. Existing top-level import violations remain for a separate, reviewed source clean-up; the check currently fails on them. No broad import rewrite or formatter run has been applied.
+
+Validation: Accepted and rejected brace fixtures cover single-line conditionals, multiline branches, else-if, missing/explicit else, nesting, comments and suppression. Import fixtures cover group/selector order, group spacing, Java/Scala/Scala.js classification, relative imports, unused imports, aliases/wildcards, and preservation of nested imports. Targeted positive checks pass and negative fixtures yield expected diagnostics. The syntax-only project check and sbt compile pass. Full project check fails on existing import violations. sbt test reached Safari but its Scala.js test runner terminated; a Node override could not run because Node is unavailable. Scalafmt check reports ten pre-existing formatting deviations and was not applied.
+
+Review and next step: Review the rule/configuration and representative import findings before any broad import cleanup. The source cleanup is intentionally pending; only close this issue after user agreement. Estimated implementation scale remains below 1000 LOC; source cleanup can be split into a separate child issue if desired."""
+status = "closed"
+status_reason = "completed"
 type = "task"
 priority = 4
+assignee = "codex"
 created_at = "2026-09-24T11:24:52.033081Z"
-updated_at = "2026-09-24T11:24:52.033081Z"
+updated_at = "2026-09-25T09:13:39.732733Z"
+closed_at = "2026-09-25T09:13:39.732733Z"
+
+[[comments]]
+id = "01a0d7a6-aaf2-7e73-9796-60e8f18c3a0a"
+author = "codex"
+body = "Research findings (proposal, not agreed implementation): build is Scala 2.13.18 / Scala.js 1.22.0 / sbt 2.0.9; formatter engine is pinned to 2.0.0-RC4. Scalastyle has IfBraceChecker with singleLineAllowed=false and doubleLineAllowed=false, and ImportOrderChecker, but documented plugin support is sbt 0.13/1.0; standalone CLI would avoid plugin linkage but retains old parser/tool maintenance risk. Scalafix has sbt 2 support and syntactic rules do not require SemanticDB or application compilation. DisableSyntax has opt-in restrictions but no documented mandatory-braces or mandatory-semicolons setting; robust enforcement needs AST/token-based custom rules, not regex. Modern Scalafmt supports import grouping, but brace insertion requires a preceding newline and therefore misses same-line unbraced branches. WartRemover focuses on semantic safety and does not address the requested punctuation policy. Recommendation: small local Scalafix syntactic brace rule, formatter-based imports if an upgrade produces acceptable churn, optional narrow semicolon rule after examples are agreed. Estimated LOC: integration/config/docs 40-80; brace rule 30-60; rule fixtures/tests 80-140; import config/docs 20-40 (total 170-320). Semicolon extension roughly 180-330 including tests. These exclude existing-source remediation; survey violations before agreeing cleanup scope. Validate sbt 2 local-rule wiring first. Proposed policies: braces for all present if/else branch bodies, including expression-valued conditionals; allow conventional else-if chains. Semicolon policy must distinguish block result expressions, definitions, imports, and braced constructs. No implementation made. Sources: https://github.com/scalacenter/sbt-scalafix/releases ; https://scalacenter.github.io/scalafix/docs/developers/local-rules.html ; https://scalacenter.github.io/scalafix/docs/rules/DisableSyntax ; https://www.scalastyle.org/rules-1.0.0.html ; https://www.scalastyle.org/sbt.html ; https://scalameta.org/scalafmt/docs/configuration.html ; https://www.wartremover.org/doc/warts.html"
+created_at = "2026-09-25T08:20:19.314464Z"
+
+[[comments]]
+id = "01a0d7d7-8094-74b2-905a-039d397d88c8"
+author = "lkroll"
+body = "completed"
+created_at = "2026-09-25T09:13:39.732733Z"
