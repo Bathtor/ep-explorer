@@ -18,11 +18,9 @@ libraryDependencies += ("ch.epfl.scala" % "scalafix-core_2.13" % _root_.scalafix
 // The Scala.js compiler plugin is inherited by this configuration, but local rules run on the JVM.
 ScalafixConfig / scalacOptions := Nil
 
-resolvers += Resolver.mavenLocal
-
 libraryDependencies += "org.scala-js" %% "scalajs-dom" % "2.3.0"
 libraryDependencies += "com.lihaoyi" %% "scalatags" % "0.13.1"
-libraryDependencies += "org.scala-js" %% "scalajs-java-time" % "0.2.+"
+libraryDependencies += "org.scala-js" %% "scalajs-java-time" % "0.2.6"
 libraryDependencies += "org.scala-js" %% "scalajs-java-securerandom" % "1.0.0"
 libraryDependencies += "com.outr" %% "scribe" % "3.15.2"
 libraryDependencies += "org.typelevel" %% "squants" % "1.8.3"
