@@ -75,41 +75,28 @@ object TacticalOverlay extends Logging {
   def from(obj: AstronomicalObject): TacticalOverlay = {
     new TacticalOverlay(obj)
   }
-  def intersectObjects(mouse: Vector2,
+  def intersectObjects(mouseNdc: Vector2,
                        camera: Camera,
                        screenT: ScreenTransform,
                        overlayObjects: Array[Object3D]): Array[Intersection] = {
-    val screenMouse = screenT.toScreenSpace(mouse);
-    overlayObjects.flatMap(o => intersectObject(screenMouse, camera, screenT, o))
+    val mousePixels = screenT.toScreenSpace(mouseNdc);
+    overlayObjects.flatMap(o => intersectObject(mousePixels, camera, screenT, o))
   }
 
-  def intersectObject(mouse: Vector2, camera: Camera, screenT: ScreenTransform, obj: Object3D): Option[Intersection] = {
+  def intersectObject(mousePixels: Vector2, camera: Camera, screenT: ScreenTransform, obj: Object3D): Option[Intersection] = {
     if (obj.isInstanceOf[Points]) {
-      val point = obj.asInstanceOf[Points];
-      val material = point.material.asInstanceOf[PointsMaterial];
-      val geometry = point.geometry;
-      val pos = new Vector3();
-      pos.copy(point.position);
-      pos.project(camera);
-      val screenPos = screenT.toScreenSpace(pos);
-      val dist = screenPos.distanceTo(mouse);
-      if (dist > (material.size / 2)) {
+      val pointsObject = obj.asInstanceOf[Points];
+      val material = pointsObject.material.asInstanceOf[PointsMaterial];
+      val worldPosition = pointsObject.position;
+      val projectedPositionNdc = worldPosition.clone().project(camera);
+      val screenPositionPixels = screenT.toScreenSpace(projectedPositionNdc);
+      val pixelDistance = screenPositionPixels.distanceTo(mousePixels);
+      if (pixelDistance > (material.size / 2)) {
         None
       } else {
-        val intersectPointScreen = new Vector2();
-        intersectPointScreen.subVectors(mouse, screenPos);
-        val intersectPointNCS = screenT.toNormalizedCameraSpace(intersectPointScreen);
-        val intersectPoint = new Vector3();
-        intersectPoint.set(intersectPointNCS.x, intersectPointNCS.y, 0.5);
-        intersectPoint.project(camera);
-        intersectPoint.setZ(pos.z);
-        val rayDistance = camera.position.distanceTo(pos);
-        val ints = js.Dynamic.literal(distance = rayDistance,
-                                      distanceToRay = dist,
-                                      point = intersectPoint,
-                                      index = 0,
-                                      face = null,
-                                      `object` = point);
+        val worldDistance = camera.position.distanceTo(worldPosition);
+        val ints = js.Dynamic.literal(distance = worldDistance,
+                                      `object` = pointsObject);
         Some(ints.asInstanceOf[Intersection])
       }
     } else {

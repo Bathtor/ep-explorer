@@ -44,7 +44,6 @@ class PerspectiveCamera extends Camera {
 @js.native
 trait Intersection extends js.Object {
   val distance: Double = js.native
-  val point: Vector3 = js.native
   val `object`: Object3D = js.native
 }
 

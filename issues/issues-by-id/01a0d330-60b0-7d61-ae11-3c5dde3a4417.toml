@@ -1,9 +1,36 @@
 id = "01a0d330-60b0-7d61-ae11-3c5dde3a4417"
 ref = "epexplorer-wv6"
 title = "Review synthetic overlay intersection point"
-body = "TacticalOverlay.intersectObject currently converts a screen-space offset as though it were an absolute screen position, then calls project where unproject may be intended. The resulting Intersection.point is not read by the current selection path. Decide whether that field is needed: remove the unused calculation and simplify the intersection representation if possible, or compute a meaningful world-space point and cover it with a focused test. Keep overlay hit selection behaviour intact. Estimate: 15-60 LOC plus a focused test if retained."
-status = "open"
+body = "Correct tactical overlay intersections without introducing coordinate wrapper types. Keep the existing pixel hit test and selection priority rules. In TacticalOverlay, use names that state whether coordinates are in world space, normalised device coordinates, or screen pixels; calculate distance from the camera to the overlay centre in world space before projecting a separate copy for hit testing. Remove the unused synthetic intersection point and other unused synthetic fields, and narrow the local Intersection facade to the fields the application reads (distance and object). Validate with compilation/tests and a focused check of overlay hit ordering where feasible. Estimated implementation: 15-40 LOC plus validation."
+status = "closed"
+status_reason = "completed"
 type = "task"
 priority = 4
+assignee = "codex"
 created_at = "2026-09-24T11:32:38.192725Z"
-updated_at = "2026-09-24T11:32:38.192725Z"
+updated_at = "2026-09-25T12:02:57.760886Z"
+closed_at = "2026-09-25T12:02:57.760886Z"
+
+[[comments]]
+id = "01a0d862-23d9-7db2-bebf-934f517be798"
+author = "codex"
+body = "Review findings: the synthetic point converts a pixel displacement with an absolute-position transform, projects in the wrong direction, and then assigns NDC depth to the result. No application consumer reads Intersection.point. A related active bug is that pos.project(camera) mutates pos before camera.position.distanceTo(pos), mixing world and NDC coordinates; IntersectionPriority sorts by that distance. Proposed correction, not yet agreed: narrow the local Intersection facade to the consumed distance/object fields, remove the unused synthetic point and extra literal fields, and calculate overlay distance to the unprojected overlay centre. Preserve the existing inclusive circular pixel hit test and category priority rules; overlapping-hit distance ordering will intentionally change. Existing test harness uses NoModule and cannot directly import Three.js, so focused runtime coverage needs a small bundled harness or an agreed test configuration adjustment. No implementation performed."
+created_at = "2026-09-25T11:45:05.497004Z"
+
+[[comments]]
+id = "01a0d868-6e16-79b3-91f8-be108ffbbb09"
+author = "codex"
+body = "User agreed to F2: remove the unused synthetic intersection point. F1 scope remains under discussion: user requested an estimate for coordinate newtypes across most of the viewer. Initial inspection suggests staged work: typed picking and projection boundaries (roughly 250-450 changed lines including tests), graphics positions and camera tracking (additional 250-450), and orbital/geographic frames and unit conversions (additional 450-800). Broad migration is roughly 950-1700 changed lines and should be split into independently reviewable tasks once scope is agreed. Wrapping mutable Three.js vectors must prevent projection from mutating a value that retains its old coordinate-space type; conversions should return distinct values and raw-vector access should stay at explicit interop boundaries. No implementation performed."
+created_at = "2026-09-25T11:51:57.718209Z"
+
+[[comments]]
+id = "01a0d86d-7d7b-7851-ba45-7ec611fbf8d7"
+author = "codex"
+body = "Implemented agreed narrow correction: world-space distance now uses the overlay position before projecting a cloned vector; coordinate variable names state NDC, pixel, and world space; removed unused synthetic point and fields and narrowed the Intersection facade. Existing circular hit threshold and priority code are unchanged. Validation: fastLinkJS succeeded, Test / test passed 4 existing tests in Safari, git diff --check passed. No focused overlay regression test was added because this Scala.js test target cannot directly import Three.js modules; the current tests do not exercise overlay selection."
+created_at = "2026-09-25T11:57:29.339944Z"
+
+[[comments]]
+id = "01a0d872-8060-7122-9ab0-92a8809abd82"
+author = "lkroll"
+body = "completed"
+created_at = "2026-09-25T12:02:57.760886Z"
