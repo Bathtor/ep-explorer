@@ -9,6 +9,7 @@ Required result
 - Publish a downloadable release archive with an unambiguous version, source commit, download URL, and SHA-256 checksum. Document the archive format and its top-level directory layout.
 - The archive must contain one complete production web root: index.html, the Vite-generated JavaScript and CSS output, images, models, fonts, and every other locally served file required by the site. Include source maps if they are part of the intended public release. Exclude build caches and files the browser does not need.
 - All local asset references must resolve when the unpacked archive is served from a website root. Preserve the production entry point and working map behaviour without relying on the former epmapviewer-jsdeps.js file.
+- Build the production archive with VITE_HITKEEP_HOST=https://stats.lkroll.com, so the optional Hitkeep tracker is initialised in the published site.
 - The release process should work from a clean checkout with documented build dependencies, without relying on unpublished Maven-local state or the old rsync destination. Split substantial dependency or build modernisation into child tasks as needed.
 - Document how to produce, inspect, publish, and verify a release. Validate the archive under a simple static HTTP server: load the entry page, confirm local assets return successfully, and exercise representative map rendering and interaction in a browser.
 
@@ -21,4 +22,4 @@ blocked_by = [
     "01a0d26a-02fc-73c3-89fe-eb44d3c9fff1",
 ]
 created_at = "2026-09-24T07:33:29.510656Z"
-updated_at = "2026-09-24T12:59:32.333481Z"
+updated_at = "2026-09-25T06:53:28.08851Z"

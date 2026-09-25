@@ -1,10 +1,19 @@
 id = "01a0d26a-02fc-73c3-89fe-eb44d3c9fff1"
 ref = "epexplorer-mni"
 title = "Integrate hitkeep for static-release asset retention"
-body = "Integrate hitkeep into the static-site build, using either its standalone script or npm package as appropriate. Configure it to identify and retain assets needed by the published static web root, and document the chosen integration and invocation. This task must be completed before the static release archive work begins."
-status = "open"
+body = "Integrate the @hitkeep/tracker npm package into the Vite static-site build. Initialise it only when VITE_HITKEEP_HOST is supplied at build time, so source and generic release artefacts do not contain the concrete analytics host. The deployment build will provide the default host. Verify configured and unconfigured production builds."
+status = "closed"
+status_reason = "completed"
 type = "task"
 priority = 3
+assignee = "lkroll"
 blocks = ["01a0d255-6f26-7240-b83d-2070b05704ea"]
 created_at = "2026-09-24T07:55:58.076624Z"
-updated_at = "2026-09-24T07:56:00.624929Z"
+updated_at = "2026-09-25T06:55:27.070694Z"
+closed_at = "2026-09-25T06:55:27.070694Z"
+
+[[comments]]
+id = "01a0d758-f75e-7240-ac3e-a2e59b81f2a4"
+author = "lkroll"
+body = "completed"
+created_at = "2026-09-25T06:55:27.070694Z"

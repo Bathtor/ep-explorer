@@ -6,6 +6,7 @@
       "dependencies": {
         "@fontsource/play": "5.3.0",
         "@fortawesome/fontawesome-free": "6.7.2",
+        "@hitkeep/tracker": "^2.13.18",
         "three": "0.186.0",
       },
       "devDependencies": {
@@ -17,6 +18,8 @@
     "@fontsource/play": ["@fontsource/play@5.3.0", "", {}, "sha512-VpI6fd/A3jT1J3bOuyHn01CioAqwGWwNReTGycrFF2D57An2EJhDAuG030up3Ho7jSy1sSGW85gtB+l/v3gXOw=="],
 
     "@fortawesome/fontawesome-free": ["@fortawesome/fontawesome-free@6.7.2", "", {}, "sha512-JUOtgFW6k9u4Y+xeIaEiLr3+cjoUPiAuLXoyKOJSia6Duzb7pq+A76P9ZdPDoAoxHdHzq6gE9/jKBGXlZT8FbA=="],
+
+    "@hitkeep/tracker": ["@hitkeep/tracker@2.13.18", "", {}, "sha512-ew3X66dJkTz9aHK5C9obywe6ORxGwqe9MAKzYSKYdl92S2sNUUu+HYc0cLvRiI3dUDd794tYA5JzEUr91jj0Gw=="],
 
     "@oxc-project/types": ["@oxc-project/types@0.151.0", "", {}, "sha512-J1yXrIlNDZVzE3ada310xeAw7nH8yCAyLPuUIsjKatFPmfn5bS1oW+cM+QsGOtVWd5nhSpbwZWx/rue+r5Z+PA=="],
 
