@@ -64,7 +64,6 @@ object HabitatsRimward {
                       Seq(Crime))
       with Orbiting {
     val orbit = new ConstantOriginOrbit(0.253, 2.44.AU, 3.68.º, 31.0.º, 244.0.º, 0.0.º, this.mass, Stars.Sol.mass); // wrong epoch for mean anomaly
-    //override def extraInfo = Seq(("Population" -> "10 million+"));
   }
 
   object NovaYork
@@ -169,7 +168,6 @@ object HabitatsRimward {
                                         306.898.º,
                                         this.mass,
                                         Stars.Sol.mass); // wrong epoch for mean anomaly
-    //override def extraInfo = Seq(("Population" -> "250 000"));
   }
 
   // Jupiter
@@ -969,7 +967,6 @@ object HabitatsRimward {
                               Degrees(0.0),
                               mass,
                               Planets.Neptune);
-    //val rotation = ECR(320.7654228.ºd, 299.27.º, 42.91.º, 93.38.º);
     override def extraInfo = Seq(Designation(Planets.Neptune, 8), ("Population" -> "10 000"));
   }
 

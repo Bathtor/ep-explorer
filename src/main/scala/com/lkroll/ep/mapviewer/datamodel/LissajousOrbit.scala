@@ -22,14 +22,8 @@ class LissajousOrbit(val centre: Orbit,
       extends OrbitalSnapshot {
     override def v: Velocity = MetersPerSecond(Double.NaN); // FIXME: no idea how to calculate this
     override def eclipticMatrix = parent.eclipticMatrix;
-    //        lazy val dir = {
-    //            val v = new Vector3();
-    //            v.subVectors(pos, parent.pos);
-    //            v
-    //        }
     override def project(pos: Vector3): Unit = {
       parent.project(pos);
-      //pos.add(dir);
     }
 
     private def positionFromt(t: Time): Vector3 = {
@@ -80,7 +74,6 @@ class LissajousOrbit(val centre: Orbit,
       val posRaw = new Vector3();
       posRaw.set(x, y, z);
       val pos = scaledPosition(posRaw, parent);
-      //println(s"posRaw=${posRaw.pretty} pos=${pos.pretty}")
       parameterCache = OrbitalPosition(t, pos, posRaw, M, parent)
     }
     return parameterCache;

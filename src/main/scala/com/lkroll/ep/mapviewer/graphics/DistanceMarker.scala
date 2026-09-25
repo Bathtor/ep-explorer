@@ -35,8 +35,6 @@ class DistanceMarker(val distance: Length) extends GraphicsObject {
     scene.addObject(this, ellipse);
     label.moveTo(path(0));
     scene.addObject(this, label.sprite);
-    //    label.moveTo(path(0));
-    //    label.addToScene(scene);
   }
 
   override def update(time: Time): Unit = {} // do nothing

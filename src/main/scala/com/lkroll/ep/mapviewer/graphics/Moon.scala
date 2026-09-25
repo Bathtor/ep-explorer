@@ -23,7 +23,6 @@ class MoonSingle(val moon: MoonData) extends GraphicsObject {
   private val (radius, faces) = {
     val r = moon.radius.toKilometers;
     val f = Math.max(Math.floor((2.0 * Math.PI * r) / 100.0), 64.0);
-    //println(s"Drawing ${moon.name} with $f faces.");
     (r, f)
   }
 
@@ -179,7 +178,6 @@ object Moon {
   def materialParams(name: String, transp: Boolean): MeshPhongMaterialParameters =
     js.Dynamic
       .literal(
-               //color = new Color(Moons.colours(name)), //, wireframe = true
                map = Textures("planet"),
                transparent = transp,
                opacity = 0.5,

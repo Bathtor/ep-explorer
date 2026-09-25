@@ -10,7 +10,7 @@ object Constants {
   val G = 6.67408e-11; // gravitational constant in m^3/(kg*s^2)
   val c = MetersPerSecond(299792458); // speed of light in vacuum
   // Time
-  val secondsPerDay = 86400; //24.0*60.0*60.0;
+  val secondsPerDay = 86400;
   val daysPerYear = 365.25; // approximately
   val daysPerCentury = 100.0 * daysPerYear;
   // Model calculations

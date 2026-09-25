@@ -33,7 +33,6 @@ object TimeControls extends Logging {
                              option(value := "m", "1min", selected),
                              option(value := "h", "1h"),
                              option(value := "d", "1d")).render;
-  //private val play = button(`type` := "button", name := "play", raw("&#x25B6;")).render;
   private val play = button(`type` := "button", name := "play", i(cls := "fas fa-play fa-xs")).render;
   play.onclick = (e: MouseEvent) => {
     if (editing) {
@@ -47,7 +46,6 @@ object TimeControls extends Logging {
       }
     }
   };
-  //private val stop = button(`type` := "button", name := "stop", raw("&#x25A0;")).render;
   private val stop = button(`type` := "button", name := "stop", i(cls := "fas fa-stop fa-xs")).render;
   stop.onclick = (e: MouseEvent) => {
     if (!editing) {
@@ -61,7 +59,6 @@ object TimeControls extends Logging {
       }
     }
   };
-  //private val step = button(`type` := "button", name := "step", raw("&#x25B8;&#x25B8;")).render;
   private val step = button(`type` := "button", name := "step", i(cls := "fas fa-forward fa-xs")).render;
   step.onclick = (e: MouseEvent) => {
     if (editing) {
@@ -129,17 +126,11 @@ object TimeControls extends Logging {
         case "Unix"            => tscaled.to(UnixTime)
         case x                 => logger.error(s"Unrecognized epoch ${x}"); tscaled.t // FIXME
       }
-      //logger.info(s"Updating to time t=${t.toSeconds} with is ${tscaled} or ${tselection.toSeconds} in ${epoch.value}")
       val yearsWithRest = TimeUtils.toFull(Years)(tselection);
-      //logger.info(s"In years ${yearsWithRest._1} with rest ${yearsWithRest._2}")
       val daysWithRest = TimeUtils.toFull(Days)(yearsWithRest._2);
-      //logger.info(s"In days ${daysWithRest._1} with rest ${daysWithRest._2}")
       val hoursWithRest = TimeUtils.toFull(Hours)(daysWithRest._2);
-      //logger.info(s"In hours ${hoursWithRest._1} with rest ${hoursWithRest._2}")
       val minutesWithRest = TimeUtils.toFull(Minutes)(hoursWithRest._2);
-      //logger.info(s"In minutes ${minutesWithRest._1} with rest ${minutesWithRest._2}")
       val secondsWithRest = TimeUtils.toFull(Seconds)(minutesWithRest._2);
-      //logger.info(s"In seconds ${secondsWithRest._1} with rest ${secondsWithRest._2}")
       val years = epoch.value match {
         case "BF" => -yearsWithRest._1
         case _    => yearsWithRest._1
@@ -149,8 +140,6 @@ object TimeControls extends Logging {
       hourField.value = hoursWithRest._1.toString();
       minuteField.value = minutesWithRest._1.toString();
       secondField.value = secondsWithRest._1.toString();
-      //logger.info(s"Updated values to y=${years.toString()}, d=${daysWithRest._1.toString()}, h=${hourField.value}, m=${minuteField.value}, s=${secondField.value}")
-
       lastUpdate = tnow;
     }
   }

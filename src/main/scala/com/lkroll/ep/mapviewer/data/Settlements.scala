@@ -129,9 +129,6 @@ object Settlements {
   import Earth._
 
   object Luna {
-    //        object ZeroMeridian extends Settlement("Zero Meridian", UUID.randomUUID(),
-    //            (North(0, 0, 0), West(0, 0, 0)), Moons.Luna, Kilometers(10),
-    //            NoPolity, Seq.empty[Language], Seq.empty[Industry])
     object Erato
         extends Settlement("Erato",
                            UUID.randomUUID(),
@@ -303,7 +300,6 @@ object Settlements {
                            PlanetaryConsortium(FaJing),
                            Seq(Japanese),
                            Seq(Agriculture, Brewing)) {
-      //override def extraInfo = Seq(("Population" -> "350 000"));
     }
     object PathfinderGate
         extends PandoraGate("Pathfinder Gate",
@@ -321,7 +317,6 @@ object Settlements {
                            PlanetaryConsortium(Pathfinder),
                            Seq(English, Mandarin),
                            Seq(Gatecrashing, Colonization)) {
-      //override def extraInfo = Seq(("Population" -> "350 000"));
     }
     object Anyang
         extends Settlement("Anyang",
@@ -343,7 +338,6 @@ object Settlements {
                            AbandonedToTITANs,
                            Seq(Arabic),
                            Seq()) {
-      //override def extraInfo = Seq(("Population" -> "350 000"));
     }
     object Kartika
         extends Settlement("Kartika",
@@ -354,7 +348,6 @@ object Settlements {
                            AbandonedToTITANs,
                            Seq(),
                            Seq()) {
-      //override def extraInfo = Seq(("Population" -> "350 000"));
     }
   }
   import Mars._
@@ -459,7 +452,6 @@ object Settlements {
                            Independent(Sifter),
                            Seq(Arabic, Hindi),
                            Seq(Trade, Mining, Politics)) {
-      //override def extraInfo = Seq(("Population" -> "1 million"));
     }
     object Caloris18
         extends Settlement("Caloris 18 (Quarantined)",
@@ -470,7 +462,6 @@ object Settlements {
                            TITANs,
                            Seq(),
                            Seq()) {
-      //override def extraInfo = Seq(("Population" -> "1 million"));
     }
     object Cannon
         extends Settlement("Cannon",
@@ -515,7 +506,6 @@ object Settlements {
                            Extropian,
                            Seq(English, Portuguese, Spanish, Tagalog),
                            Seq(Transport, Shipping)) {
-      //override def extraInfo = Seq(("Population" -> "1 million"));
     }
     object Wujec
         extends Bathyscaphe("Wujec",
@@ -526,7 +516,6 @@ object Settlements {
                             Extropian,
                             Seq(English, Portuguese, Spanish, Tagalog),
                             Seq(Trade, Bioengineering)) {
-      //override def extraInfo = Seq(("Population" -> "1 million"));
     }
     object Piazzi {
       val name = "Piazzi";
@@ -566,7 +555,6 @@ object Settlements {
                             PlanetaryConsortium(Prosperity),
                             Seq(English, Mandarin),
                             Seq(FoodIndustry, Drugs)) {
-      //override def extraInfo = Seq(("Population" -> "1 million"));
     }
   }
   import Ceres._
@@ -581,7 +569,6 @@ object Settlements {
                                       Jovian,
                                       Seq(English, Spanish),
                                       Seq(FoodIndustry, Microfacturing, MilitaryTech, Politics)) {
-      //override def extraInfo = Seq(("Population" -> "1 million"));
     }
     object LibertyStation {
       val name = "Liberty Station";
@@ -624,7 +611,6 @@ object Settlements {
                                       Jovian,
                                       Seq(English, Spanish),
                                       Seq(Mining, Prison)) {
-      //override def extraInfo = Seq(("Population" -> "1 million"));
     }
   }
   import Io._
@@ -650,7 +636,6 @@ object Settlements {
                                       Protectorate(Jovian, IndependentPolity),
                                       Seq(Skandinaviska, German, English),
                                       Seq(Mining)) {
-      //override def extraInfo = Seq(("Population" -> "2 million"));
     }
   }
   import Callisto._
@@ -665,7 +650,6 @@ object Settlements {
                            Europan,
                            Seq(Russian, Japanese, Spanish, Indonesian),
                            Seq(Transport, Shipping)) {
-      //override def extraInfo = Seq(("Population" -> "1 million"));
     }
     object Conamara
         extends Bathyscaphe("Conamara",
@@ -676,7 +660,6 @@ object Settlements {
                             Europan,
                             Seq(Russian, Japanese, Spanish, Indonesian),
                             Seq(Trade, Bioengineering, Research)) {
-      //override def extraInfo = Seq(("Population" -> "1 million"));
     }
     object Pwyll
         extends Settlement("Pwyll elevator head",
@@ -687,7 +670,6 @@ object Settlements {
                            Europan,
                            Seq(Russian, Japanese, Spanish, Indonesian),
                            Seq(Transport, Shipping)) {
-      //override def extraInfo = Seq(("Population" -> "1 million"));
     }
     object TheNorns
         extends Bathyscaphe("The Norns",
@@ -698,7 +680,6 @@ object Settlements {
                             Europan,
                             Seq(Russian, Japanese, Spanish, Indonesian),
                             Seq(Research, Exploration)) {
-      //override def extraInfo = Seq(("Population" -> "1 million"));
     }
   }
   import Europa._;

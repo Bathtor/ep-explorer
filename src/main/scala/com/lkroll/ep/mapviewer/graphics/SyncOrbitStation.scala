@@ -76,7 +76,7 @@ object SyncOrbitStation {
   def materialParams(name: String): MeshPhongMaterialParameters =
     js.Dynamic
       .literal(
-        color = new Color(0xFCD19C) // wireframe = true
+        color = new Color(0xFCD19C)
       )
       .asInstanceOf[MeshPhongMaterialParameters];
 

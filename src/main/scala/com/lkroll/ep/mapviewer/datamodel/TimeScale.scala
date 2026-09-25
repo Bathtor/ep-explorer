@@ -128,24 +128,3 @@ object AFTT extends TimeStandard {
   def toJulianDateTT(t: Time): Time = t + epoch.t;
   def fromJulianDateTT(t: Time): Time = t - epoch.t;
 }
-
-// WRONG^^
-//object ADTT extends TimeStandard {
-//    override def symbol: String = "AD(TT)";
-//    override def primaryUnit: TimeUnit = Days;
-//    override def epoch: TimeScale = JulianDateTT(1721424.5); // January 1st 00:00 0AD
-//    def toJulianDateTT(t: Time): Time = t + epoch.t;
-//    def fromJulianDateTT(t: Time): Time = t - epoch.t;
-//}
-//
-//object BC {
-//
-//    def apply(t: Time, year: Int): TimeScale = {
-//        val yearDays = year * Constants.daysPerYear;
-//        val t0AD = ADTT(t);
-//        val tJD = t0AD.toJDTT;
-//        val dJD = tJD.toDays;
-//        val adjustedDate = dJD - (yearDays + 1.0); // since BC years are negative to AD years
-//        JulianDateTT(adjustedDate)
-//    }
-//}

@@ -146,21 +146,12 @@ abstract class TrackingCameraControls(val camera: Camera,
 
   override def onMouseDown(event: MouseEvent): Unit = {
     this.element.focus(); // so that the keyboard commands only work in canvas
-    //orbitControl.onMouseDown(event);
   }
   override def onMouseMove(event: MouseEvent): Unit = {
     this.onCursorMove(event.clientX, event.clientY);
-    //orbitControl.onMouseMove(event);
-  }
-  override def onMouseUp(event: MouseEvent): Unit = {
-    //orbitControl.onMouseUp(event);
-  }
-  override def onMouseWheel(event: MouseEvent): Unit = {
-    //orbitControl.onMouseWheel(event);
   }
 
   def onKeyDown(event: KeyboardEvent): Unit = {
-    //println(s"Got keydown event: ${event.keyCode}");
     this.keyboardActions.get(event.keyCode) match {
       case Some(action) => action.perform()
       case None         => () // ignore
@@ -168,7 +159,6 @@ abstract class TrackingCameraControls(val camera: Camera,
   }
 
   def onKeyUp(event: KeyboardEvent): Unit = {
-    //println(s"Got keyup event: ${event.keyCode}");
     this.keyboardActions.get(event.keyCode) match {
       case Some(action: UndoableAction) => action.undo()
       case _                            => () // ignore

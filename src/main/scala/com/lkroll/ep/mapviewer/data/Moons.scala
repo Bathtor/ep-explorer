@@ -54,14 +54,8 @@ object Moons {
         ("Institutions" -> "Wauxhall Institute (Cognite)")
       );
   }
-  //    object Deimos extends Moon("Deimos", UUID.randomUUID(),
-  //        Kilograms(1.4762e15), Kilometers(6.2), Planets.Mars, 1) with Orbiting with Rotating {
-  //        val orbit = VariableOrbit(0.00033, Kilometers(23463.2), Degrees(27.58),
-  //            ConstantAngle(Degrees(0.0)),
-  //            ConstantAngle(Degrees(0.0)),
-  //            Degrees(0.0), mass, Planets.Mars);
-  //        val rotation = ECR(285.1618970.ºd, 316.65.º, 53.52.º, 79.41.º);
-  //    }
+
+  // Deimos is tracked as the Progress station (HabitatsSunward.Progress), not as a separate moon.
 
   // Jupiter
   object Io
@@ -524,33 +518,8 @@ object Moons {
     val rotation = TidalLock(orbit); // we have no idea^^
   }
 
-  //        object L1Test extends Moon("L1Test", UUID.randomUUID(), Kilograms(3.7493e19), Kilometers(198.2), Planets.Earth) with Orbiting {
-  //            val orbit = new L1(Planets.Earth, Moons.Luna);
-  //        }
-  //
-  //        object L2Test extends Moon("L2Test", UUID.randomUUID(), Kilograms(3.7493e19), Kilometers(198.2), Planets.Earth) with Orbiting {
-  //            val orbit = new L2(Planets.Earth, Moons.Luna);
-  //        }
-  //
-  //        object L3Test extends Moon("L3Test", UUID.randomUUID(), Kilograms(3.7493e19), Kilometers(198.2), Planets.Earth) with Orbiting {
-  //            val orbit = new L3(Planets.Earth, Moons.Luna);
-  //        }
-  //
-  //        object L4Test extends Moon("L4Test", UUID.randomUUID(), Kilograms(3.7493e19), Kilometers(198.2), Planets.Earth) with Orbiting {
-  //            val orbit = new L4(Planets.Earth, Moons.Luna);
-  //        }
-  //
-  //        object L5Test extends Moon("L5Test", UUID.randomUUID(), Kilograms(3.7493e19), Kilometers(198.2), Planets.Earth) with Orbiting {
-  //            //val orbit = new L5(Stars.Sol, Planets.Earth);
-  //            val orbit = new L5(Planets.Earth, Moons.Luna);
-  //        }
-  //
-  //    object L2LTest extends Moon("L2LTest", UUID.randomUUID(), Kilograms(3.7493e19), Kilometers(198.2), Planets.Earth) with Orbiting {
-  //        val orbit = new LissajousOrbit(L1Test.orbit, Kilometers(700000.0), Kilometers(500000.0), DegreesPerSecond(0.04086), DegreesPerSecond(0.02015), 3.229, Degrees(0.0), Degrees(0.0));
-  //    }
-
   val forPlanet = Map(
-    Planets.Earth.name -> Seq(Luna), //, L1Test, L2Test, L3Test, L4Test, L5Test),
+    Planets.Earth.name -> Seq(Luna),
     Planets.Mars.name -> Seq(Phobos),
     Planets.Jupiter.name -> Seq(Io, Europa, Ganymede, Callisto),
     Planets.Saturn.name -> Seq(Titan, Pandora, Iapetus, Rhea, Tethys, Enceladus, Dione, Mimas),
@@ -560,8 +529,8 @@ object Moons {
     Planets.Eris.name -> Seq(Dysnomia)
   );
   val colours = Map(
-    Luna.name -> 0x848381, //, "L1Test" -> 0x848381, "L2Test" -> 0x848381, "L3Test" -> 0x848381, "L4Test" -> 0x848381, "L5Test" -> 0x848381, "L2LTest" -> 0x848381,
-    Phobos.name -> 0x848381, //Deimos.name -> 0x848381,
+    Luna.name -> 0x848381,
+    Phobos.name -> 0x848381,
     Io.name -> 0xcfc063,
     Europa.name -> 0x848381,
     Ganymede.name -> 0x848381,

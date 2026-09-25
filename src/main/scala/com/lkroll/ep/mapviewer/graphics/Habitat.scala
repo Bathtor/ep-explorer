@@ -130,7 +130,7 @@ object Habitat extends Logging {
   def materialParams(name: String): MeshLambertMaterialParameters =
     js.Dynamic
       .literal(
-        color = new Color(0xC0C0C0) // wireframe = true
+        color = new Color(0xC0C0C0)
       )
       .asInstanceOf[MeshLambertMaterialParameters]
 

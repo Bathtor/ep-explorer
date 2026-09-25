@@ -16,31 +16,11 @@ trait IntersectionControls {
   val rayLength = 1e16;
   val rayOffset = new Vector3(0.0, 0.0, 0.0);
 
-  //    lazy val (raycaster, ray) = {
-  //        val rc = new Raycaster();
-  //        //rc.setFromCamera(mouse, camera);
-  //        val r = buildRay(rc.ray.origin, rc.ray.direction);
-  //        r.matrixAutoUpdate = true;
-  //        //scene.add(r);
-  //        (rc, r)
-  //    }
-
   lazy val raycaster = new Raycaster();
 
   lazy val screenT = {
     val rect = element.getBoundingClientRect();
-    //        val width = if (rect.width == 0.0) {
-    //            dom.window.innerWidth
-    //        } else {
-    //            rect.width
-    //        }
-    //        val height = if (rect.height == 0.0) {
-    //            dom.window.innerHeight
-    //        } else {
-    //            rect.height
-    //        }
     val (width, height) = (dom.window.innerWidth, dom.window.innerHeight);
-    //println(s"Bounding rectangle: left=${rect.left}, top=${rect.top}, width=${width}, hight=${height}")
     new graphics.ScreenTransform(width, height, rect.left, rect.top)
   }
 
@@ -51,11 +31,8 @@ trait IntersectionControls {
   var enter = Map.empty[Object3D, List[Intersection]]
 
   def findIntersections(mouse: Vector2): List[Intersection] = {
-    //println(s"Mouse position: ${mouse.toArray().mkString(",")}");
     raycaster.setFromCamera(mouse, camera);
-    //updateRay(raycaster.ray.origin, raycaster.ray.direction)
-    //println(s"Raycaster: ${raycaster.ray.origin.toArray().mkString(",")} -> ${raycaster.ray.direction.toArray().mkString(",")}, near=${raycaster.near},far=${raycaster.far}");
-    val sceneIntersections = raycaster.intersectObjects(sceneObjects.toJSArray); //.sortWith((a, b) => a.point.distanceTo(raycaster.ray.origin) < b.point.distanceTo(raycaster.ray.origin)).toList
+    val sceneIntersections = raycaster.intersectObjects(sceneObjects.toJSArray);
     val overlayIntersections = graphics.TacticalOverlay.intersectObjects(mouse, camera, screenT, overlayObjects);
     val intersectionsB = List.newBuilder[Intersection];
     intersectionsB ++= sceneIntersections;
@@ -68,18 +45,12 @@ trait IntersectionControls {
   def onCursorMove(cordX: Double, cordY: Double): Unit = {
     coords.set(cordX, cordY);
     val ncs = screenT.toNormalizedCameraSpace(coords);
-    //        val ss = screenT.toScreenSpace(ncs);
-    //        println(s"coords=${coords.pretty}, ncs=${ncs.pretty}, ss=${ss.pretty}, screenT=${screenT}");
     intersections = findIntersections(ncs);
-    //println(s"Intersections: ${intersections.map { x => x.`object`.name }.mkString(",")}")
     underMouse = intersections.groupBy(_.`object`)
     val l = last // if I do not do this assigment and use last instead of l I get into trouble
     this.exit = l.filter { case (key, _) => !underMouse.contains(key) }
     this.enter = underMouse.filter { case (key, _) => !l.contains(key) }
-    // if(exit.exists{case (key,value)=>enter.contains(key)}) dom.console.error("same enterexit")
-    //val s = enter.size
     last = underMouse
-    //if (s != enter.size) dom.console.error("ScalaJS error with immutable collections")
   }
 
 }

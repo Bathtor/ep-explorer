@@ -37,9 +37,7 @@ object HabitatsSunward {
                                    Degrees(0.0),
                                    Degrees(0.0));
     override def extraInfo = Seq(("Population" -> "2 million+"));
-    //        override def description = Some("""
     //The center of the Lunar-Lagrange Alliance and the largest station near Earth, Remembrance dominates the Earth-Luna L4 point and houses over two million people. Though it is the largest O’Neill cylinder in existence, it is still overpopulated, so most of the station is cramped, dirty, smelly, and dangerous. The station itself actually consists of two counter-rotating cylinders laid end-to-end, each 35 kilometers in length and 8 kilometers in diameter, and providing approximate Earth gravity. The most crowded cylinder, home to the more impoverished residents and indentures, is continuously pushing its environmental systems to their maximum, and suffers regular breakdowns – as evidenced by the septic growths and smells. The other half of the habitat fares slightly better, thanks to better air scrubbers, and it is here that the towers of the upper-class elites, including the LLA officials, rise above all, clean and airy and shining. There have been several proposals to expand Remembrance itself, adding another cylinder in order to accommodate its increased population, but doing so would require a substantial amount of cred. Most of the elite refuse to be bothered; after all, they’re not the ones being crowded. Still, the effects do spill over into the business section and even around the towers, and Remembrance suffers an unfortunate amount of vice and crime.
-    //""");
   }
 
   object Elegua
@@ -82,7 +80,6 @@ object HabitatsSunward {
                                    2.10780125,
                                    Degrees(90.0),
                                    Degrees(45.0));
-    //override def extraInfo = Seq(("Population" -> "120 000"));
   }
 
   object Hexagon
@@ -103,7 +100,6 @@ object HabitatsSunward {
                                    2.10780125,
                                    Degrees(270.0),
                                    Degrees(315.0));
-    //override def extraInfo = Seq(("Population" -> "120 000"));
   }
 
   object HotelCalifornia
@@ -124,7 +120,6 @@ object HabitatsSunward {
                                    3.82387286764706,
                                    Degrees(35.0),
                                    Degrees(125.0));
-    //override def extraInfo = Seq(("Population" -> "120 000"));
   }
 
   object Paradise
@@ -145,7 +140,6 @@ object HabitatsSunward {
                                    3.82387286764706,
                                    Degrees(0.0),
                                    Degrees(0.0));
-    //override def extraInfo = Seq(("Population" -> "120 000"));
   }
 
   object VoNguyen
@@ -230,7 +224,6 @@ object HabitatsSunward {
                                   Degrees(90.0),
                                   this.mass,
                                   this.centre);
-    //override def extraInfo = Seq(("Population" -> "25 000"), ("Owner" -> "Starware"));
   }
 
   object Mitre
@@ -251,7 +244,6 @@ object HabitatsSunward {
                                   Degrees(210.0),
                                   this.mass,
                                   this.centre);
-    //override def extraInfo = Seq(("Population" -> "25 000"), ("Owner" -> "Starware"));
   }
 
   object Tsukomo
@@ -287,7 +279,6 @@ object HabitatsSunward {
                       Seq(Management, Politics, Finance))
       with Orbiting {
     val orbit = ConstantOrbit(0.00033, Kilometers(23463.2), 27.58.º, 0.0.º, 0.0.º, 0.0.º, mass, Planets.Mars);
-    //val rotation = ECR(285.1618970.ºd, 316.65.º, 53.52.º, 79.41.º);
     override def extraInfo = Seq(("Population" -> "8.5 million"));
   }
   object Pontes
@@ -308,15 +299,10 @@ object HabitatsSunward {
                                   Degrees(180.0),
                                   this.mass,
                                   this.centre);
-    //override def extraInfo = Seq(("Population" -> "25 000"), ("Owner" -> "Starware"));
   }
 
-  // can't really draw tether like this, because it's not aerostationary (not in the equatorial plane)
-  //    object Tether extends Habitat("Tether (Asteroid)", UUID.randomUUID(), Kilograms(1.4762e10),
-  //        Asteroid("Counterweight/Domes", 5.0.km, 3.5.km, 3.2.km), 23000.0.km, Planets.Mars,
-  //        PlanetaryConsortium(OIA), Seq(Mandarin, English), Seq.empty[Industry]) with Orbiting {
-  //        val orbit = ConstantOrbit(0.00033, Kilometers(23463.2), 27.58.º, 0.0.º, 0.0.º, 0.0.º, mass, Planets.Mars);
-  //    }
+  // Tether is approximated by Settlements.Mars.Tether: its inclined path
+  // cannot be modelled as an aerostationary habitat.
   object McClintock
       extends Habitat("McClintock",
                       UUID.randomUUID(),
@@ -328,7 +314,6 @@ object HabitatsSunward {
                       Seq(EcosystemManagement, Biodesign, GeneticalEngineering))
       with Orbiting {
     val orbit = new ConstantOrbit(0.0, 17000.0.km, 27.5.º, 0.0.º, 0.0.º, 58.0.º, this.mass, this.centre);
-    //override def extraInfo = Seq(("Population" -> "25 000"), ("Owner" -> "Starware"));
   }
 
   object LuXing
@@ -356,7 +341,6 @@ object HabitatsSunward {
                       Seq(Research, GeneticalEngineering, MorphProduction))
       with Orbiting {
     val orbit = new ConstantOrbit(0.0, 17000.0.km, 58.0.º, 0.0.º, 0.0.º, 12.0.º, this.mass, this.centre);
-    //override def extraInfo = Seq(("Population" -> "5 500"));
   }
 
   object Viriditas
@@ -370,7 +354,6 @@ object HabitatsSunward {
                       Seq(Research, GeneticalEngineering, NanoTechnology, Microfacturing, ZeroGManufacturing))
       with Orbiting {
     val orbit = new ConstantOrbit(0.0, 17000.0.km, 2.0.º, 0.0.º, 0.0.º, 98.0.º, this.mass, this.centre);
-    //override def extraInfo = Seq(("Population" -> "25 000"), ("Owner" -> "Starware"));
   }
 
   object Batteries123
@@ -391,7 +374,6 @@ object HabitatsSunward {
                                    3.82387286764706,
                                    Degrees(35.0),
                                    Degrees(125.0));
-    //override def extraInfo = Seq(("Population" -> "25 000"), ("Owner" -> "Starware"));
   }
 
   object Batteries456
@@ -412,7 +394,6 @@ object HabitatsSunward {
                                    3.82387286764706,
                                    Degrees(35.0),
                                    Degrees(125.0));
-    //override def extraInfo = Seq(("Population" -> "25 000"), ("Owner" -> "Starware"));
   }
 
   // Venus
@@ -440,7 +421,6 @@ object HabitatsSunward {
                       Seq(AI, Research, SoftwareDesign))
       with Orbiting {
     val orbit = new ConstantOrbit(0.0, 42000.0.km, 43.0.º, 0.0.º, 0.0.º, 12.0.º, this.mass, this.centre);
-    //override def extraInfo = Seq(("Population" -> "120 000"));
   }
   object FarReachII
       extends Habitat("Far Reach II",
@@ -545,7 +525,6 @@ object HabitatsSunward {
                                         174.79439.º,
                                         this.mass,
                                         Stars.Sol.mass);
-    //override def extraInfo = Seq(("Population" -> "300 - 3 000"));
   }
 
   object Quartet1
@@ -566,7 +545,6 @@ object HabitatsSunward {
                                         0.0.º,
                                         this.mass,
                                         Stars.Sol.mass);
-    //override def extraInfo = Seq(("Population" -> "300 - 3 000"));
   }
   object Quartet2
       extends Habitat("Quartet II",
@@ -586,7 +564,6 @@ object HabitatsSunward {
                                         90.0.º,
                                         this.mass,
                                         Stars.Sol.mass);
-    //override def extraInfo = Seq(("Population" -> "300 - 3 000"));
   }
   object Quartet3
       extends Habitat("Quartet III",
@@ -606,7 +583,6 @@ object HabitatsSunward {
                                         180.0.º,
                                         this.mass,
                                         Stars.Sol.mass);
-    //override def extraInfo = Seq(("Population" -> "300 - 3 000"));
   }
   object Quartet4
       extends Habitat("Quartet IV",
@@ -626,7 +602,6 @@ object HabitatsSunward {
                                         270.0.º,
                                         this.mass,
                                         Stars.Sol.mass);
-    //override def extraInfo = Seq(("Population" -> "300 - 3 000"));
   }
 
   object V2014Ra
@@ -676,7 +651,6 @@ object HabitatsSunward {
                       Seq(Management))
       with Orbiting {
     val orbit = new ConstantOrbit(0.0, 24843.0.km, 45.5.º, 32.33167.º, 56.12478.º, 0.0.º, this.mass, this.centre);
-    //override def extraInfo = Seq(("Note" -> "The purpose and function of The Egg is unkown, but it is off limits to transhumanity."));
   }
 
   // Inner Fringe
@@ -692,7 +666,6 @@ object HabitatsSunward {
       with Orbiting {
     val orbit =
       new ConstantOriginOrbit(0.023, 0.867.AU, 12.00487.º, 3.73463.º, 29.12478.º, 0.0.º, this.mass, Stars.Sol.mass);
-    //override def extraInfo = Seq(("Population" -> "300 - 3 000"));
   }
   object Condor2
       extends Habitat("Condor-2",
@@ -705,7 +678,6 @@ object HabitatsSunward {
                       Seq(ComSystems, SignalAnalysis))
       with Orbiting {
     val orbit = new ConstantOriginOrbit(0.34, 1.02.AU, 75.0.º, 65.0.º, 98.1.º, 0.0.º, this.mass, Stars.Sol.mass);
-    //override def extraInfo = Seq(("Population" -> "300 - 3 000"));
   }
   object Eros
       extends Habitat("Eros",
@@ -719,7 +691,6 @@ object HabitatsSunward {
       with Orbiting {
     val orbit =
       new ConstantOriginOrbit(0.13, 1.48.AU, 1.85061.º, 49.57854.º, 286.4623.º, 67.0.º, this.mass, Stars.Sol.mass);
-    //override def extraInfo = Seq(("Population" -> "300 - 3 000"));
   }
   object Geographos
       extends Habitat("Geographos/SYNAPSCAPE",
@@ -732,7 +703,6 @@ object HabitatsSunward {
                       Seq(Research, AI))
       with Orbiting {
     val orbit = new ConstantOriginOrbit(0.42, 1.05.AU, 15.8.º, 21.0.º, 34.0.º, 20.0.º, this.mass, Stars.Sol.mass);
-    //override def extraInfo = Seq(("Population" -> "300 - 3 000"));
   }
   object Horeb
       extends Habitat("Horeb",
@@ -746,7 +716,6 @@ object HabitatsSunward {
       with Orbiting {
     val orbit =
       new ConstantOriginOrbit(0.35, 1.0.AU, 33.0.º, 348.73936.º, 114.20783.º, 177.05281.º, this.mass, Stars.Sol.mass);
-    //override def extraInfo = Seq(("Population" -> "300 - 3 000"));
   }
   object Impian
       extends Habitat("Impian",
@@ -785,7 +754,6 @@ object HabitatsSunward {
                       Seq())
       with Orbiting {
     val orbit = new ConstantOriginOrbit(0.792593, 0.675.AU, 23.9.º, 4.5.º, 32.0.º, 112.0.º, this.mass, Stars.Sol.mass);
-    //override def extraInfo = Seq(("Owner" -> "Nazareno Batista"));
   }
   object Sisyphus
       extends Habitat("Sisyphus",
@@ -798,7 +766,6 @@ object HabitatsSunward {
                       Seq(ZeroGManufacturing, Microfacturing))
       with Orbiting {
     val orbit = new ConstantOriginOrbit(0.67, 1.001.AU, 34.0.º, 2.1.º, 8.0.º, 9.0.º, this.mass, Stars.Sol.mass);
-    //override def extraInfo = Seq(("Owner" -> "Nazareno Batista"));
   }
   object TheSummit
       extends Habitat("The Summit",
@@ -812,7 +779,6 @@ object HabitatsSunward {
       with Orbiting {
     val orbit =
       new ConstantOriginOrbit(0.51485, 0.99774.AU, 19.805.º, 126.23.º, 43.831.º, 257.46.º, this.mass, Stars.Sol.mass);
-    //override def extraInfo = Seq(("Owner" -> "Nazareno Batista"));
   }
 
   // Martian Trojans
@@ -834,7 +800,6 @@ object HabitatsSunward {
                                    3.229,
                                    Degrees(78.0),
                                    Degrees(56.0));
-    //override def extraInfo = Seq(("Owner" -> "Nazareno Batista"));
   }
   object MemoryHole
       extends Habitat("Memory Hole",
@@ -854,7 +819,6 @@ object HabitatsSunward {
                                    2.229,
                                    Degrees(23.0),
                                    Degrees(87.0));
-    //override def extraInfo = Seq(("Owner" -> "Nazareno Batista"));
   }
   object Moustier
       extends Habitat("Moustier",
@@ -874,7 +838,6 @@ object HabitatsSunward {
                                    1.229,
                                    Degrees(90.0),
                                    Degrees(180.0));
-    //override def extraInfo = Seq(("Owner" -> "Nazareno Batista"));
   }
   object QingLong
       extends Habitat("Qing Long",
@@ -914,7 +877,6 @@ object HabitatsSunward {
                                    2.929,
                                    Degrees(120.0),
                                    Degrees(10.0));
-    //override def extraInfo = Seq(("Population" -> "2 million+"));
   }
 
   // Other stuff
@@ -936,7 +898,6 @@ object HabitatsSunward {
                                    4.229,
                                    Degrees(0.0),
                                    Degrees(0.0));
-    //override def extraInfo = Seq(("Population" -> "2 million+"));
   }
   object PEX
       extends Habitat("PEX",

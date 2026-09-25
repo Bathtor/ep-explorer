@@ -36,9 +36,8 @@ trait SceneContainer extends Logging {
 
   lazy val scene = {
     val s = new Scene();
-    // some init code here as this will definitely get loaded
+    // The lazy scene is always accessed during construction, so initialise the view here.
     UI.updateView(this, uiInfo, systemTracking);
-    // end init
     s
   }
 
@@ -80,18 +79,16 @@ trait SceneContainer extends Logging {
     obj match {
       case opObj: OrbitObject => {
         opObj.activatePathRender();
-        //logger.info(s"Activating ${opObj.name} and the following local objects:");
         localityGroups.get(opObj) match {
           case Some(entries) => {
             entries.foreach { o =>
               o.activatePathRender();
-            //logger.info(s"	${o.name}");
             }
           }
           case None => logger.error(s"No locality entry found for ${obj.name}!")
         }
       }
-      case _ => logger.warn(s"Tracking non-orbiting object ${obj.name}") //
+      case _ => logger.warn(s"Tracking non-orbiting object ${obj.name}")
     }
   }
   def unmarkLocal(obj: GraphicsObject): Unit = {
@@ -107,7 +104,7 @@ trait SceneContainer extends Logging {
           case None => logger.error(s"No locality entry found for ${obj.name}!")
         }
       }
-      case _ => logger.warn(s"Untracking non-orbiting object ${obj.name}") //
+      case _ => logger.warn(s"Untracking non-orbiting object ${obj.name}")
     }
   }
 
@@ -121,10 +118,6 @@ trait SceneContainer extends Logging {
           val thatOrbit = other.orbiter.orbit;
           val distanceForward = thisOrbit.pathTo(thatOrbit);
           val distanceBackward = thatOrbit.pathTo(thisOrbit);
-          //          logger.info(s"""
-          //  Forward ${opObj.name} -> ${other.name} = ${distanceForward}
-          //  Backward ${opObj.name} <- ${other.name} = ${distanceBackward}
-          //""");
           distanceForward match {
             case OrbitDistance.Zero | OrbitDistance.Similar => {
               newEntries ::= other;
@@ -148,7 +141,6 @@ trait SceneContainer extends Logging {
               if (Main.renderUp && (p.upLength == 1) && (p.downLength) <= 1) {
                 localityGroups += (other -> opObj);
               } else if ((other.orbiter == data.Stars.Sol) && (p.downLength <= 1)) { // don't go 2 steps up for Sol
-                //logger.info(s"Sol backward path is ${distanceBackward} with DOWN=${p.downLength}");
                 localityGroups += (other -> opObj);
               } else if ((p.upLength == 0) && (p.downLength <= 2)) {
                 localityGroups += (other -> opObj);
@@ -216,7 +208,7 @@ trait SceneContainer extends Logging {
   protected def initRenderer(): WebGLRenderer = {
     val params = Dynamic
       .literal(antialias = true,
-               alpha = true, // canvas = container
+               alpha = true,
                logarithmicDepthBuffer = true)
       .asInstanceOf[WebGLRendererParameters]
     val vr = new WebGLRenderer(params)
@@ -261,7 +253,6 @@ trait SceneContainer extends Logging {
     stats.begin();
     animate();
     controls.update()
-    //renderer.render(scene, camera)
     composer.render();
     stats.end();
   }

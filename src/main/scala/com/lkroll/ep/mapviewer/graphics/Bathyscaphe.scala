@@ -46,7 +46,6 @@ class Bathyscaphe(val settlement: BathyscapheData) extends GraphicsObject with O
     offset.multiplyScalar(-radius);
     offset.add(pSnap.pos);
     moveTo(offset);
-    //dir.multiplyScalar(-1.0); // face down instead of up
     meshRotation.setFromUnitVectors(vYup, dir);
     mesh.setRotationFromQuaternion(meshRotation);
   }
@@ -68,7 +67,7 @@ object Bathyscaphe {
   def materialParams(name: String): MeshLambertMaterialParameters =
     js.Dynamic
       .literal(
-        color = new Color(0xFCD19C) // wireframe = true
+        color = new Color(0xFCD19C)
       )
       .asInstanceOf[MeshLambertMaterialParameters];
 

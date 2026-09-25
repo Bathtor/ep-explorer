@@ -7,7 +7,6 @@ import com.lkroll.ep.mapviewer.datamodel.ExtraUnits._
 
 import java.util.UUID
 
-//import squants._;
 import squants.mass._
 import squants.motion._
 import squants.space._
@@ -283,7 +282,6 @@ case class ConstantOriginOrbit(val e: Double,
   }
 
   private def rawPositionFromE(E: Angle): Vector3 = {
-    //val x = a * (E.cos - e); // why -e?
     val x = a * E.cos;
     val y = b * E.sin;
     return new Vector3(x.toKilometers - focalDiff.toKilometers, y.toKilometers, 0.0);

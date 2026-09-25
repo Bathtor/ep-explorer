@@ -14,7 +14,7 @@ import squants.time._
 
 class TextSprite(
     val text: String,
-    val colour: Color = new Color(0x808080) //new Color(0xFFFFFF)
+    val colour: Color = new Color(0x808080)
 ) extends GraphicsObject {
 
   val size: Double = 64.0 / Main.pixelRatio;
@@ -32,14 +32,9 @@ class TextSprite(
   def drawText(): Unit = {
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    //ctx.f.font = fontFace;
     ctx.font = fontFace;
     textWidth = ctx.measureText(text).width.asInstanceOf[Double] / 4.0;
     textHeight = TextSprite.measureFontHeight(fontFace) / 4.0;
-
-    //val wp = TextSprite.ceilPowerOfTwo(textWidth);
-    //val hp = TextSprite.ceilPowerOfTwo(textHeight);
-    //hwp = Math.max(wp, hp);
 
     canvas.width = canvasSize;
     canvas.height = canvasSize;
@@ -47,19 +42,10 @@ class TextSprite(
     ctx.fillStyle = fillStyle
     ctx.textAlign = align;
     ctx.textBaseline = "top";
-    //this.ctx.shadowColor = ctxOptions.shadowColor;
-    //this.ctx.shadowBlur = ctxOptions.shadowBlur;
-    //this.ctx.shadowOffsetX = ctxOptions.shadowOffsetX;
-    //this.ctx.shadowOffsetY = ctxOptions.shadowOffsetY;
-
     val offsetH = Math.max(0, (canvasSize / 2) - (textWidth / 2.0).toInt);
     val offsetV = Math.max(0, (canvasSize / 2) - (textHeight / 2.0).toInt);
 
-    // println(s"Drawing size=$size with text=($textWidth, $textHeight) and canvas=(${canvas.width}, ${canvas.height}) and offset=($offsetH, $offsetV)");
-
     ctx.fillText(text, offsetH, offsetV);
-    //ctx.strokeStyle = "green";
-    //ctx.strokeRect(0, 0, canvasSize, canvasSize);
   }
   drawText();
 
@@ -71,7 +57,6 @@ class TextSprite(
     t
   }
 
-  //val material = new SpriteMaterial(js.Dynamic.literal(map = texture, blending = THREE.AdditiveBlending, depthTest = false, transparent = true).asInstanceOf[SpriteMaterialParameters]);
   private val material = new PointsMaterial(
     js.Dynamic
       .literal(size = size,
@@ -86,16 +71,12 @@ class TextSprite(
   private val geometry = new BufferGeometry().setFromPoints(js.Array(new Vector3(0, 0, 0)));
   val sprite = new Points(geometry, material);
 
-  //val sprite = new Sprite(material);
-  //sprite.scale.set(canvas.width, this.canvas.height, 1);
-
   override def moveTo(pos: Vector3): Unit = {
     sprite.moveTo(pos);
   }
 
   override def addToScene(scene: SceneContainer): Unit = {
     throw new RuntimeException("Use objects addToScene instead of overlay's");
-    //scene.addObject(this, sprite);
   }
 
   override def update(time: Time): Unit = { throw new RuntimeException("Use objects update instead of overlay's"); }

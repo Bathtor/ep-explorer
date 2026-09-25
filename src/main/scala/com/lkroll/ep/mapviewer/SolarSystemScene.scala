@@ -31,9 +31,6 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
   lazy val systemTracking: Option[AstronomicalObject] = None;
   lazy val sceneParams: QueryParams = QueryParams(View.System);
 
-  //scene.background = new Color(0x000000);
-  //scene.background = background;
-
   val ambLight = new AmbientLight(0xFFFFFF, 0.1);
   scene.add(ambLight);
   val sun = Star.fromStarData(Stars.Sol);
@@ -44,24 +41,6 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
 
   planets.foreach(p => p.addToScene(this))
   habitats.foreach(p => p.addToScene(this))
-  //    planets.zipWithIndex.foreach {
-  //        case (p, i) =>
-  //            this.sprites = addLabel(p.mesh.position.clone().setY(p.mesh.position.y - 200), "Planet #" + i) :: this.sprites
-  //
-  //    }
-  //    sprites.foreach(cssScene.add)
-
-  // postprocessing
-  //				val composer = new EffectComposer( renderer );
-  //				composer.addPass( new THREE.RenderPass( scene, camera ) );
-  //				val effect1 = new ShaderPass( DotScreenShader );
-  //				effect1.uniforms('scale').value = 4;
-  //				composer.addPass( effect1 );
-  //				val effect2 = new THREE.ShaderPass( THREE.RGBShiftShader );
-  //				effect2.uniforms('amount').value = 0.0015;
-  //				effect2.renderToScreen = true;
-  //				composer.addPass( effect2 );
-
   val axisHelper = new AxesHelper(1e12);
 
   if (Main.opts.debug()) {
@@ -86,7 +65,7 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
                               width,
                               height,
                               initialTrackingObject.getOrElse(sun),
-                              IntersectionPriorities.FirstLargest); //planets("Saturn").mesh);
+                              IntersectionPriorities.FirstLargest);
 
   override val controls: CameraControls = ctrls;
 

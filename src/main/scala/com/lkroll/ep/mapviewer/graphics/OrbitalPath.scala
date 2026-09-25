@@ -82,10 +82,6 @@ trait OrbitalPath { self: GraphicsObject =>
           currentOrbit = Some(newOrbit);
         }
       }
-      //      val newOrbit = calculateOrbit(t);
-      //      scene.removeObject(currentOrbit);
-      //      scene.addObject(self, newOrbit);
-      //      currentOrbit = newOrbit;
     } // else just leave it where it is
   }
 
@@ -94,8 +90,6 @@ trait OrbitalPath { self: GraphicsObject =>
     val path = this.path(os);
     val geom = curveGeometry(path);
     val ellipse = this.ellipse(geom);
-    //ellipse.frustumCulled = false;
-    //ellipse.renderOrder = 1;
     ellipse
   }
 
@@ -108,8 +102,6 @@ trait OrbitalPath { self: GraphicsObject =>
     (0 until SEGMENTS)
       .map(i => {
         val colour = new Color(orbitColour);
-        // colour.multiplyScalar(2.0 / Math.sqrt(i.toDouble));
-        // colour.multiplyScalar(1.0 - 0.0027 * i.toDouble);
         colour.multiplyScalar(1.0 / Math.log(i.toDouble / 2.0));
         colour
       })
@@ -124,8 +116,6 @@ trait OrbitalPath { self: GraphicsObject =>
     geom.setAttribute("color", new Float32BufferAttribute(colourComponents, 3));
     geom
   };
-  //  private val lineParams = js.Dynamic.literal(
-  //    color = orbitColour).asInstanceOf[LineBasicMaterialParameters]
   private val lineParams = js.Dynamic
     .literal(vertexColors = true, depthTest = false, depthWrite = false)
     .asInstanceOf[LineBasicMaterialParameters];

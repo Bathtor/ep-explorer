@@ -26,14 +26,12 @@ class TacticalOverlay(obj: AstronomicalObject) extends GraphicsObject with Overl
   );
   val mesh = new Points(geometry, material);
   mesh.name = obj.name + " Overlay";
-  //mesh
 
   override def moveTo(pos: Vector3) {
     mesh.moveTo(pos);
   }
 
   override def addToScene(scene: SceneContainer) {
-    //scene.addOverlayObject(this, mesh);
     throw new RuntimeException("Use objects addToScene instead of overlay's");
   }
 
@@ -90,13 +88,10 @@ object TacticalOverlay extends Logging {
       val point = obj.asInstanceOf[Points];
       val material = point.material.asInstanceOf[PointsMaterial];
       val geometry = point.geometry;
-      //            val inverseProjection = new Matrix4();
-      //            inverseProjection.getInverse(camera.projectionMatrix);
       val pos = new Vector3();
       pos.copy(point.position);
       pos.project(camera);
       val screenPos = screenT.toScreenSpace(pos);
-      //logger.info(s"mouse at ${mouse.pretty} and pos at ${screenPos.pretty}");
       val dist = screenPos.distanceTo(mouse);
       if (dist > (material.size / 2)) {
         None
@@ -119,8 +114,6 @@ object TacticalOverlay extends Logging {
       }
     } else {
       logger.error(s"Object was not of type Points: ${obj.name}");
-      //            val is = raycaster.intersectObject(obj);
-      //            is.headOption
       None
     }
   }

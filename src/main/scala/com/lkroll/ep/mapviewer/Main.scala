@@ -15,8 +15,7 @@ object Main extends Logging {
   val scale = 1e-6;
   val scaleDistance = 1e-6;
   val pixelRatio = dom.window.devicePixelRatio;
-  val starttime = datamodel.AFTT(3653.0).to(datamodel.J2000TT); //data.JulianDateTT(2451623.81597).to(data.J2000TT);//Seconds(0.0);
-  //val timeFactor = Minutes(1);
+  val starttime = datamodel.AFTT(3653.0).to(datamodel.J2000TT);
   var scene: Option[SceneContainer with TimeAnimatedScene] = None;
   var url: String = {
     val urlparts = document.URL.split("\\?");
@@ -25,9 +24,6 @@ object Main extends Logging {
   var opts: MapOptions = MapOptions.default;
 
   def main(args: Array[String]): Unit = {
-    //        val canvas: html.Canvas = document.body.children.namedItem("canvas").asInstanceOf[html.Canvas];
-    //        logger.debug(s"Starting up with canvas ${canvas.id}");
-    //        val ctx = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D];
     val nojs = document.body.children.namedItem("nojs");
     document.body.removeChild(nojs);
     val ctx = div(id := "context", tabindex := 0).render

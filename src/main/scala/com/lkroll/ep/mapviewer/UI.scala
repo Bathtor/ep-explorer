@@ -127,11 +127,6 @@ object UI extends Logging {
     div(id := "search", label("Search"), data, search, track, infoButton)
   );
 
-  //    def updateData(items: Seq[String]) {
-  //        data.innerHTML = "";
-  //        items.foreach(item => data.appendChild(option(value := item).render));
-  //    }
-
   def addData(item: String) {
     data.appendChild(option(value := item).render)
   }

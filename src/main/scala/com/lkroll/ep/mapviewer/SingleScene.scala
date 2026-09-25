@@ -46,11 +46,6 @@ class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement
   lazy val uiInfo = s"Single Body: ${targetData.name}";
   lazy val systemTracking = Some(targetData);
   lazy val sceneParams = QueryParams(View.Single, Main.opts.target(targetData));
-  //override def sceneParams: QueryParams = ;
-
-  //    val light = new DirectionalLight(0xffffff, 2)
-  //    light.position.set(1, 1, 1).normalize()
-  //    scene.add(light)
   val ambLight = new AmbientLight(0xFFFFFF, 0.4);
   scene.add(ambLight);
 

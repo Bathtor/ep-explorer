@@ -82,8 +82,6 @@ object ExtraUnits {
       val scaledG = g / 255.0;
       val scaledB = b / 255.0;
       val c = new Color(scaledR, scaledG, scaledB);
-      //c.setRGB(math.floor(r), math.floor(g), math.floor(b));
-      //println(s"Color(r=$r=${c.r}, g=$g=${c.g}, b=$b=${c.b})=${c.getHexString()} for t=${t.toKelvinScale}")
       c
     }
 

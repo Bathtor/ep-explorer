@@ -72,7 +72,7 @@ object UndergroundSettlement {
   def materialParams(name: String): MeshLambertMaterialParameters =
     js.Dynamic
       .literal(
-        color = new Color(0xFCD19C) // wireframe = true
+        color = new Color(0xFCD19C)
       )
       .asInstanceOf[MeshLambertMaterialParameters];
 

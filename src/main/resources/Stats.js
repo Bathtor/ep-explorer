@@ -9,7 +9,6 @@ var Stats = function () {
 	var mode = 0;
 
 	var container = document.createElement( 'div' );
-	//container.style.cssText = 'position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000';
 	container.id = "stats"
 	container.addEventListener( 'click', function ( event ) {
 
@@ -17,8 +16,6 @@ var Stats = function () {
 		showPanel( ++ mode % container.children.length );
 
 	}, false );
-
-	//
 
 	function addPanel( panel ) {
 
@@ -38,8 +35,6 @@ var Stats = function () {
 		mode = id;
 
 	}
-
-	//
 
 	var beginTime = ( performance || Date ).now(), prevTime = beginTime, frames = 0;
 

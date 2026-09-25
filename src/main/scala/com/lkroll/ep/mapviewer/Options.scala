@@ -56,9 +56,6 @@ abstract class Options(val params: QueryParams) {
     o
   }
 
-  //protected def opt(key: String, required: Boolean = false): Opt[String] = addOpt(Opt(key, identity, None, required));
-  //protected def opt(key: String, default: String, required: Boolean = false): Opt[String] = addOpt(Opt(key, identity, Some(default), required));
-  //protected def opt[T](key: String, required: Boolean = false)(implicit converter: String => T): Opt[T] = addOpt(Opt(key, converter, None, required));
   protected def opt[T](key: String, default: => Option[T] = None, required: Boolean = false)(
       implicit converter: ParamConverter[T]
   ): Opt[T] = addOpt(Opt(key, converter, default _, required));

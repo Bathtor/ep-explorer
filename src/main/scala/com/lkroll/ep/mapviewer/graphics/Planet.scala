@@ -31,7 +31,7 @@ class PlanetSingle(val planet: PlanetData) extends PlanetObject {
 
   private val (radius, faces) = {
     val r = planet.radius.toKilometers;
-    val f = 64.0; //Math.Math.max(Math.floor((2.0 * Math.PI * r) / 200.0), 64.0);
+    val f = 64.0;
     println(s"Drawing ${planet.name} with $f faces.");
     (r, f)
   }
@@ -43,7 +43,6 @@ class PlanetSingle(val planet: PlanetData) extends PlanetObject {
   val mesh: Mesh = {
     val m = new Mesh(geometry, material);
     m.name = planet.name;
-    //m.rotateX(Degrees(90.0).toRadians);
     m
   }
 
@@ -170,7 +169,6 @@ class Planet(val planet: PlanetData) extends PlanetObject with Logging with Over
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
     this.addEllipseToScene(scene);
-    //this.activatePathRender(); // planets always render paths
     children.foreach { c =>
       c.addToScene(scene)
     }
@@ -201,7 +199,6 @@ object Planet {
   def materialParams(name: String, transp: Boolean): MeshPhongMaterialParameters =
     js.Dynamic
       .literal(
-               //color = new Color(Planets.colours(name)), //, wireframe = true
                map = Textures("planet"),
                transparent = transp,
                opacity = 0.5,

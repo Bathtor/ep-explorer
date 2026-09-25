@@ -10,12 +10,6 @@ trait CameraControls {
   /** Handles pointer movement over the controlled element. */
   def onMouseMove(event: MouseEvent): Unit
 
-  /** Handles a mouse button release on the controlled element. */
-  def onMouseUp(event: MouseEvent): Unit
-
-  /** Handles a mouse wheel event on the controlled element. */
-  def onMouseWheel(event: MouseEvent): Unit
-
   /** Applies camera changes for the current render frame. */
   def update(): Unit
 

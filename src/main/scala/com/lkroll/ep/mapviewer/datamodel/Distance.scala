@@ -4,7 +4,6 @@ import com.lkroll.ep.mapviewer.Main
 
 import squants.space._
 import squants.time._
-//import squants.mass._
 
 class Distance(val start: OrbitalSnapshot, val end: OrbitalSnapshot) {
   lazy val instant: Length = Kilometers(start.pos.distanceTo(end.pos) * Distance.inverseScale);

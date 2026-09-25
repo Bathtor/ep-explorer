@@ -76,8 +76,6 @@ object QueryParams {
 
   def replace(uriS: String, parameter: String, newValue: String): String = {
     val uri = new URI(uriS);
-    //    // TODO do this properly
-    //    s"${uri.getPath}?$parameter=$newValue"
     val qp = fromURI(uri);
     val newQp = qp + (parameter -> newValue);
     newQp.toURI(uri.getPath)

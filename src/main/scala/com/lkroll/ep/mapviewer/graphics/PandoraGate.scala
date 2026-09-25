@@ -73,7 +73,7 @@ object PandoraGate {
   def materialParams(name: String): MeshPhongMaterialParameters =
     js.Dynamic
       .literal(
-        color = new Color(0xAC5334) // wireframe = true
+        color = new Color(0xAC5334)
       )
       .asInstanceOf[MeshPhongMaterialParameters];
 

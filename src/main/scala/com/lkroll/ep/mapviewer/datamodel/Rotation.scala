@@ -50,8 +50,6 @@ case object EarthEquatorConstantRotation extends Rotation {
 
   val eclipticRotation = {
     val m = new Matrix4();
-    //m2.makeRotationX(tilt.toRadians);
-    //m.makeRotationY(alpha.toRadians); // skip because alpha is 0
     m.makeRotationX((delta - tilt).toRadians); // equator is tilt down from the ecliptic and pole is delta up
     m
   }
