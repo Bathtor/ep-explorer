@@ -1,0 +1,46 @@
+id = "01a0d877-b56e-7121-8dc2-c22625748b50"
+ref = "epexplorer-xuj"
+title = "Add CI workflow to publish the static release archive"
+body = """
+Agreed plan, updated after review on 2026-09-25
+
+Implement the EPtools-style release flow. Manual workflow_dispatch builds and tests from checkout, then uploads the versioned archive and checksum as an Actions artefact without publishing. A pushed stable vMAJOR.MINOR.PATCH tag must match the sbt version, run the same build and tests, download and verify the tested artefact, then create a GitHub release from the existing tag. The workflow never creates or pushes tags.
+
+Share JDK 21, sbt, Node 22, and Bun 1.4.2 setup between normal CI and release CI with a local composite action. Keep Node because the Linux Scala.js tests use NodeJSEnv; macOS tests use Safari. Release CI additionally sets up Nushell. Keep frozen Bun installation and the full Scala.js test suite before the Vite production build.
+
+Make the release builder accept an optional --hitkeep-host argument. With no argument, produce a generic site with no tracker host, even if VITE_HITKEEP_HOST is inherited. Release CI alone passes https://stats.lkroll.com from its workflow configuration. Keep the host out of the release script and README.
+
+Package dist/ as ep-explorer-<version>.tar.gz containing one website root, omitting planet.psd. Generate a standard SHA-256 checksum. Upload both files under a commit-specific Actions artefact name; on tags, verify the checksum after download and publish both files with release notes identifying the source commit. Do not enable source maps. Leave browser smoke testing and retirement of deploy.sh in parent epexplorer-5r3.
+
+Keep README release guidance brief: local build command, checksum verification, manual workflow run, and matching tag publication. Point to the release workflow for toolchain details; do not list build dependencies, Hitkeep configuration, asset inventories, or URL patterns there.
+
+Validate both workflow files with actionlint and test configured and unconfigured local release builds by inspecting generated output and checksum. Preserve all existing staged files and never stage or unstage changes. Compare the result with this plan and mark in review; close only after user approval.
+
+Estimate for review amendments: local composite action 30-45 LOC; workflow references 15-25 changed LOC; script argument 5-15 LOC; README reduction about 20-25 removed LOC. Well below 1000 LOC."""
+status = "closed"
+status_reason = "completed"
+type = "task"
+priority = 3
+assignee = "codex"
+parent = "01a0d255-6f26-7240-b83d-2070b05704ea"
+created_at = "2026-09-25T12:08:39.022126Z"
+updated_at = "2026-09-25T12:44:58.980779Z"
+closed_at = "2026-09-25T12:44:58.980779Z"
+
+[[comments]]
+id = "01a0d883-7c70-7433-84fd-8711f7a0e0c5"
+author = "codex"
+body = "Implemented the EPtools-style release flow: manual dispatch builds, tests and uploads a retained archive/checksum artefact; a stable matching tag does the same and then verifies the downloaded checksum before publishing a GitHub release. The archive contains the Vite web root and excludes planet.psd. Local validation passed: Nu version-parser checks, the complete release script including Scala.js tests and Vite production build, checksum verification, archive extraction and asset inspection, actionlint v1.7.12, and git diff --check. A mismatched v0.6.3 tag was rejected before rebuilding against project version 0.6.2. The workflow has not yet run on GitHub and the browser smoke test belongs to the parent release task. No changes were staged."
+created_at = "2026-09-25T12:21:30.864349Z"
+
+[[comments]]
+id = "01a0d895-9e4f-78f1-a36f-2e1e7a3d98f9"
+author = "codex"
+body = "Review amendments implemented: the Java/sbt/Node/Bun setup now lives in a local composite action used by both workflows; the release workflow alone configures and passes the optional Hitkeep host; the release script removes an inherited host when the option is absent; and the README release section is reduced to basic steps. actionlint v1.7.12 passed for both workflows, the composite metadata parsed, Nu parser checks passed, and both generic and configured release builds passed with matching SHA-256 checksums. The generic build had no configured or inherited host URL in its bundle; the configured build contained the CI host URL. The first local SafariDriver start failed transiently; a retry and the configured run passed. Existing staged files were left staged; no staging or unstaging was performed. GitHub Actions has not run yet."
+created_at = "2026-09-25T12:41:19.183898Z"
+
+[[comments]]
+id = "01a0d898-f8e4-7362-9c0b-a06be6d5dea1"
+author = "lkroll"
+body = "completed"
+created_at = "2026-09-25T12:44:58.980779Z"

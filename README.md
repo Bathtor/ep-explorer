@@ -54,6 +54,19 @@ bun run preview
 
 The `preview` command builds the production site in `dist/` before serving it. Run `bun run build` to build without starting the preview server.
 
+## Static release archive
+
+Build and check an archive locally:
+
+```sh
+nu scripts/build-release.nu
+cd release
+shasum -a 256 --check ep-explorer-*.tar.gz.sha256
+tar -tzf ep-explorer-*.tar.gz
+```
+
+Run the [Release workflow](.github/workflows/release.yml) manually for a downloadable Actions artefact. Push a `vMAJOR.MINOR.PATCH` tag matching `mapviewer.sbt` to publish a GitHub release.
+
 ## TODO
 
 ### Definitely
