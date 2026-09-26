@@ -36,7 +36,7 @@ Run the CI checks locally:
 
 ```sh
 bun install --frozen-lockfile
-sbt -batch 'clean;compile;testFull'
+sbt -batch testFull
 bun run build
 ```
 

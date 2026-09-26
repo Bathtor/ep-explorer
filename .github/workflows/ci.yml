@@ -22,7 +22,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Compile and test Scala.js
-        run: sbt -batch 'clean;compile;testFull'
+        run: sbt -batch testFull
 
       - name: Build production site
         run: bun run build
