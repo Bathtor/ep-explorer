@@ -13,14 +13,26 @@ Required result
 - The release process should work from a clean checkout with documented build dependencies, without relying on unpublished Maven-local state or the old rsync destination. Split substantial dependency or build modernisation into child tasks as needed.
 - Document how to produce, inspect, publish, and verify a release. Validate the archive under a simple static HTTP server: load the entry page, confirm local assets return successfully, and exercise representative map rendering and interaction in a browser.
 
-The current deploy.sh runs sbt fullOptJS and uploads the sbt target tree with rsync. This task defines the release artifact contract; implementation can be split into child issues and refined here. Retire the old deployment script after the new release process has been accepted."""
-status = "open"
+The current deploy.sh runs sbt fullOptJS and uploads the sbt target tree with rsync. This task defines the release artifact contract; implementation can be split into child issues and refined here. Retire the old deployment script after the new release process has been accepted.
+
+Release execution agreed 2026-09-26
+
+The user reports that all workflows have been tested and work as expected, and requests a full release. Bump the sbt minor version from 0.6.2 to 0.7.0, commit the worktree on master, create a v0.7.0 tag on that commit, and push master and the tag. Verify the remote release workflow and published archive and checksum after the push. Do not change the fixed-version parser test fixture merely because the application version changes. Release code change estimate: one line in mapviewer.sbt, plus issue metadata; well below 1000 LOC. Keep this issue open until the published release has been inspected and remaining release-contract work is accepted."""
+status = "in-progress"
+status_reason = "v0.7.0 release pending CI"
 type = "task"
 priority = 3
+assignee = "codex"
 blocked_by = [
     "01a0d257-7e82-7ff0-ab8e-ccd90f2045c2",
     "01a0d26a-02fc-73c3-89fe-eb44d3c9fff1",
 ]
 children = ["01a0d877-b56e-7121-8dc2-c22625748b50"]
 created_at = "2026-09-24T07:33:29.510656Z"
-updated_at = "2026-09-25T12:08:44.024123Z"
+updated_at = "2026-09-26T09:15:45.573741Z"
+
+[[comments]]
+id = "01a0dcff-b5f6-72d2-a0f9-497fbef8b88f"
+author = "codex"
+body = "Release preparation on 2026-09-26: user reports all workflows tested and functioning. Bumped minor version 0.6.2 to 0.7.0. Local release build with expected tag v0.7.0 and the configured Hitkeep host passed Scala.js tests, the Vite build, archive packaging, and SHA-256 verification. The tag and remote GitHub release are pending push/CI. Leave this parent issue open until the published release and remaining contract work are accepted."
+created_at = "2026-09-26T09:15:40.918914Z"
