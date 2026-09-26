@@ -18,8 +18,8 @@ The current deploy.sh runs sbt fullOptJS and uploads the sbt target tree with rs
 Release execution agreed 2026-09-26
 
 The user reports that all workflows have been tested and work as expected, and requests a full release. Bump the sbt minor version from 0.6.2 to 0.7.0, commit the worktree on master, create a v0.7.0 tag on that commit, and push master and the tag. Verify the remote release workflow and published archive and checksum after the push. Do not change the fixed-version parser test fixture merely because the application version changes. Release code change estimate: one line in mapviewer.sbt, plus issue metadata; well below 1000 LOC. Keep this issue open until the published release has been inspected and remaining release-contract work is accepted."""
-status = "in-progress"
-status_reason = "v0.7.0 release pending CI"
+status = "closed"
+status_reason = "completed"
 type = "task"
 priority = 3
 assignee = "codex"
@@ -29,10 +29,23 @@ blocked_by = [
 ]
 children = ["01a0d877-b56e-7121-8dc2-c22625748b50"]
 created_at = "2026-09-24T07:33:29.510656Z"
-updated_at = "2026-09-26T09:15:45.573741Z"
+updated_at = "2026-09-26T09:23:43.390632Z"
+closed_at = "2026-09-26T09:23:43.390632Z"
 
 [[comments]]
 id = "01a0dcff-b5f6-72d2-a0f9-497fbef8b88f"
 author = "codex"
 body = "Release preparation on 2026-09-26: user reports all workflows tested and functioning. Bumped minor version 0.6.2 to 0.7.0. Local release build with expected tag v0.7.0 and the configured Hitkeep host passed Scala.js tests, the Vite build, archive packaging, and SHA-256 verification. The tag and remote GitHub release are pending push/CI. Leave this parent issue open until the published release and remaining contract work are accepted."
 created_at = "2026-09-26T09:15:40.918914Z"
+
+[[comments]]
+id = "01a0dd06-f2e5-7613-9248-82dac4572cd4"
+author = "codex"
+body = "User approved the v0.7.0 release for completion. Published release: https://github.com/Bathtor/ep-explorer/releases/tag/v0.7.0 . Source commit: 9064c109b0570f38d83242ff2eb1f05699254890 . Archive: https://github.com/Bathtor/ep-explorer/releases/download/v0.7.0/ep-explorer-0.7.0.tar.gz . Checksum: https://github.com/Bathtor/ep-explorer/releases/download/v0.7.0/ep-explorer-0.7.0.tar.gz.sha256 . SHA-256: 420ebcadc3077d16ade9b1b3842119e28fbc3b1bc0d9b0b137e0097d878d18ee . The downloaded checksum matches the published archive digest. Removed obsolete deploy.sh after acceptance."
+created_at = "2026-09-26T09:23:35.269826Z"
+
+[[comments]]
+id = "01a0dd07-129e-7133-99d0-848fbd336172"
+author = "lkroll"
+body = "completed"
+created_at = "2026-09-26T09:23:43.390632Z"
