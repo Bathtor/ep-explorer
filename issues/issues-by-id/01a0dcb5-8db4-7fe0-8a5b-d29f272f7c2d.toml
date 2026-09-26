@@ -1,0 +1,20 @@
+id = "01a0dcb5-8db4-7fe0-8a5b-d29f272f7c2d"
+ref = "epexplorer-wzw"
+title = "Make Scala compilation pass with -Werror"
+body = """
+Goal: make fresh Scala 2.13.18 compilation and tests pass with -Werror, and enforce that in CI.
+
+Baseline (2026-09-26): CI compilation reports 929 deprecations (57 since 2.13.0, 1 since 2.13.2, 871 since 2.13.3), one feature warning, an unused import in data/Habitats.scala, and a non-exhaustive match in Options.scala. The current build enables -Wunused:imports but does not reject warnings.
+
+Plan: First collect detailed deprecation and feature diagnostics and group them by root cause, source area, and likely fix. Estimate the work after this inventory; if it exceeds 1000 LOC, split remediation into small child issues by warning category. Fix the two direct warnings and the deprecation groups without broad warning suppression or behaviour changes; document any narrow unavoidable exception. Then enable -Werror in mapviewer.sbt so CI enforces it.
+
+Acceptance: a fresh CI build including testFull passes with -Werror; Scalafix checks and production linking still pass; no unexplained compiler warnings or blanket suppressions remain. Keep the warning inventory and any justified exceptions in this issue. This is a follow-up task, not authorisation to start the migration now."""
+status = "open"
+type = "task"
+priority = 3
+created_at = "2026-09-26T07:54:40.948986Z"
+updated_at = "2026-09-26T07:54:47.315973Z"
+
+[[links]]
+target = "01a0d329-43c1-79c0-b3b0-b181906cdd97"
+label = "discovered from"

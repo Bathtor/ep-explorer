@@ -30,7 +30,8 @@ abstract class Options(val params: QueryParams) {
     def apply(): T = this.get.get;
     def get: Option[T] = {
       cache.get(key) match {
-        case Some(t: T @unchecked) => Some(t)
+        // Each key must retain its T; erasure may defer a bad cast until the value is used.
+        case Some(value) => Some(value.asInstanceOf[T])
         case None => {
           params.get(key) match {
             case Some(s) => {
