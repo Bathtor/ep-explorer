@@ -11,7 +11,12 @@ scalaVersion := "2.13.18"
 
 semanticdbEnabled := true
 semanticdbVersion := scalafixSemanticdb.revision
-scalacOptions += "-Wunused:imports"
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-feature",
+  "-Wunused:imports",
+  "-Werror"
+)
 
 // Local Scalafix rules live in src/scalafix/scala and do not enter the Scala.js application.
 libraryDependencies += ("ch.epfl.scala" % "scalafix-core_2.13" % _root_.scalafix.sbt.BuildInfo.scalafixVersion) % ScalafixConfig

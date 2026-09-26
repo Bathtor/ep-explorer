@@ -28,11 +28,11 @@ object IntersectionPriorities {
           objO match {
             case Some(star: Star) => {
               sun = Some(star);
-              break // if we are intersecting the sun
+              break() // if we are intersecting the sun
             }
             case Some(planet: PlanetObject) => {
               if (firstPlanet.isDefined) {
-                break // as soon as we find the second planet we are done
+                break() // as soon as we find the second planet we are done
               } else {
                 firstPlanet = Some(planet)
               }

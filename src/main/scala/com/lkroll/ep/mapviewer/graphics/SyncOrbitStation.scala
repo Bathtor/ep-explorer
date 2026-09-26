@@ -33,19 +33,19 @@ class SyncOrbitStation(val settlement: SyncOrbitStationData) extends GraphicsObj
     o
   }
 
-  override def moveTo(pos: Vector3) {
+  override def moveTo(pos: Vector3): Unit = {
     mesh.moveTo(pos);
     overlay.moveTo(pos);
   }
 
-  override def addToScene(scene: SceneContainer) {
+  override def addToScene(scene: SceneContainer): Unit = {
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
   }
 
   val meshRotation = new Quaternion();
 
-  override def update(t: Time) {
+  override def update(t: Time): Unit = {
     val pSnap = settlement.position.at(t);
     // TODO move half geometry height up to stand on the surface
     val dir = pSnap.pos.clone();

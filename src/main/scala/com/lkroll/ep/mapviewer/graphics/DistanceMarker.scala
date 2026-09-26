@@ -1,8 +1,8 @@
 package com.lkroll.ep.mapviewer.graphics
 
+import com.lkroll.ep.mapviewer.SceneContainer;
 import com.lkroll.ep.mapviewer.data.Stars
 import com.lkroll.ep.mapviewer.datamodel.{AstronomicalObject, ConstantOriginOrbit, ExtraUnits}
-import com.lkroll.ep.mapviewer.SceneContainer;
 import com.lkroll.ep.mapviewer.three._
 
 import squants.space._

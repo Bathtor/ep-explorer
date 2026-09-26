@@ -76,7 +76,7 @@ class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement
 
   override def passes = Seq(clearPass, texturePass, renderPass, outputPass);
 
-  private def updatePositions() {
+  private def updatePositions(): Unit = {
     target.update(time)
   }
 
@@ -103,7 +103,7 @@ class SingleScene(val targetData: AstronomicalObject, val container: HTMLElement
   }
   override def currentTime: Time = time;
 
-  override def animate() {
+  override def animate(): Unit = {
     if (running) {
       step();
     }

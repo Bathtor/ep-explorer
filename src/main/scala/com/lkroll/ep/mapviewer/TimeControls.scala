@@ -75,7 +75,7 @@ object TimeControls extends Logging {
   private val updateInterval = Seconds(0.5).toMilliseconds;
   private var lastUpdate = Double.NegativeInfinity;
 
-  private def updateScene(scene: TimeAnimatedScene) {
+  private def updateScene(scene: TimeAnimatedScene): Unit = {
     scene.setOffset(fieldsToTime().to(J2000TT));
     val spd = speed.value match {
       case "s" => Seconds(1.0)
@@ -114,7 +114,7 @@ object TimeControls extends Logging {
     }
   }
 
-  def update(t: Time) {
+  def update(t: Time): Unit = {
     val tnow = Date.now();
     val tdiff = tnow - lastUpdate;
     if (((tdiff) > updateInterval) || editing) { // always update in editing mode

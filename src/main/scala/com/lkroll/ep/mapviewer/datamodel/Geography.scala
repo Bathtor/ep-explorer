@@ -51,7 +51,7 @@ object Geography {
           -lon.value
         }
       };
-      (alpha.normalise, delta)
+      (alpha.normalise(), delta)
     }
     lazy val pretty: String = {
       val latD = lat.value.toDegrees;

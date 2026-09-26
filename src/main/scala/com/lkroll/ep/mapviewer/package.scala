@@ -4,7 +4,7 @@ import com.lkroll.ep.mapviewer.three._
 
 package object mapviewer {
   implicit class ExtObject3D(obj: Object3D) {
-    def moveTo(pos: Vector3) {
+    def moveTo(pos: Vector3): Unit = {
       obj.position.set(pos.x, pos.y, pos.z);
     }
   }

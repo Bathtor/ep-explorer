@@ -36,7 +36,7 @@ class MapControls(_cam: Camera,
 
   private var topObject: Double = 0.0;
 
-  def select(obj: GraphicsObject) {
+  def select(obj: GraphicsObject): Unit = {
     if (topObject != obj.id) {
       val oldObj = GraphicsObjects(topObject);
       oldObj match {

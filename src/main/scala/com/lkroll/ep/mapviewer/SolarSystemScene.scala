@@ -69,7 +69,7 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
 
   override val controls: CameraControls = ctrls;
 
-  private def updatePositions() {
+  private def updatePositions(): Unit = {
     sun.update(time)
     planets.foreach { p =>
       p.update(time)
@@ -102,7 +102,7 @@ class SolarSystemScene(val container: HTMLElement, val width: Double, val height
   }
   override def currentTime: Time = time;
 
-  override def animate() {
+  override def animate(): Unit = {
     if (running) {
       step();
     }

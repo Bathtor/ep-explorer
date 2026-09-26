@@ -55,11 +55,11 @@ class MoonSingle(val moon: MoonData) extends GraphicsObject {
     cB.result()
   }
 
-  override def moveTo(pos: Vector3) {
+  override def moveTo(pos: Vector3): Unit = {
     mesh.moveTo(pos);
   }
 
-  override def addToScene(scene: SceneContainer) {
+  override def addToScene(scene: SceneContainer): Unit = {
     scene.addSceneObject(this, mesh);
     scene.addObject(this, light);
     if (Main.opts.debug()) {
@@ -72,7 +72,7 @@ class MoonSingle(val moon: MoonData) extends GraphicsObject {
 
   val inverseScale = -1.0 / Main.scaleDistance;
 
-  override def update(t: Time) {
+  override def update(t: Time): Unit = {
     val pos = orbiter.orbit.at(t).pos.clone();
     val dir = pos.clone().normalize();
     pos.multiplyScalar(inverseScale); // direction from planet to sun
@@ -135,12 +135,12 @@ class Moon(val moon: MoonData) extends GraphicsObject with Overlayed with Orbita
   val overlay = TacticalOverlay.from(moon);
   GraphicsObjects.put(overlay.mesh, this);
 
-  override def moveTo(pos: Vector3) {
+  override def moveTo(pos: Vector3): Unit = {
     mesh.moveTo(pos);
     overlay.moveTo(pos);
   }
 
-  override def addToScene(scene: SceneContainer) {
+  override def addToScene(scene: SceneContainer): Unit = {
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
     this.addEllipseToScene(scene);
@@ -149,7 +149,7 @@ class Moon(val moon: MoonData) extends GraphicsObject with Overlayed with Orbita
     }
   }
 
-  override def update(t: Time) {
+  override def update(t: Time): Unit = {
     val pos = orbiter.orbit.at(t).pos;
     moveTo(pos);
     this.updateEllipse(t);
@@ -185,7 +185,10 @@ object Moon {
       .asInstanceOf[MeshPhongMaterialParameters];
 
   def fromData(moon: MoonData): Moon = {
-    fromData(moon, SystemView).left.get
+    fromData(moon, SystemView) match {
+      case Left(value) => value
+      case Right(_)    => throw new AssertionError("SystemView must produce a Moon")
+    }
   }
 
   def fromData(moon: MoonData, viewType: ViewType): Either[Moon, MoonSingle] = {

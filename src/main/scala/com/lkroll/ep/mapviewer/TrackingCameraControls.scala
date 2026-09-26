@@ -179,7 +179,7 @@ abstract class TrackingCameraControls(val camera: Camera,
     }
   }
 
-  def attach(el: Element) {
+  def attach(el: Element): Unit = {
     el.addEventListener("dblclick", (this.onDoubleClick _).asInstanceOf[Function[Event, _]], false);
     el.addEventListener("mousemove", (this.onMouseMove _).asInstanceOf[Function[Event, _]], false);
     el.addEventListener("mousedown", (this.onMouseDown _).asInstanceOf[Function[Event, _]], false);

@@ -68,11 +68,11 @@ class PlanetSingle(val planet: PlanetData) extends PlanetObject {
     cB.result()
   }
 
-  override def moveTo(pos: Vector3) {
+  override def moveTo(pos: Vector3): Unit = {
     mesh.moveTo(pos);
   }
 
-  override def addToScene(scene: SceneContainer) {
+  override def addToScene(scene: SceneContainer): Unit = {
     scene.addSceneObject(this, mesh);
     scene.addObject(this, light);
     if (Main.opts.debug()) {
@@ -85,7 +85,7 @@ class PlanetSingle(val planet: PlanetData) extends PlanetObject {
 
   val inverseScale = -1.0 / Main.scaleDistance;
 
-  override def update(t: Time) {
+  override def update(t: Time): Unit = {
     val pos = orbiter.orbit.at(t).pos.clone();
     val dir = pos.clone().normalize();
     pos.multiplyScalar(inverseScale); // direction from planet to sun
@@ -144,7 +144,7 @@ class Planet(val planet: PlanetData) extends PlanetObject with Logging with Over
 
   }
 
-  val moons = Moons.forPlanet.getOrElse(orbiter.name, Seq.empty).map { m =>
+  val moons = Moons.forPlanet.getOrElse(orbiter.name(), Seq.empty).map { m =>
     Moon.fromData(m)
   };
 
@@ -160,12 +160,12 @@ class Planet(val planet: PlanetData) extends PlanetObject with Logging with Over
 
   def name = planet.name;
 
-  override def moveTo(pos: Vector3) {
+  override def moveTo(pos: Vector3): Unit = {
     mesh.moveTo(pos);
     overlay.moveTo(pos);
   }
 
-  override def addToScene(scene: SceneContainer) {
+  override def addToScene(scene: SceneContainer): Unit = {
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
     this.addEllipseToScene(scene);
@@ -174,7 +174,7 @@ class Planet(val planet: PlanetData) extends PlanetObject with Logging with Over
     }
   }
 
-  override def update(t: Time) {
+  override def update(t: Time): Unit = {
     val pos = orbiter.orbit.at(t).pos;
     moveTo(pos);
     updateEllipse(t);
@@ -206,7 +206,10 @@ object Planet {
       .asInstanceOf[MeshPhongMaterialParameters];
 
   def fromData(planet: PlanetData): Planet = {
-    fromData(planet, SystemView).left.get
+    fromData(planet, SystemView) match {
+      case Left(value) => value
+      case Right(_)    => throw new AssertionError("SystemView must produce a Planet")
+    }
   }
 
   def fromData(planet: PlanetData, viewType: ViewType): Either[Planet, PlanetSingle] = {

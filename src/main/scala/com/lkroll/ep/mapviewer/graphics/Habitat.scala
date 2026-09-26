@@ -45,18 +45,18 @@ abstract class Habitat(val habitat: HabitatData, val orbiter: Orbiting)
     o
   }
 
-  override def moveTo(pos: Vector3) {
+  override def moveTo(pos: Vector3): Unit = {
     mesh.moveTo(pos);
     overlay.moveTo(pos);
   }
 
-  override def addToScene(scene: SceneContainer) {
+  override def addToScene(scene: SceneContainer): Unit = {
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
     this.addEllipseToScene(scene);
   }
 
-  override def update(t: Time) {
+  override def update(t: Time): Unit = {
     val pos = orbiter.orbit.at(t).pos;
     moveTo(pos);
     this.updateEllipse(t);

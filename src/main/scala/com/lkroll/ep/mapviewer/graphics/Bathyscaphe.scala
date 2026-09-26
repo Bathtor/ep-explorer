@@ -26,19 +26,19 @@ class Bathyscaphe(val settlement: BathyscapheData) extends GraphicsObject with O
     o
   }
 
-  override def moveTo(pos: Vector3) {
+  override def moveTo(pos: Vector3): Unit = {
     mesh.moveTo(pos);
     overlay.moveTo(pos);
   }
 
-  override def addToScene(scene: SceneContainer) {
+  override def addToScene(scene: SceneContainer): Unit = {
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
   }
 
   val meshRotation = new Quaternion();
 
-  override def update(t: Time) {
+  override def update(t: Time): Unit = {
     val pSnap = settlement.position.at(t);
     val dir = pSnap.pos.clone();
     dir.normalize();

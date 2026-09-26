@@ -27,15 +27,15 @@ class TacticalOverlay(obj: AstronomicalObject) extends GraphicsObject with Overl
   val mesh = new Points(geometry, material);
   mesh.name = obj.name + " Overlay";
 
-  override def moveTo(pos: Vector3) {
+  override def moveTo(pos: Vector3): Unit = {
     mesh.moveTo(pos);
   }
 
-  override def addToScene(scene: SceneContainer) {
+  override def addToScene(scene: SceneContainer): Unit = {
     throw new RuntimeException("Use objects addToScene instead of overlay's");
   }
 
-  override def update(t: Time) {
+  override def update(t: Time): Unit = {
     throw new RuntimeException("Use objects update instead of overlay's");
   }
 
@@ -47,15 +47,15 @@ class TacticalOverlay(obj: AstronomicalObject) extends GraphicsObject with Overl
 
   override def id = mesh.id;
 
-  def hover() {
+  def hover(): Unit = {
     mesh.material.asInstanceOf[PointsMaterial].color.set(TacticalOverlay.hoverColor)
   }
 
-  def select() {
+  def select(): Unit = {
     material.color.set(TacticalOverlay.selectedColor)
   }
 
-  def clear() {
+  def clear(): Unit = {
     material.color.set(TacticalOverlay.defaultColor)
   }
 

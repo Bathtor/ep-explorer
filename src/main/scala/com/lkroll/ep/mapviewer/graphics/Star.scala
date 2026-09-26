@@ -57,19 +57,19 @@ class Star(val star: StarData) extends GraphicsObject with Overlayed with Orbita
 
   val light = new PointLight(color.getHex(), 1.0, 0.0);
 
-  def moveTo(pos: Vector3) {
+  def moveTo(pos: Vector3): Unit = {
     mesh.moveTo(pos);
     light.moveTo(pos);
     overlay.moveTo(pos);
   }
 
-  def addToScene(scene: SceneContainer) {
+  def addToScene(scene: SceneContainer): Unit = {
     scene.addSceneObject(this, mesh);
     scene.addOverlayObject(this, overlay.mesh);
     scene.addObject(this, light);
   }
 
-  def update(t: Time) {
+  def update(t: Time): Unit = {
     moveTo(orbiter.orbit.at(t).pos);
     val m = rotor.rotation.at(t).rotationMatrix;
     mesh.setRotationFromMatrix(m);

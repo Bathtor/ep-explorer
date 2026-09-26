@@ -59,7 +59,7 @@ abstract class Options(val params: QueryParams) {
 
   protected def opt[T](key: String, default: => Option[T] = None, required: Boolean = false)(
       implicit converter: ParamConverter[T]
-  ): Opt[T] = addOpt(Opt(key, converter, default _, required));
+  ): Opt[T] = addOpt(Opt(key, converter, () => default, required));
 
   def verify(): List[Failure[Unit]] = {
     val res = opts.map { o =>

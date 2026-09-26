@@ -257,5 +257,5 @@ trait SceneContainer extends Logging {
     stats.end();
   }
 
-  def animate() {};
+  def animate(): Unit = {};
 }

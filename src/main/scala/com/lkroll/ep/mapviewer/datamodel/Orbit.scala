@@ -6,6 +6,7 @@ import com.lkroll.ep.mapviewer.utils.PosCache
 import com.lkroll.ep.mapviewer.datamodel.ExtraUnits._
 
 import java.util.UUID
+import scala.language.implicitConversions
 
 import squants.mass._
 import squants.motion._

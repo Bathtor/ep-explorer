@@ -98,7 +98,7 @@ object UI extends Logging {
 
   val viewContent = span("Loading").render;
 
-  def updateView(scene: SceneContainer, info: String, systemTrack: Option[AstronomicalObject]) {
+  def updateView(scene: SceneContainer, info: String, systemTrack: Option[AstronomicalObject]): Unit = {
     if (scene.isInstanceOf[SolarSystemScene]) {
       viewContent.innerHTML = "";
       viewContent.appendChild(info.render);
@@ -127,7 +127,7 @@ object UI extends Logging {
     div(id := "search", label("Search"), data, search, track, infoButton)
   );
 
-  def addData(item: String) {
+  def addData(item: String): Unit = {
     data.appendChild(option(value := item).render)
   }
 
